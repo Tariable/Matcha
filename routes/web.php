@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+Route::view('image', 'image')->middleware('verified');
+Route::post('image', 'ImageController@store');
