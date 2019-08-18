@@ -24,6 +24,7 @@ class ImageController extends Controller
         $path = $request->file('image')->storeAs('public/images', $imageNameToStore);
         $image = new Image();
         $image->path = 'storage/images/' . $imageNameToStore;
+        $image->user_id = \Auth::user()->id;
         $image->save();
     }
 }
