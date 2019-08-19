@@ -28,4 +28,10 @@ class ImageController extends Controller
         $newImage->user_id = \Auth::user()->id;
         $newImage->save();
     }
+
+    public function delete($id)
+    {
+
+    }
+
 }
