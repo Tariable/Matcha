@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
@@ -27,19 +28,20 @@ class PhotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function store(Request $request)
     {
+
         $this->validate($request, [
-            'photo' => 'image|required|max:1999'
+            'photo' => 'required',
+            'photo.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
-        $photoExtension = $request->file('photo')->getClientOriginalExtension();
-        $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
-        $request->file('photo')->storeAs('public/photos', $photoNameToStore);
-        $newPhoto = new Photo();
-        $newPhoto->path = 'storage/photos/' . $photoNameToStore;
-        $newPhoto->user_id = \Auth::user()->id;
-        $newPhoto->save();
+
+//            $this->validate($request, [
+//                'photo' => 'image|required|max:1999'
+//            ]);
+        $this->saveImage($request);
+
         return redirect('/home');
     }
 
@@ -52,5 +54,18 @@ class PhotoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function saveImage(Request $request)
+    {
+        foreach ($request->file('photo') as $photo) {
+            $photoExtension = $photo->getClientOriginalExtension();
+            $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
+            $photo->storeAs('public/photos', $photoNameToStore);
+            $newPhoto = new Photo();
+            $newPhoto->path = 'storage/photos/' . $photoNameToStore;
+            $newPhoto->user_id = Auth::id();
+            $newPhoto->save();
+        }
     }
 }
