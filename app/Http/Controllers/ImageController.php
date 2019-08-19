@@ -21,10 +21,11 @@ class ImageController extends Controller
         $imageName = pathinfo($imageNameWithExt, PATHINFO_FILENAME);
         $imageExtension = $request->file('image')->getClientOriginalExtension();
         $imageNameToStore = $imageName . '_' . time() . '.' . $imageExtension;
-        $path = $request->file('image')->storeAs('public/images', $imageNameToStore);
-        $image = new Image();
-        $image->path = 'storage/images/' . $imageNameToStore;
-        $image->user_id = \Auth::user()->id;
-        $image->save();
+
+        $request->file('image')->storeAs('public/images', $imageNameToStore);
+        $newImage = new Image();
+        $newImage->path = 'storage/images/' . $imageNameToStore;
+        $newImage->user_id = \Auth::user()->id;
+        $newImage->save();
     }
 }
