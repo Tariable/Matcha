@@ -15,9 +15,9 @@ class ProfileCreationTest extends TestCase
     {
         $response = $this->post('/profiles', [
             'name' => 'Profile_name',
-            'date_of_birth' => '19/09/2000',
+            'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
@@ -31,9 +31,9 @@ class ProfileCreationTest extends TestCase
     {
         $response = $this->post('/profiles', [
             'name' => '',
-            'date_of_birth' => '19/09/2000',
+            'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -47,9 +47,9 @@ class ProfileCreationTest extends TestCase
     {
         $response = $this->post('/profiles', [
             'name' => '1',
-            'date_of_birth' => '19/09/2000',
+            'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -62,9 +62,9 @@ class ProfileCreationTest extends TestCase
     {
         $response = $this->post('/profiles', [
             'name' => '1111111111111111111111111111111111111111111111111111111111111',
-            'date_of_birth' => '19/09/2000',
+            'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -79,7 +79,7 @@ class ProfileCreationTest extends TestCase
             'name' => 'name',
             'date_of_birth' => '',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -90,18 +90,17 @@ class ProfileCreationTest extends TestCase
     }
 
     /** @test */
-    public function a_date_of_birth_is_required()
+    public function format_of_date_of_birth()
     {
         $response = $this->post('/profiles', [
             'name' => 'name',
-            'date_of_birth' => '',
+            'date_of_birth' => '05-03-1998',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
         ]);
-
 
         $response->assertSessionHasErrors('date_of_birth');
     }
@@ -111,12 +110,11 @@ class ProfileCreationTest extends TestCase
     {
         $response = $this->post('/profiles', [
             'name' => 'name',
-            'date_of_birth' => '19/09/2000',
+            'date_of_birth' => '2000-09-19',
             'description' => '',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
-
         ]);
 
         $response->assertSessionHasErrors('description');
@@ -139,13 +137,29 @@ class ProfileCreationTest extends TestCase
     }
 
     /** @test */
+    public function a_gender_can_be_feMale_Male()
+    {
+        $response = $this->post('/profiles', [
+            'name' => 'name',
+            'date_of_birth' => '',
+            'description' => 'Profile_description',
+            'gender' => 'trans',
+            'current_latitude' => 55.751244,
+            'current_longitude' => 37.618423,
+
+        ]);
+
+        $response->assertSessionHasErrors('gender');
+    }
+
+    /** @test */
     public function a_current_latitude_is_required()
     {
         $response = $this->post('/profiles', [
             'name' => 'name',
             'date_of_birth' => '',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => '',
             'current_longitude' => 37.618423,
 
@@ -161,7 +175,7 @@ class ProfileCreationTest extends TestCase
             'name' => 'name',
             'date_of_birth' => '',
             'description' => 'Profile_description',
-            'gender' => 'male',
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => '',
 
