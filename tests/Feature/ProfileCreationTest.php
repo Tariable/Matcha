@@ -13,6 +13,7 @@ class ProfileCreationTest extends TestCase
     /** @test */
     public function a_profile_can_be_created()
     {
+        $this->withoutExceptionHandling();
         $response = $this->post('/profiles', [
             'name' => 'Profile_name',
             'date_of_birth' => '2000-09-19',
@@ -137,7 +138,7 @@ class ProfileCreationTest extends TestCase
     }
 
     /** @test */
-    public function a_gender_can_be_feMale_Male()
+    public function a_gender_can_only_be_Female_or_Male()
     {
         $response = $this->post('/profiles', [
             'name' => 'name',
@@ -169,6 +170,22 @@ class ProfileCreationTest extends TestCase
     }
 
     /** @test */
+    public function a_current_latitude_must_be_in_range_180()
+    {
+        $response = $this->post('/profiles', [
+            'name' => 'name',
+            'date_of_birth' => '',
+            'description' => 'Profile_description',
+            'gender' => 'Male',
+            'current_latitude' => 189,
+            'current_longitude' => 65.345 ,
+
+        ]);
+
+        $response->assertSessionHasErrors('current_latitude');
+    }
+
+    /** @test */
     public function a_current_longitude_is_required()
     {
         $response = $this->post('/profiles', [
@@ -179,6 +196,21 @@ class ProfileCreationTest extends TestCase
             'current_latitude' => 55.751244,
             'current_longitude' => '',
 
+        ]);
+
+        $response->assertSessionHasErrors('current_longitude');
+    }
+
+    /** @test */
+    public function a_current_longitude_must_be_in_range_90()
+    {
+        $response = $this->post('/profiles', [
+            'name' => 'name',
+            'date_of_birth' => '',
+            'description' => 'Profile_description',
+            'gender' => 'Male',
+            'current_latitude' => 55.751244,
+            'current_longitude' => -90.342,
         ]);
 
         $response->assertSessionHasErrors('current_longitude');

@@ -19,8 +19,8 @@ class ProfilesController extends Controller
             'date_of_birth' => 'required|date_format:"Y-m-d"',
             'description' => 'required',
             'gender' => 'required|in:Male,Female',
-            'current_latitude' => 'required',
-            'current_longitude' => 'required',
+            'current_latitude' => 'required|numeric|max:180|min:-180',
+            'current_longitude' => 'required|numeric|max:90|min:-90',
         ]);
 
 
