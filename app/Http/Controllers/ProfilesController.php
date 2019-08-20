@@ -23,6 +23,8 @@ class ProfilesController extends Controller
             'current_longitude' => 'required|numeric|max:90|min:-90',
         ]);
 
+        dd($data);
+
 
         Profile::create($data);
     }
