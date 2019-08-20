@@ -20,3 +20,4 @@ Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
 Route::post('/photos', 'PhotoController@store');
+Route::get('/photos/{user}', 'PhotoController@show');

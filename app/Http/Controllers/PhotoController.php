@@ -12,34 +12,25 @@ class PhotoController extends Controller
 
     use ValidatesRequests;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show()
+    {
+
+        $paths = $this->getUserPhotos(Auth::id());
+
+        return view('photo.show', [
+           'paths' =>  $paths,
+        ]);
+    }
+
     public function create()
     {
         return view('photo.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
     public function store(Request $request)
     {
+        $this->validate($request, $this->rules(), $this->errorMessages());
 
-        $this->validate($request, [
-            'photo' => 'required',
-            'photo.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
-        ]);
-
-//            $this->validate($request, [
-//                'photo' => 'image|required|max:1999'
-//            ]);
         $this->saveImage($request);
 
         return redirect('/home');
@@ -48,12 +39,18 @@ class PhotoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    public function getUserPhotos($userId)
+    {
+        return Photo::where('user_id', $userId)->pluck('path');
+
     }
 
     public function saveImage(Request $request)
@@ -63,9 +60,27 @@ class PhotoController extends Controller
             $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
             $photo->storeAs('public/photos', $photoNameToStore);
             $newPhoto = new Photo();
-            $newPhoto->path = 'storage/photos/' . $photoNameToStore;
+            $newPhoto->path = '/storage/photos/' . $photoNameToStore;
             $newPhoto->user_id = Auth::id();
             $newPhoto->save();
         }
+    }
+
+    public function rules()
+    {
+        return [
+            'photo' => 'required',
+            'photo.*' => 'max:2048|image|mimes:jpeg,png,jpg,svg'
+        ];
+    }
+
+    public function errorMessages()
+    {
+        return [
+            'photo.required' => 'At least 1 photo is required',
+            'photo.*.image' => 'Please upload an image only',
+            'photo.*.mimes' => 'Only jpeg, png, jpg and bmp images are allowed',
+            'photo.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
+        ];
     }
 }
