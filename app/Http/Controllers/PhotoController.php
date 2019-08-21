@@ -64,10 +64,10 @@ class PhotoController extends Controller
             $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
             $image->save();
 
-            $newPhoto = new Photo();
-            $newPhoto->path = '/storage/photos/' . $photoNameToStore;
-            $newPhoto->user_id = Auth::id();
-            $newPhoto->save();
+            Photo::create([
+               'user_id' => Auth::id(),
+                'path' => '/storage/photos/' . $photoNameToStore,
+            ]);
         }
     }
 
