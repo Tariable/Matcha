@@ -55,11 +55,18 @@
                 };
 
                 var geoError = function() {
-                    $.getJSON('https://ipapi.co/217.67.187.54/latitude', function(data) {
-                        console.log(JSON.stringify(data));
-                        // document.getElementById('current_longitude').value = JSON.stringify(data.geoplugin_longitude);
-                        // document.getElementById('current_latitude').value = JSON.stringify(data.geoplugin_latitude);
-                    });
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            var latlong = xhr.response.split(',');
+                            document.getElementById('current_longitude').value = latlong[0];
+                            document.getElementById('current_latitude').value = latlong[1];
+                        } else {
+                            console.log('The request failed!');
+                        }
+                    };
+                    xhr.open('GET', 'https://ipapi.co/latlong/');
+                    xhr.send();
                 };
 
                 navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
