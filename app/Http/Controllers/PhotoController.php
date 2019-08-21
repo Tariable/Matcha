@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
+use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
 {
@@ -33,7 +34,7 @@ class PhotoController extends Controller
 
         $this->saveImage($request);
 
-        return redirect('/home');
+        return redirect("/photos/" . Auth::id());
     }
 
     /**
@@ -61,6 +62,10 @@ class PhotoController extends Controller
             $photo->storeAs('public/photos', $photoNameToStore);
             $newPhoto = new Photo();
             $newPhoto->path = '/storage/photos/' . $photoNameToStore;
+
+          /*  $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
+            $image->save();
+            */
             $newPhoto->user_id = Auth::id();
             $newPhoto->save();
         }
