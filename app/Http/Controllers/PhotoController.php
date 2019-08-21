@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
+use App\User;
 use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
@@ -13,10 +14,9 @@ class PhotoController extends Controller
 
     use ValidatesRequests;
 
-    public function show()
+    public function show($user)
     {
-
-        $paths = $this->getUserPhotos(Auth::id());
+        $paths = $this->getUserPhotos($user);
 
         return view('photo.show', [
            'paths' =>  $paths,
@@ -60,12 +60,12 @@ class PhotoController extends Controller
             $photoExtension = $photo->getClientOriginalExtension();
             $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
             $photo->storeAs('public/photos', $photoNameToStore);
+
+            $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
+            $image->save();
+
             $newPhoto = new Photo();
             $newPhoto->path = '/storage/photos/' . $photoNameToStore;
-
-          /*  $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
-            $image->save();
-            */
             $newPhoto->user_id = Auth::id();
             $newPhoto->save();
         }
