@@ -12,7 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function photos()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Photo::class);
     }
 
     /**
