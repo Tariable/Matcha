@@ -50,6 +50,7 @@
         <script>
             window.onload = function() {
                 var geoSuccess = function(position) {
+
                     document.getElementById('current_longitude').value = position.coords.longitude;
                     document.getElementById('current_latitude').value = position.coords.latitude;
                 };
@@ -59,8 +60,8 @@
                     xhr.onload = function () {
                         if (xhr.status >= 200 && xhr.status < 300) {
                             var latlong = xhr.response.split(',');
-                            document.getElementById('current_longitude').value = latlong[0];
-                            document.getElementById('current_latitude').value = latlong[1];
+                            document.getElementById('current_latitude').value = latlong[0];
+                            document.getElementById('current_longitude').value = latlong[1];
                         } else {
                             console.log('The request failed!');
                         }

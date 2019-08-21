@@ -15,7 +15,7 @@ class ProfileCreationTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $response = $this->post('/profiles', [
-            'name' => 'Profile_name',
+            'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'gender' => 'Male',
@@ -96,6 +96,38 @@ class ProfileCreationTest extends TestCase
         $response = $this->post('/profiles', [
             'name' => 'name',
             'date_of_birth' => '05-03-1998',
+            'description' => 'Profile_description',
+            'gender' => 'Male',
+            'current_latitude' => 55.751244,
+            'current_longitude' => 37.618423,
+
+        ]);
+
+        $response->assertSessionHasErrors('date_of_birth');
+    }
+
+    /** @test */
+    public function age_must_be_over_18()
+    {
+        $response = $this->post('/profiles', [
+            'name' => 'name',
+            'date_of_birth' => '05-09-2003',
+            'description' => 'Profile_description',
+            'gender' => 'Male',
+            'current_latitude' => 55.751244,
+            'current_longitude' => 37.618423,
+
+        ]);
+
+        $response->assertSessionHasErrors('date_of_birth');
+    }
+
+    /** @test */
+    public function age_must_be_less_than_100()
+    {
+        $response = $this->post('/profiles', [
+            'name' => 'name',
+            'date_of_birth' => '21-08-1919',
             'description' => 'Profile_description',
             'gender' => 'Male',
             'current_latitude' => 55.751244,
