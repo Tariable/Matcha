@@ -19,7 +19,7 @@ class ProfilesController extends Controller
 
         $data['user_id'] = Auth::id();
 
-        $profile = Profile::create($data)exit
+        $profile = Profile::create($data);
     }
 
     public function update(Profile $profile)
