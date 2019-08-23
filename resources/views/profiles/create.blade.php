@@ -28,6 +28,12 @@
                     <input class="m-2" id="gender" name="gender" type="radio" value="Female"><span>Female</span>
                 </div>
 
+                <div class="form-group">
+                    <label class="m-2" for="notification">Notifications</label>
+                    <input class="m-2" id="notification" name="notification" type="radio" value=true><span>Turn on</span>
+                    <input class="m-2" id="notification" name="notification" type="radio" value=false><span>Turn off</span>
+                </div>
+
                 <div>
                     <input type="number" id="current_longitude" name="current_longitude" hidden>
                     <input type="number" id="current_latitude" name="current_latitude" hidden>
