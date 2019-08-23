@@ -22,9 +22,9 @@ Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
 Route::post('/photos', 'PhotoController@store');
 Route::get('/photos/{user}', 'PhotoController@show');
 
-Route::get('/profiles/create', 'ProfilesController@create');
-Route::post('/profiles', 'ProfilesController@store');
-Route::get('/profiles/{id}/create', 'ProfilesController@edit');
-Route::put('/profiles/{id}', 'ProfilesController@update');
-Route::delete('/profiles/{id}', 'ProfilesController@destroy');
+Route::get('/profiles/create', 'ProfileController@create');
+Route::post('/profiles', 'ProfileController@store');
+Route::get('/profiles/{id}/create', 'ProfileController@edit');
+Route::put('/profiles/{id}', 'ProfileController@update');
+Route::delete('/profiles/{id}', 'ProfileController@destroy');
 

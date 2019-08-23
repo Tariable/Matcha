@@ -6,7 +6,7 @@ use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProfilesController extends Controller
+class ProfileController extends Controller
 {
     public function create()
     {
