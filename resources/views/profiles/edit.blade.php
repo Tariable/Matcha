@@ -4,34 +4,19 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2>Profile creation</h2>
-
-            <hr>
-
-            <form action="/photos" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="m-2">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <button type="submit" class="btn btn-primary">Save photo</button>
-                </div>
-            </form>
-
-            <hr>
-
             <form action="/profiles" method="post" novalidate>
                 @csrf
+                @method('put')
                 <div class="form-group">
                     <label class="m-2" for="name">Name:</label>
-                    <input name="name" id="name" type="text" class="form-control">
+                    <input name="name" id="name" type="text" class="form-control"
+                           value="{{ old('name') ?? $profile->name }}">
                 </div>
 
                 <div class="form-group">
                     <label class="m-2" for="date_of_birth">Date of birth</label>
-                    <input name="date_of_birth" id="date_of_birth" type="date" class="form-control" max="2002-01-01">
+                    <input name="date_of_birth" id="date_of_birth" type="date" class="form-control"
+                           value="{{ old('date_of_birth') ?? $profile->dob }}">
                 </div>
 
                 <div class="form-group">
@@ -95,7 +80,6 @@
                 };
 
                 navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-
             };
         </script>
     </div>

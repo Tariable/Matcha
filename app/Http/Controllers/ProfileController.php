@@ -19,7 +19,13 @@ class ProfileController extends Controller
 
         $data['user_id'] = Auth::id();
 
-        $profile = Profile::create($data);
+        Profile::create($data);
+    }
+
+    public function edit(Profile $profile)
+    {
+        dd($profile);
+        return view('profiles.edit', compact('profile'));
     }
 
     public function update(Profile $profile)

@@ -24,7 +24,7 @@ Route::get('/photos/{user}', 'PhotoController@show');
 
 Route::get('/profiles/create', 'ProfileController@create');
 Route::post('/profiles', 'ProfileController@store');
-Route::get('/profiles/{id}/create', 'ProfileController@edit');
+Route::get('/profiles/{id}/edit', 'ProfileController@edit');
 Route::put('/profiles/{id}', 'ProfileController@update');
 Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
