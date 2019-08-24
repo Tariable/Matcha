@@ -21,5 +21,9 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "bootstrap-slider": "^10.6.2",
+        "nouislider": "^14.0.2"
     }
 }

@@ -1,4 +1,5 @@
 window._ = require('lodash');
+window.noUiSlider = require('matcha/resources/js/components/nouislider');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
