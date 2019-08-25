@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d23734a-0fec-498c-8708-125433ddb6c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/profiles/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/profiles/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profiles/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -174,7 +168,9 @@
       <workItem from="1566401053219" duration="1094000" />
       <workItem from="1566480988542" duration="1186000" />
       <workItem from="1566557561799" duration="78000" />
-      <workItem from="1566648773912" duration="2497000" />
+      <workItem from="1566648773912" duration="2539000" />
+      <workItem from="1566732776659" duration="2609000" />
+      <workItem from="1566744013092" duration="2010000" />
     </task>
     <task id="LOCAL-00001" summary="init commit of profile2 branch">
       <created>1566582989049</created>
@@ -197,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566597020680</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="edit.blade modif">
+      <created>1566652916735</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1566652916735</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +237,7 @@
     <MESSAGE value="init commit of profile2 branch" />
     <MESSAGE value="ProfileController modification&#10;-add some properties to Profile model&#10;-add tests" />
     <MESSAGE value="ProfileController modification&#10;-add edit action&#10;-add edit blade" />
-    <option name="LAST_COMMIT_MESSAGE" value="ProfileController modification&#10;-add edit action&#10;-add edit blade" />
+    <MESSAGE value="edit.blade modif" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit.blade modif" />
   </component>
 </project>

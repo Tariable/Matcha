@@ -4,39 +4,23 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2>Profile creation</h2>
-
-            <hr>
-
-            <form action="/photos" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="m-2">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <input name="photo[]" type="file" class="pb-3">
-                    <button type="submit" class="btn btn-primary">Save photo</button>
-                </div>
-            </form>
-
-            <hr>
-
             <form action="/profiles" method="post" novalidate>
                 @csrf
                 <div class="form-group">
                     <label class="m-2" for="name">Name:</label>
-                    <input name="name" id="name" type="text" class="form-control">
+                    <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}">
                 </div>
 
                 <div class="form-group">
                     <label class="m-2" for="date_of_birth">Date of birth</label>
-                    <input name="date_of_birth" id="date_of_birth" type="date" class="form-control" max="2002-01-01">
+                    <input name="date_of_birth" id="date_of_birth" type="date" class="form-control" max="2002-01-01"
+                           value="{{ old('date_of_birth') }}">
                 </div>
 
                 <div class="form-group">
                     <label class="m-2" for="description">Say some words about yourself:</label>
-                    <textarea name="description" id="description" cols="30" rows="10" class="form-control">
+                    <textarea name="description" id="description" cols="30" rows="10" class="form-control"
+                              value="{{ old('description') }}">
                     </textarea>
                 </div>
 
@@ -48,8 +32,8 @@
 
                 <div class="form-group">
                     <label class="m-2" for="notification">Notifications</label>
-                    <input class="m-2" id="notification" name="notification" type="radio" value=true><span>Turn on</span>
-                    <input class="m-2" id="notification" name="notification" type="radio" value=false><span>Turn off</span>
+                    <input class="m-2" id="notification" name="notification" type="radio" value=1><span>Turn on</span>
+                    <input class="m-2" id="notification" name="notification" type="radio" value=0><span>Turn off</span>
                 </div>
 
                 <div>
