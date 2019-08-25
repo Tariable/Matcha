@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tags;
 use Illuminate\Http\Request;
 
 class PreferenceController extends Controller
@@ -14,6 +15,7 @@ class PreferenceController extends Controller
      */
     public function create()
     {
+        $tags = \App\Tags::where()
         return view('preference.create');
     }
 

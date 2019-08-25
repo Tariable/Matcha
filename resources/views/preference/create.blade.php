@@ -3,13 +3,17 @@
 @section('title', 'Preferences')
 
 @section('content')
-    <p>Choose your age preference</p>
-    <div class="col-3">
-        <span id="lowerAge"></span>
-        <div id="ageSlider"></div>
-        <span id="upperAge"></span>
-    </div>
 
+    <div class="col-3">
+        <p>Choose your age preference</p>
+        <div class="age-slider">
+        <span id="lowerAge" class="custom-span"></span>
+            <div class="huy">
+                <div id="ageSlider"></div>
+            </div>
+        <span id="upperAge" class="custom-span"></span>
+        </div>
+    </div>
     <div class="col-3">
         <p>Max distance</p>
         <span id="lowerDistance"></span>
@@ -29,6 +33,8 @@
         </div>
     </div>
 
+
+
     <script>
 
         let ageSlider = document.getElementById('ageSlider');
@@ -40,7 +46,7 @@
             connect: 'lower',
             range: {
                 'min': [0],
-                'max': [100]
+                 'max': [100]
             }
         });
 
