@@ -4,13 +4,9 @@
 
 @section('content')
     <div class="container">
-            <form action="/photos" method="post" enctype="multipart/form-data">
-                <input name="photo[]" type="file" class="pb-3">
-                <input name="photo[]" type="file" class="pb-3">
-                <input name="photo[]" type="file" class="pb-3">
-                <input name="photo[]" type="file" class="pb-3">
-                <input name="photo[]" type="file" class="pb-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <form action="/photos" name="photo-form" id="photo-form" method="post" enctype="multipart/form-data">
+                <input name="photo" onchange="sendImage()" type="file" class="pb-3">
+                <span id="photoError"></span>
                 @csrf
             </form>
     </div>
@@ -25,4 +21,26 @@
         </ul>
     </div>
 @endif
+    <script>
+        function sendImage() {
+            let error = document.getElementById('photoError');
+            let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            let url = '/photos';
+            let input = document.querySelector('input[type="file"]');
+            let headers = {"X-CSRF-TOKEN": token};
+            let formData = new FormData();
+            formData.append('photo', input.files[0]);
+
+            let option = {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            }
+
+            fetch(url, option)
+                .then((res) => res.json())
+                .then((data) => alert(data))
+                .catch((error) => alert(error))
+        }
+    </script>
 @endsection
