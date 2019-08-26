@@ -29,4 +29,6 @@ Route::put('/profiles/{id}', 'ProfileController@update');
 Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
 Route::get('/preferences/create', 'PreferenceController@create');
+Route::post('/preferences', 'PreferenceController@store');
+
 

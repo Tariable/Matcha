@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Tags;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class PreferenceController extends Controller
      */
     public function create()
     {
-        $tags = \App\Tags::where()
-        return view('preference.create');
+        $tags = Tags::all()->pluck('name');
+
+        return view('preference.create', compact('tags'));
     }
 
     /**
@@ -27,7 +29,10 @@ class PreferenceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, $this->rules());
+
+        return redirect("/");
+
     }
 
     /**
@@ -73,5 +78,16 @@ class PreferenceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function rules()
+    {
+        return [
+            'lowerAge' => 'required|numeric',
+            'upperAge' => 'required|numeric',
+            'distance' => 'required|numeric',
+            'sex' => 'required',
+            'tags' => 'sometimes|array'
+        ];
     }
 }

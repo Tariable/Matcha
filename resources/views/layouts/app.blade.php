@@ -18,30 +18,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nouislider.css') }}" rel="stylesheet">
-    <style>
-        /*.age-slider > div {*/
-        /*    width: 300px;*/
-        /*    flex: 1;*/
-
-        /*}*/
-        /*.nomargin {*/
-        /*    margin: 0;*/
-        /*    text-align: center;*/
-        /*}*/
-        /*.age-slider > .custom-span {*/
-        /*    display: block;*/
-        /*    padding: 1rem;*/
-        /*}*/
-        /*.age-slider {*/
-        /*    display: flex;*/
-        /*    !*height: 300px;*!*/
-        /*    width: 500px;*/
-        /*    flex-flow: row nowrap;*/
-        /*    justify-content: space-around;*/
-        /*    align-items: center;*/
-        /*}*/
-
-    </style>
 </head>
 <body>
     <div id="app">
