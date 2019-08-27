@@ -27,11 +27,11 @@
             <div class="container" style="display: flex; padding-left: 0;">
                 <div class="btn-group-toggle pr-2" data-toggle="buttons">
                     <label class="btn btn-secondary active" style="background-color:#FF7373">
-                        <input type="radio" name="sex" checked value="bisexual"> Bisexual</label>
+                        <input type="radio" name="pref_sex" checked value="bi"> Bisexual</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="sex" value="male"> Male</label>
+                        <input type="radio" name="pref_sex" value="male"> Male</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="sex" value="female"> Female</label>
+                        <input type="radio" name="pref_sex" value="female"> Female</label>
                 </div>
             </div>
         </div>
@@ -67,6 +67,15 @@
             @csrf
         </div>
     </form>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <script>
 
@@ -78,7 +87,7 @@
             step: 1,
             connect: 'lower',
             range: {
-                'min': [0],
+                'min': [3],
                 'max': [100]
             }
         });

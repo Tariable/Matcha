@@ -14,12 +14,12 @@ class CreatePreferencesTable extends Migration
     public function up()
     {
         Schema::create('preferences', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('profile_id');
             $table->bigInteger('lowerAge');
             $table->bigInteger('upperAge');
             $table->bigInteger('distance');
-            $table->string('sex');
-            $table->string('tags');
+            $table->string('pref_sex');
+            $table->string('tags')->nullable();
             $table->timestamps();
         });
     }
