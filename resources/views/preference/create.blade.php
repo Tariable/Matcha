@@ -56,7 +56,7 @@
                             border-radius: 5px;
                             text-align: center;
                             width: 100px;">
-                            <input name="tags[]" type="checkbox" value="{{ $i }}"> {{ $tag }}
+                            <input name="tags[]" type="checkbox" value="{{ $i + 1 }}"> {{ $tag }}
                         </label>
                     </div>
                 @endforeach
