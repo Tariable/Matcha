@@ -30,8 +30,6 @@ class PhotoController extends Controller
     public function store(StorePhoto $request)
     {
         $this->saveImage($request);
-        $photos = $this->getUserPhotos(Auth::id());
-        return response()->json(['photos' => $photos]);
     }
 
     /**

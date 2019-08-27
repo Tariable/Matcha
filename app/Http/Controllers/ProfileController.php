@@ -21,6 +21,7 @@ class ProfileController extends Controller
         $data['user_id'] = Auth::id();
 
         Profile::create($data);
+
     }
 
     public function edit(Profile $profile)
