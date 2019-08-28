@@ -15,6 +15,6 @@ class Profile extends Model
 
     public function preference()
     {
-        return $this->hasOne(Preference::class);
+        return $this->hasOne(Preference::class, 'id');
     }
 }
