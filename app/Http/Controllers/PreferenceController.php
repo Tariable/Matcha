@@ -52,7 +52,7 @@ class PreferenceController extends Controller
 
     public function savePreferences($data)
     {
-        $data['profile_id'] = Auth::id();
+        $data['id'] = Auth::id();
         $data['tags'] = (isset($data['tags'])) ? serialize($data['tags']) : 0;
         Preference::create($data);
     }

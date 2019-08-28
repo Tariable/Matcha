@@ -17,7 +17,7 @@ class FirstTime
      */
     public function handle($request, Closure $next)
     {
-        if (Preference::where('profile_id', Auth::id())) {
+        if (Preference::where('id', Auth::id())->first() !== null) {
             return redirect('/');
         }
         return $next($request);

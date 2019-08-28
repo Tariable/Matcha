@@ -17,7 +17,7 @@ class ProfileController extends Controller
     {
         $data = request()->validate($this->rules(), $this->error_messages());
 
-        $data['user_id'] = Auth::id();
+        $data['id'] = Auth::id();
 
         $profile = Profile::create($data);
     }
