@@ -3,12 +3,19 @@
 namespace Tests\Feature;
 
 use App\Preference;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PreferenceCreationTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed('TagsTableSeeder');
+    }
 
     /** @test */
     public function a_preference_can_be_created_without_tags()
@@ -34,7 +41,7 @@ class PreferenceCreationTest extends TestCase
             'upperAge' => 28,
             'distance' => 20,
             'pref_sex' => 'male',
-            'tags' => [0]
+            'tags' => ['1', '2']
         ]);
 
         $this->assertCount(1, Preference::all());
