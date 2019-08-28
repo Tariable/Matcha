@@ -28,7 +28,7 @@ Route::get('/profiles/{id}/create', 'ProfileController@edit');
 Route::put('/profiles/{id}', 'ProfileController@update');
 Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
-Route::get('/preferences/create', 'PreferenceController@create');
+Route::get('/preferences/create', 'PreferenceController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/preferences', 'PreferenceController@store');
 
 

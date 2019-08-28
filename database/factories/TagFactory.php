@@ -5,7 +5,7 @@
 use App\Model;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Tags::class, function (Faker $faker) {
+$factory->define(\App\Tag::class, function (Faker $faker) {
     return [
         'name' => 'anime',
     ];

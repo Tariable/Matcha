@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Preference;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Tags;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PreferenceController extends Controller
@@ -19,7 +19,7 @@ class PreferenceController extends Controller
      */
     public function create()
     {
-        $tags = Tags::all()->pluck('name');
+        $tags = Tag::all()->pluck('name');
 
         return view('preference.create', compact('tags'));
     }
@@ -101,7 +101,7 @@ class PreferenceController extends Controller
             'pref_sex' => ['required',
                             Rule::in(['bi', 'male', 'female']),],
             'tags' => 'sometimes|array',
-            'tags.*' => 'numeric|min:1|max:' . Tags::all()->count()
+            'tags.*' => 'numeric|min:1|max:' . Tag::all()->count()
         ];
     }
 
