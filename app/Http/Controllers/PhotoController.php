@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePhoto;
+use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -17,19 +18,26 @@ class PhotoController extends Controller
 
     public function show(User $user)
     {
-        $photos = $this->getUserPhotos($user->id);
+        $photos = $this->getUserPhotos($user);
+        return response()->json($photos);
+    }
 
-        return view('photo.show', compact('photos'));
+    public function showTheLastOne(User $user)
+    {
+        $photo = Photo::where('user_id', $user->id)->orderBy('id', 'desc')->first();
+        return response()->json($photo);
     }
 
     public function create()
     {
-        return view('photo.create');
+        $profileId = Auth::id();
+        return view('photo.create', compact('profileId'));
     }
 
     public function store(StorePhoto $request)
     {
         $this->saveImage($request);
+        return response()->json(array('message' => 'successful photo store'));
     }
 
     /**

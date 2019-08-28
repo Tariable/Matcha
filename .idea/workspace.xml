@@ -4,8 +4,10 @@
     <list default="true" id="6d23734a-0fec-498c-8708-125433ddb6c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PhotoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PhotoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StorePhoto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StorePhoto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_16_125821_create_profiles_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_16_125821_create_profiles_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/photo/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/photo/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/framework/views/ce8c1e0456ba3c7ce27184b20b2c64f6b4151f16.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/ce8c1e0456ba3c7ce27184b20b2c64f6b4151f16.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -174,7 +176,9 @@
       <workItem from="1566732776659" duration="2609000" />
       <workItem from="1566744013092" duration="2097000" />
       <workItem from="1566811000159" duration="16657000" />
-      <workItem from="1566900799611" duration="7121000" />
+      <workItem from="1566900799611" duration="7263000" />
+      <workItem from="1566989630063" duration="8646000" />
+      <workItem from="1567006626987" duration="9294000" />
     </task>
     <task id="LOCAL-00001" summary="init commit of profile2 branch">
       <created>1566582989049</created>
