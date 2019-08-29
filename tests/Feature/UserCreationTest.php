@@ -17,9 +17,6 @@ class UserCreationTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create();
-        dd($user->id());
-
         $response = $this->post('/register', [
             'email' => 'userEmail@test.com',
             'password' => 'qwerty',

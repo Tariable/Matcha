@@ -10,9 +10,11 @@ $factory->define(Preference::class, function (Faker $faker) {
     for ($i = 0; $i < $faker->numberBetween(2, 5); $i++) {
         $tags[] = $faker->numberBetween(1, 6);
     }
+    $lowerAge = $faker->numberBetween(18, 50);
+
     return [
-        'lowerAge' => $faker->numberBetween(18, 50),
-        'upperAge' => $faker->numberBetween(21, 53),
+        'lowerAge' => $lowerAge,
+        'upperAge' => $faker->numberBetween($lowerAge + 3, 53),
         'distance' => $faker->numberBetween(3, 100),
         'pref_sex' => $faker->randomElement($array = array ('male', 'female', 'bi')),
         'tags' => serialize(array_unique($tags)),
