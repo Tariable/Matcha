@@ -17,6 +17,9 @@ class UserCreationTest extends TestCase
 
         $this->withoutExceptionHandling();
 
+        $user = factory(User::class)->create();
+        dd($user->id());
+
         $response = $this->post('/register', [
             'email' => 'userEmail@test.com',
             'password' => 'qwerty',
@@ -25,7 +28,6 @@ class UserCreationTest extends TestCase
 
         $this->assertCount(1, User::all());
         $response->assertRedirect('/home');
-
     }
 
     /** @test */

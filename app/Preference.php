@@ -13,4 +13,3 @@ class Preference extends Model
         return $this->belongsTo(Profile::class, 'id');
     }
 }
-
