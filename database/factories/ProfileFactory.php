@@ -13,6 +13,8 @@ $factory->define(Profile::class, function (Faker $faker) {
         'description' => $faker->sentence($nbSentences = 10, $variableNBSentences = true),
         'gender' => $gender,
         'current_latitude' => $faker->latitude,
-        'current_longitude' => $faker->longitude
+        'current_longitude' => $faker->longitude,
+        'rating' => $faker->numberBetween(40, 75),
+        'notification' => true
     ];
 });

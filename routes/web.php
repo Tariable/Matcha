@@ -23,7 +23,7 @@ Route::post('/photos', 'PhotoController@store');
 Route::get('/photos/{user}', 'PhotoController@show');
 Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
 
-Route::get('/profiles/create', 'ProfileController@create');
+Route::get('/profiles/create', 'ProfileController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/profiles', 'ProfileController@store');
 Route::get('/profiles/{id}/edit', 'ProfileController@edit');
 Route::put('/profiles/{id}', 'ProfileController@update');
