@@ -44,7 +44,7 @@
             }
 
             async function displayLastPhoto() {
-                removeAllChildElemFrom('gallery');
+                // removeAllChildElemFrom('gallery');
                 let urlShow = "/lastPhoto/<?php echo e($profileId); ?>";
                 let showResponse = await fetch(urlShow);
                 let photo = await showResponse.json();
