@@ -10,5 +10,4 @@ npm-debug.log
 yarn-error.log
 /node_modules
 matcha.sh
-.idea
-
+/.idea

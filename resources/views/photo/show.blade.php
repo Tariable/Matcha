@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @foreach ($paths as $path)
-        <img class="pt-3 pr-2" style="width: 25%" src="{{ $path }}" alt="">
+    @foreach ($photos as $photo)
+        <img class="pt-3 pr-2" style="width: 25%" src="{{ $photo->path }}" alt="">
     @endforeach
 @endsection

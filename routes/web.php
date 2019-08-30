@@ -21,10 +21,11 @@ Route::get('/home', 'HomeController@index')->middleware('verified')->name('home'
 Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
 Route::post('/photos', 'PhotoController@store');
 Route::get('/photos/{user}', 'PhotoController@show');
+Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
 
 Route::get('/profiles/create', 'ProfileController@create');
 Route::post('/profiles', 'ProfileController@store');
-Route::get('/profiles/{id}/create', 'ProfileController@edit');
+Route::get('/profiles/{id}/edit', 'ProfileController@edit');
 Route::put('/profiles/{id}', 'ProfileController@update');
 Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
