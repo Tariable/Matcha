@@ -5,16 +5,21 @@
         <div class="row">
             <div class="col-12">
                 <div class="photoContainer">
+                    <h2>Photo section</h2>
                     <form action="/photos" name="photo-form" id="photo-form" method="post"
                           enctype="multipart/form-data">
-                        <input name="photo" onchange="sendImage()" type="file" class="pb-3">
+                        <label id="labelPhoto" for="photo">Add some pretty photos:</label>
+                        <input name="photo" id="photo" hidden onchange="sendImage()" type="file" class="pb-3">
                         @csrf
                     </form>
                     <div id="errorDiv"></div>
                     <div id="gallery"></div>
                 </div>
 
+                <hr>
+
                 <div class="profileContainer">
+                    <h2>Profile section</h2>
                     <form action="/profiles" method="post" novalidate>
                         @csrf
                         <div class="form-group">
@@ -31,23 +36,29 @@
 
                         <div class="form-group">
                             <label class="m-2" for="description">Say some words about yourself:</label>
-                            <textarea name="description" id="description" cols="30" rows="3" class="form-control"
-                                      value="{{ old('description') }}">
-                    </textarea>
+                            <textarea name="description" id="description" cols="30" rows="3"
+                                      class="form-control">{{ old('description') }}
+                            </textarea>
                         </div>
 
                         <div class="form-group">
-                            <label class="m-2" for="gender">Choose your gender:</label>
-                            <input class="m-2" id="gender" name="gender" type="radio" value="Male"><span>Male</span>
-                            <input class="m-2" id="gender" name="gender" type="radio" value="Female"><span>Female</span>
+                            <span class="m-2">Choose your gender: </span>
+                            <input class="m-2" id="genderMale" name="gender" type="radio" value="male"
+                                {{ old('gender') == 'male' ? 'checked' : ''}}>
+                            <label for="genderMale">Male</label>
+                            <input class="m-2" id="genderFemale" name="gender" type="radio" value="female"
+                                {{ old('gender') == 'female' ? 'checked' : ''}}>>
+                            <label for="genderFemale">Female</label>
                         </div>
 
                         <div class="form-group">
-                            <label class="m-2" for="notification">Notifications</label>
-                            <input class="m-2" id="notification" name="notification" type="radio"
-                                   value=1><span>Turn on</span>
-                            <input class="m-2" id="notification" name="notification" type="radio"
-                                   value=0><span>Turn off</span>
+                            <span class="m-2">Notifications: </span>
+                            <input class="m-2" id="notificationOn" name="notification" type="radio" value=1
+                                {{ old('notification') == 1 ? 'checked' : ''}}>
+                            <label for="notificationOn">Turn on</label>
+                            <input class="m-2" id="notificationOff" name="notification" type="radio" value=0
+                                {{ old('notification') == 0 ? 'checked' : ''}}>
+                            <label for="notificationOff">Turn off</label>
                         </div>
 
                         <div>
@@ -73,32 +84,56 @@
             </div>
             <script>
                 window.onload = function () {
-                    var geoSuccess = function (position) {
+                    showAllPhotos();
+                    getCurrentLocation();
+                };
 
+                function quantityOfPhotos() {
+                    let photosQuantity = document.getElementById('gallery').childElementCount;
+                    return photosQuantity;
+                }
+
+                function getCurrentLocation() {
+                    var geoSuccess = function (position) {
                         document.getElementById('current_longitude').value = position.coords.longitude;
                         document.getElementById('current_latitude').value = position.coords.latitude;
                     };
 
-                    var geoError = function () {
-                        var xhr = new XMLHttpRequest();
-                        xhr.onload = function () {
-                            if (xhr.status >= 200 && xhr.status < 300) {
-                                var latlong = xhr.response.split(',');
-                                document.getElementById('current_latitude').value = latlong[0];
-                                document.getElementById('current_longitude').value = latlong[1];
-                            } else {
-                                console.log('The request failed!');
-                            }
-                        };
-                        xhr.open('GET', 'https://ipapi.co/latlong/');
-                        xhr.send();
+                    var geoError = async function () {
+                        let urlLocationApi = 'https://ipapi.co/latlong/';
+                        let getLocationResponse = await fetch(urlLocationApi);
+                        if (getLocationResponse.ok) {
+                            let location = await getLocationResponse.text();
+                            location = location.split(',');
+                            document.getElementById('current_latitude').value = location[0];
+                            document.getElementById('current_longitude').value = location[1];
+                        } else {
+                            console.log("Bad location request");
+                        }
                     };
 
                     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-                };
-            </script>
+                }
 
-            <script>
+
+                async function showAllPhotos() {
+                    let urlShowAllPhotos = "/photos/{{ Auth::id() }}";
+                    let showAllPhotosResponse = await fetch(urlShowAllPhotos);
+                    let photos = await showAllPhotosResponse.json();
+                    photos.forEach(function (photo) {
+                        let photoElem = document.createElement('img');
+                        photoElem.src = photo.path;
+                        photoElem.id = photo.id;
+                        photoElem.width = 150;
+                        document.getElementById('gallery').appendChild(photoElem);
+                    });
+                    if (quantityOfPhotos() >= 5) {
+                        document.getElementById('photo-form').remove();
+                    } else {
+                        document.getElementById('photo').removeAttribute("hidden");
+                    }
+                }
+
                 async function sendImage() {
                     let urlStore = '/photos';
 
@@ -120,32 +155,39 @@
                     let storeResponse = await fetch(urlStore, option);
 
                     if (storeResponse.ok) {
-                        removeAllChildElemFrom("errorDiv");
-                        displayLastPhoto();
+                        removeAllChildrenElemFrom("errorDiv");
+                        showLastPhoto();
                     } else {
                         let jsonErrors = await storeResponse.json();
                         jsonErrors.errors.photo.forEach(function (error) {
                             let errorElem = document.createElement('p');
                             errorElem.innerHTML = error;
-                            document.getElementById('errorDiv').appendChild(errorElem);
+                            document.getElementById('errorDiv').append(errorElem);
                         })
                     }
-                    async function displayLastPhoto() {
-                        let urlShow = "/lastPhoto/{{ Auth::id() }}";
-                        let showResponse = await fetch(urlShow);
-                        let photo = await showResponse.json();
-                        let photoElem = document.createElement('img');
-                        photoElem.src = photo.path;
-                        photoElem.id = photo.id;
-                        photoElem.width = 150;
-                        document.getElementById('gallery').appendChild(photoElem);
+                }
+
+                async function showLastPhoto() {
+                    let urlShowLastPhoto = "/lastPhoto/{{ Auth::id() }}";
+                    let showLastPhotoResponse = await fetch(urlShowLastPhoto);
+                    let photo = await showLastPhotoResponse.json();
+                    let photoElem = document.createElement('img');
+                    photoElem.src = photo.path;
+                    photoElem.id = photo.id;
+                    photoElem.width = 150;
+                    document.getElementById('gallery').appendChild(photoElem);
+                    if (quantityOfPhotos() >= 5) {
+                        document.getElementById('photo-form').remove();
+                    } else {
+                        document.getElementById('photo').removeAttribute("hidden");
                     }
 
-                    function removeAllChildElemFrom(Div) {
-                        let div = document.getElementById(Div);
-                        while (div.firstChild) {
-                            div.removeChild(div.firstChild);
-                        }
+                }
+
+                function removeAllChildrenElemFrom(Div) {
+                    let div = document.getElementById(Div);
+                    while (div.firstChild) {
+                        div.firstChild.remove()
                     }
                 }
             </script>

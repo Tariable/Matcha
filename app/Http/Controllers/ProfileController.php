@@ -16,18 +16,16 @@ class ProfileController extends Controller
 
     public function store()
     {
-
         $data = request()->validate($this->rules(), $this->error_messages());
-
         $data['id'] = Auth::id();
-
         Profile::create($data);
 
+        return redirect('/preferences/create');
     }
 
     public function edit(Profile $profile)
     {
-        dd($profile);
+        $profile = Profile::whereId(Auth::id())->get()->first();
         return view('profiles.edit', compact('profile'));
     }
 
@@ -37,7 +35,7 @@ class ProfileController extends Controller
 
         $profile->update($data);
 
-        return redirect('/home');
+        return redirect('/preferences/create');
     }
 
     public function rules()
@@ -46,7 +44,7 @@ class ProfileController extends Controller
             'name' => 'required|alpha|min:2|max:20',
             'date_of_birth' => 'required|date_format:"Y-m-d"|after:-100 years|before:-18 years',
             'description' => 'required',
-            'gender' => 'required|in:Male,Female',
+            'gender' => 'required|in:male,female',
             'rating' => '',
             'notification' => 'required|bool',
             'tags' => '',

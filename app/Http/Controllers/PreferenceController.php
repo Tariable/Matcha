@@ -33,10 +33,9 @@ class PreferenceController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, $this->rules(), $this->errorMessages());
-
         $this->savePreferences($data);
-
-        return redirect("/");
+        $user_id = Auth::id();
+        return redirect("/profiles/$user_id/edit");
     }
 
     /**

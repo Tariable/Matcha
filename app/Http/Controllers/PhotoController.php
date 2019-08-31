@@ -18,7 +18,7 @@ class PhotoController extends Controller
 
     public function show(User $user)
     {
-        $photos = $this->getUserPhotos($user);
+        $photos = $this->getUserPhotos($user->id);
         return response()->json($photos);
     }
 
