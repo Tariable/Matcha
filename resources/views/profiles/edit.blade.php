@@ -8,8 +8,8 @@
                     <h2>Photo section</h2>
                     <form action="/photos" name="photo-form" id="photo-form" method="post"
                           enctype="multipart/form-data">
-                        <label for="photo">Add some pretty photos:</label>
-                        <input name="photo" id="photo" hidden onchange="sendImage()" type="file" class="pb-3">
+                        <label for="photoInput">Add some pretty photos:</label>
+                        <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
                         @csrf
                     </form>
                     <div id="errorDiv"></div>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button class="btn btn-primary m-2" type="submit">Create profile</button>
+                            <button class="btn btn-primary m-2" id="profileUpdate" type="submit">Create profile</button>
                         </div>
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -90,20 +90,79 @@
                     getCurrentLocation();
                 };
 
-                function quantityOfPhotos() {
-                    let photosQuantity = document.getElementById('gallery').childElementCount;
-                    return photosQuantity;
+                // AJAX query to update profiles info
+
+                let update = document.getElementById('profileUpdate')
+                update.onclick = async function(evt) {
+                    evt.preventDefault();
+                    if (!getQuantityOfPhotos() && !document.getElementById('errors')){
+                        displayError('You must add at least one photo');
+                    } else {
+                        let urlUpdateProfile = "/profiles/{{ Auth::id() }}";
+
+                        let headers = new Headers();
+                        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        headers.append('X-CSRF-TOKEN', token);
+                        headers.append('Accept', 'application/json');
+
+                        let formData = new FormData();
+                        let name = document.getElementById('name').value;
+                        let date_of_birth = document.getElementById('date_of_birth').value;
+                        let description = document.getElementById('description').value;
+                        let gender = document.querySelector('input[name="gender"]:checked').value;;
+                        let notification = document.querySelector('input[name="notification"]:checked').value;;
+                        let current_longitude = document.getElementById('current_longitude').value;
+                        let current_latitude = document.getElementById('current_latitude').value;
+                        formData.append('name', name);
+                        formData.append('date_of_birth', date_of_birth);
+                        formData.append('description', description);
+                        formData.append('gender', gender);
+                        formData.append('notification', notification);
+                        formData.append('current_longitude', current_longitude);
+                        formData.append('current_latitude', current_latitude);
+
+                        let option = {
+                            method: 'PUT',
+                            headers: headers,
+                            body: formData
+                        }
+
+                        let profileUpdateResponse = await fetch(urlUpdateProfile, option);
+
+                        if(profileUpdateResponse.ok){
+                            alert('Done!');
+                        }
+                    }
+                };
+
+                // AJAX query to get profiles photo
+
+                async function showAllPhotos() {
+                    let urlShowAllPhotos = "/photos/{{ Auth::id() }}";
+
+                    let showAllPhotosResponse = await fetch(urlShowAllPhotos);
+
+                    let photos = await showAllPhotosResponse.json();
+
+                    photos.forEach(function (photo) {
+                        createPhotoElem(photo);
+                    });
+                    checkPhotoLimit();
                 }
 
+                // Getting current location coordinates
+
                 function getCurrentLocation() {
-                    var geoSuccess = function (position) {
+                    var geoLocation = function (position) {
                         document.getElementById('current_longitude').value = position.coords.longitude;
                         document.getElementById('current_latitude').value = position.coords.latitude;
                     };
 
-                    var geoError = async function () {
+                    var ipLocation = async function () {
                         let urlLocationApi = 'https://ipapi.co/latlong/';
+
                         let getLocationResponse = await fetch(urlLocationApi);
+
                         if (getLocationResponse.ok) {
                             let location = await getLocationResponse.text();
                             location = location.split(',');
@@ -113,28 +172,10 @@
                             console.log("Bad location request");
                         }
                     };
-
-                    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+                    navigator.geolocation.getCurrentPosition(geoLocation, ipLocation);
                 }
 
-
-                async function showAllPhotos() {
-                    let urlShowAllPhotos = "/photos/{{ Auth::id() }}";
-                    let showAllPhotosResponse = await fetch(urlShowAllPhotos);
-                    let photos = await showAllPhotosResponse.json();
-                    photos.forEach(function (photo) {
-                        let photoElem = document.createElement('img');
-                        photoElem.src = photo.path;
-                        photoElem.id = photo.id;
-                        photoElem.width = 150;
-                        document.getElementById('gallery').appendChild(photoElem);
-                    });
-                    if (quantityOfPhotos() >= 5) {
-                        document.getElementById('photo-form').remove();
-                    } else {
-                        document.getElementById('photo').removeAttribute("hidden");
-                    }
-                }
+                // AJAX query to store profile photo
 
                 async function sendImage() {
                     let urlStore = '/photos';
@@ -154,13 +195,13 @@
                         body: formData
                     }
 
-                    let storeResponse = await fetch(urlStore, option);
+                    let imageStoreResponse = await fetch(urlStore, option);
 
-                    if (storeResponse.ok) {
+                    if (imageStoreResponse.ok) {
                         removeAllChildrenElemFrom("errorDiv");
-                        showLastPhoto();
+                        displayLastPhoto();
                     } else {
-                        let jsonErrors = await storeResponse.json();
+                        let jsonErrors = await imageStoreResponse.json();
                         jsonErrors.errors.photo.forEach(function (error) {
                             let errorElem = document.createElement('p');
                             errorElem.innerHTML = error;
@@ -169,21 +210,37 @@
                     }
                 }
 
-                async function showLastPhoto() {
+                // AJAX query to get the last one photo
+
+                async function displayLastPhoto() {
                     let urlShowLastPhoto = "/lastPhoto/{{ Auth::id() }}";
+
                     let showLastPhotoResponse = await fetch(urlShowLastPhoto);
+
                     let photo = await showLastPhotoResponse.json();
+
+                    createPhotoElem(photo);
+                    checkPhotoLimit();
+                }
+
+                function displayError(textOfError){
+                    let errorDiv = document.createElement('div');
+                    errorDiv.setAttribute('class', 'alert alert-danger');
+                    errorDiv.setAttribute('id', 'errors');
+                    document.getElementById('errorsContainer').append(errorDiv);
+
+                    let error = document.createElement('p');
+                    error.innerHTML = textOfError;
+                    document.getElementById('errors').appendChild(error);
+                }
+
+
+                function createPhotoElem(photo){
                     let photoElem = document.createElement('img');
                     photoElem.src = photo.path;
                     photoElem.id = photo.id;
                     photoElem.width = 150;
                     document.getElementById('gallery').appendChild(photoElem);
-                    if (quantityOfPhotos() >= 5) {
-                        document.getElementById('photo-form').remove();
-                    } else {
-                        document.getElementById('photo').removeAttribute("hidden");
-                    }
-
                 }
 
                 function removeAllChildrenElemFrom(Div) {
@@ -191,6 +248,19 @@
                     while (div.firstChild) {
                         div.firstChild.remove()
                     }
+                }
+
+                function checkPhotoLimit() {
+                    if (getQuantityOfPhotos() >= 5) {
+                        document.getElementById('photo-form').remove();
+                    } else {
+                        document.getElementById('photoInput').removeAttribute("hidden");
+                    }
+                }
+
+                function getQuantityOfPhotos() {
+                    let photosQuantity = document.getElementById('gallery').childElementCount;
+                    return photosQuantity;
                 }
             </script>
         </div>

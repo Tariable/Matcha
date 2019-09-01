@@ -46,7 +46,7 @@ class ProfileController extends Controller
             'description' => 'required',
             'gender' => 'required|in:male,female',
             'rating' => '',
-            'notification' => 'required|bool',
+            'notification' => 'required|in:1,0',
             'tags' => '',
             'current_latitude' => 'required|numeric|max:180|min:-180',
             'current_longitude' => 'required|numeric|max:90|min:-90',
