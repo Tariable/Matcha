@@ -10,7 +10,6 @@
                           enctype="multipart/form-data">
                         <label for="photoInput">Add some pretty photos:</label>
                         <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
-                        @csrf
                     </form>
                     <div id="errorDiv"></div>
                     <div id="gallery"></div>
@@ -21,8 +20,6 @@
                 <div class="profileContainer">
                     <h2>Profile section</h2>
                     <form action="/profiles/{{ Auth::id() }}" method="post" novalidate>
-                        @csrf
-                        @method('put')
                         <div class="form-group">
                             <label class="m-2" for="name">Name:</label>
                             <input name="name" id="name" type="text" class="form-control"
@@ -71,15 +68,6 @@
                         <div class="form-group">
                             <button class="btn btn-primary m-2" id="profileUpdate" type="submit">Create profile</button>
                         </div>
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                     </form>
                 </div>
 
@@ -90,15 +78,16 @@
                     getCurrentLocation();
                 };
 
-                // AJAX query to update profiles info
+                // AJAX query to store profiles info
 
                 let update = document.getElementById('profileUpdate')
                 update.onclick = async function(evt) {
                     evt.preventDefault();
                     if (!getQuantityOfPhotos() && !document.getElementById('errors')){
-                        displayError('You must add at least one photo');
+                        displayError('You must add at least one photo', 'photoErrors');
                     } else {
-                        let urlUpdateProfile = "/profiles/{{ Auth::id() }}";
+                        removeAllChildrenElemFrom('profileErrors');
+                        let urlStoreProfile = '/profiles';
 
                         let headers = new Headers();
                         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -121,16 +110,22 @@
                         formData.append('current_longitude', current_longitude);
                         formData.append('current_latitude', current_latitude);
 
-                        let option = {
-                            method: 'PUT',
+                        let options = {
+                            method: 'POST',
                             headers: headers,
                             body: formData
                         }
 
-                        let profileUpdateResponse = await fetch(urlUpdateProfile, option);
+                        let profileStoreResponse = await fetch(urlStoreProfile, options);
 
-                        if(profileUpdateResponse.ok){
-                            alert('Done!');
+                        if(profileStoreResponse.ok){
+                            location.href = '/preferences/create';
+                        } else {
+                            let profileJsonErrors = await profileStoreResponse.json();
+                            for(let key in profileJsonErrors.errors){
+                                let value = profileJsonErrors.errors[key];
+                                displayError(value, 'profileErrors');
+                            }
                         }
                     }
                 };
@@ -189,24 +184,53 @@
                     let input = document.querySelector('input[type="file"]');
                     formData.append('photo', input.files[0]);
 
-                    let option = {
+                    let options = {
                         method: 'POST',
                         headers: headers,
                         body: formData
                     }
 
-                    let imageStoreResponse = await fetch(urlStore, option);
+                    let imageStoreResponse = await fetch(urlStore, options);
 
                     if (imageStoreResponse.ok) {
-                        removeAllChildrenElemFrom("errorDiv");
+                        removeAllChildrenElemFrom("photoErrors");
                         displayLastPhoto();
                     } else {
-                        let jsonErrors = await imageStoreResponse.json();
-                        jsonErrors.errors.photo.forEach(function (error) {
-                            let errorElem = document.createElement('p');
-                            errorElem.innerHTML = error;
-                            document.getElementById('errorDiv').append(errorElem);
+                        let photoJsonErrors = await imageStoreResponse.json();
+                        removeAllChildrenElemFrom("photoErrors");
+                        photoJsonErrors.errors.photo.forEach(function (error) {
+                            displayError(error, 'photoErrors');
                         })
+                    }
+                }
+
+                // AJAX query to delete photo
+
+                let gallery = document.getElementById('gallery');
+                gallery.onclick = function(event){
+                    let target = event.target;
+                    if (target.tagName === 'IMG'){
+                        destroyPhoto(target);
+                    }
+                }
+
+                async function destroyPhoto(target){
+                    let urlDestroyPhoto = '/photos/' + target.id;
+
+                    let headers = new Headers();
+                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    headers.append('X-CSRF-TOKEN', token);
+                    headers.append('Accept', 'application/json');
+
+                    let options = {
+                        method: 'DELETE',
+                        headers : headers,
+                    }
+
+                    let imageDestroyResponse = await fetch(urlDestroyPhoto, options)
+
+                    if (imageDestroyResponse.ok){
+                        target.remove();
                     }
                 }
 
@@ -223,15 +247,16 @@
                     checkPhotoLimit();
                 }
 
-                function displayError(textOfError){
-                    let errorDiv = document.createElement('div');
-                    errorDiv.setAttribute('class', 'alert alert-danger');
-                    errorDiv.setAttribute('id', 'errors');
-                    document.getElementById('errorsContainer').append(errorDiv);
-
+                function displayError(textOfError, typeOfError){
+                    if (!document.getElementById('errors')){
+                        let errorDiv = document.createElement('div');
+                        errorDiv.setAttribute('class', 'alert alert-danger');
+                        errorDiv.setAttribute('id', 'errors');
+                        document.getElementById(typeOfError).append(errorDiv);
+                    }
                     let error = document.createElement('p');
                     error.innerHTML = textOfError;
-                    document.getElementById('errors').appendChild(error);
+                    document.getElementById('errors').append(error);
                 }
 
 
@@ -240,7 +265,7 @@
                     photoElem.src = photo.path;
                     photoElem.id = photo.id;
                     photoElem.width = 150;
-                    document.getElementById('gallery').appendChild(photoElem);
+                    document.getElementById('gallery').append(photoElem);
                 }
 
                 function removeAllChildrenElemFrom(Div) {

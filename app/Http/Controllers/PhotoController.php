@@ -22,17 +22,6 @@ class PhotoController extends Controller
         return response()->json($photos);
     }
 
-    public function showTheLastOne(User $user)
-    {
-        $photo = Photo::where('user_id', $user->id)->orderBy('id', 'desc')->first();
-        return response()->json($photo);
-    }
-
-    public function create()
-    {
-        $profileId = Auth::id();
-        return view('photo.create', compact('profileId'));
-    }
 
     public function store(StorePhoto $request)
     {
@@ -40,20 +29,29 @@ class PhotoController extends Controller
         return response()->json(array('message' => 'successful photo store'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
+        $this->destroyImage($id);
 
+    }
+
+    public function showTheLastOne(User $user)
+    {
+        $photo = Photo::where('user_id', $user->id)->orderBy('id', 'desc')->first();
+        return response()->json($photo);
     }
 
     public function getUserPhotos($userId)
     {
         return Photo::where('user_id', $userId)->get();
+    }
+
+//????????????????????????????????? Move to model ????????????????????????????????????????????????
+
+    public function destroyImage($id)
+    {
+        Photo::where('id', $id)->delete();
     }
 
     public function saveImage(Request $request)
@@ -70,21 +68,5 @@ class PhotoController extends Controller
             'user_id' => Auth::id(),
             'path' => '/storage/photos/' . $photoNameToStore,
         ]);
-    }
-
-    public function rules()
-    {
-        return [
-            'photo' => 'max:2048|image|mimes:jpeg,png,jpg,svg'
-        ];
-    }
-
-    public function errorMessages()
-    {
-        return [
-            'photo' => 'Please upload an image only',
-            'photo.mimes' => 'Only jpeg, png, jpg and bmp images are allowed',
-            'photo.max' => 'Sorry! Maximum allowed size for an image is 2MB',
-        ];
     }
 }

@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->middleware('verified')->name('home'
 Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
 Route::post('/photos', 'PhotoController@store');
 Route::get('/photos/{user}', 'PhotoController@show');
+Route::delete('/photos/{photo}', 'PhotoController@destroy');
 Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
 
 Route::get('/profiles/create', 'ProfileController@create')->middleware('verified')->middleware('firstTime');

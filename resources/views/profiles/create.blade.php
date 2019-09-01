@@ -114,13 +114,13 @@
                         formData.append('current_longitude', current_longitude);
                         formData.append('current_latitude', current_latitude);
 
-                        let option = {
+                        let options = {
                             method: 'POST',
                             headers: headers,
                             body: formData
                         }
 
-                        let profileStoreResponse = await fetch(urlStoreProfile, option);
+                        let profileStoreResponse = await fetch(urlStoreProfile, options);
 
                         if(profileStoreResponse.ok){
                             location.href = '/preferences/create';
@@ -188,13 +188,13 @@
                     let input = document.querySelector('input[type="file"]');
                     formData.append('photo', input.files[0]);
 
-                    let option = {
+                    let options = {
                         method: 'POST',
                         headers: headers,
                         body: formData
                     }
 
-                    let imageStoreResponse = await fetch(urlStore, option);
+                    let imageStoreResponse = await fetch(urlStore, options);
 
                     if (imageStoreResponse.ok) {
                         removeAllChildrenElemFrom("photoErrors");
@@ -205,6 +205,36 @@
                         photoJsonErrors.errors.photo.forEach(function (error) {
                             displayError(error, 'photoErrors');
                         })
+                    }
+                }
+
+                // AJAX query to delete photo
+
+                let gallery = document.getElementById('gallery');
+                gallery.onclick = function(event){
+                    let target = event.target;
+                    if (target.tagName === 'IMG'){
+                        destroyPhoto(target);
+                    }
+                }
+
+                async function destroyPhoto(target){
+                    let urlDestroyPhoto = '/photos/' + target.id;
+
+                    let headers = new Headers();
+                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    headers.append('X-CSRF-TOKEN', token);
+                    headers.append('Accept', 'application/json');
+
+                    let options = {
+                        method: 'DELETE',
+                        headers : headers,
+                    }
+
+                    let imageDestroyResponse = await fetch(urlDestroyPhoto, options)
+
+                    if (imageDestroyResponse.ok){
+                        target.remove();
                     }
                 }
 
