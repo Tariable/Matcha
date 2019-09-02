@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
@@ -33,7 +34,6 @@ class PhotoController extends Controller
     public function destroy($id)
     {
         $this->destroyImage($id);
-
     }
 
     public function showTheLastOne(User $user)
@@ -51,6 +51,9 @@ class PhotoController extends Controller
 
     public function destroyImage($id)
     {
+        $path = Photo::where('id', $id)->pluck('path')->first();
+        $path = substr($path, strpos($path, '/', 1));
+        Storage::delete('public' . $path);
         Photo::where('id', $id)->delete();
     }
 
