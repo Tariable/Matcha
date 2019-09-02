@@ -41,7 +41,6 @@ class UserCreationTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('email');
-
     }
 
     /** @test */
