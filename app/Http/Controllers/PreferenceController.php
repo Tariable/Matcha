@@ -114,4 +114,5 @@ class PreferenceController extends Controller
             'tags.*' => 'Only given tags are available'
         ];
     }
+
 }

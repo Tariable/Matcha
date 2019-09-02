@@ -13,14 +13,15 @@ class ProfileCreationTest extends TestCase
     /** @test */
     public function a_profile_can_be_created()
     {
+        $this->withoutExceptionHandling();
+
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
             'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
