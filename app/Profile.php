@@ -19,17 +19,44 @@ class Profile extends Model
         return $this->hasOne(Preference::class, 'id');
     }
 
-
-    public function scopeCloseTo(Builder $query, $longitude, $latitude)
+    public function scopeCloseTo(Builder $query, $longitude, $latitude, $range)
     {
         return $query->whereRaw("
        ST_Distance_Sphere(
             point(current_longitude, current_latitude),
             point(?, ?)
-        ) * .0001 = 0
+        ) / 1000 < ?
+    ", [
+            $longitude,
+            $latitude,
+            $range,
+        ]);
+    }
+
+    public function scopeInRange(Builder $query, $longitude, $latitude)
+    {
+        return $query->whereRaw("
+       ST_Distance_Sphere(
+            point(current_longitude, current_latitude),
+            point(?, ?)
+        ) / 1000 < distance
     ", [
             $longitude,
             $latitude,
         ]);
     }
+
+    public function inAgeGap(Builder $query, $age)
+    {
+        return $query->whereRaw("
+       ST_Distance_Sphere(
+            point(current_longitude, current_latitude),
+            point(?, ?)
+        ) / 1000 < distance
+    ", [
+            $longitude,
+            $latitude,
+        ]);
+    }
+//'ST_Distance_Sphere(point(current_longitude, current_latitude), point(?, ?) ) / 1000 < ?'
 }

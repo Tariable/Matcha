@@ -15,24 +15,17 @@ class RecommendationController extends Controller
 {
     public function getRecs()
     {
-//        dd(\DB::select(\DB::raw('
-//    select ST_Distance_Sphere(
-//        point(:lonA, :latA),
-//        point(:lonB, :latB)
-//    ) / 1000 < 14
-//'), [
-//            'lonA' => 37.43225,
-//            'latA' => 55.69692,
-//            'lonB' => 37.62251,
-//            'latB' => 55.75322,
-//        ]));
-
+        // selectRaw('ST_Distance_Sphere(point(current_longitude, current_latitude), point(?, ?) ) / 1000 < ?',[$location->current_longitude,$location->current_latitude, $pref->distance])->get();
+        $age = $this->getAge();
         $pref = $this->getPreferences();
-        $location = $this->getLocation();
-        $recs = Profile:://whereBetween('date_of_birth', $this->ageGap($pref))->
-            closeTo($location->current_longitude, $location->current_latitude)->
-            //whereNotIn('id', [$pref->id])
-        get()->dd();
+        $profile = $this->getProfile();
+        $recs = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
+        whereBetween('date_of_birth', $this->ageGap($pref))->
+        where('lowerAge', '<', $age)->
+        where('upperAge', '>', $age)->
+        inRange($profile->current_longitude,$profile->current_latitude)->
+        closeTo($profile->current_longitude,$profile->current_latitude, $pref->distance)->
+        whereNotIn('profiles.id', [$pref->id])->get()->dd();
     }
 
     public function getPreferences()
@@ -40,9 +33,9 @@ class RecommendationController extends Controller
         return Preference::where('id', Auth::id())->get()->first();
     }
 
-    public function getLocation()
+    public function getProfile()
     {
-        return Profile::where('id', Auth::id())->select('current_longitude', 'current_latitude')->get()->first();
+        return Profile::where('id', Auth::id())->get()->first();
     }
 
     public function ageGap($pref)
@@ -52,4 +45,9 @@ class RecommendationController extends Controller
         return array($from, $to);
     }
 
+    public function getAge()
+    {
+        $date = Profile::where('id', Auth::id())->pluck('date_of_birth')->first();
+        return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
+    }
 }

@@ -11,6 +11,6 @@ class ProfilesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Profile::class, 2)->create();
+        factory(\App\Profile::class, 1000)->create();
     }
 }
