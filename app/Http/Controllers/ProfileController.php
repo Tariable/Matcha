@@ -34,7 +34,6 @@ class ProfileController extends Controller
         $data = request()->validate($this->rules(), $this->error_messages());
 
         $profile->update($data);
-
         return redirect('/preferences/create');
     }
 

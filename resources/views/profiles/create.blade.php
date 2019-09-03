@@ -283,7 +283,8 @@
                     }
 
                     function checkPhotoLimit() {
-                        if (getQuantityOfPhotos() >= 5) {
+                        let photoQuantityLimit = 5;
+                        if (getQuantityOfPhotos() >= photoQuantityLimit) {
                             document.getElementById('photoFormContent').style.display = "none";
                         } else {
                             document.getElementById('photoFormContent').style.display = "block";
