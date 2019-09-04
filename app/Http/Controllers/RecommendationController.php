@@ -19,8 +19,11 @@ class RecommendationController extends Controller
         $pref = $this->getPreferences();
         $profile = $this->getProfile();
         $recs = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
+        where(function ($query) use ($profile) {
+            $query->where('pref_sex', '=', $profile->gender)->
+            orWhere('pref_sex', '=', '%ale');
+        })->
         where('gender', 'like', $pref->pref_sex)->
-        where('pref_sex', 'like', $profile->gender)->
         whereBetween('date_of_birth', $this->ageGap($pref))->
         where('lowerAge', '<=', $age)->
         where('upperAge', '>=', $age)->
