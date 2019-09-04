@@ -15,16 +15,17 @@ class RecommendationController extends Controller
 {
     public function getRecs()
     {
-        // selectRaw('ST_Distance_Sphere(point(current_longitude, current_latitude), point(?, ?) ) / 1000 < ?',[$location->current_longitude,$location->current_latitude, $pref->distance])->get();
         $age = $this->getAge();
         $pref = $this->getPreferences();
         $profile = $this->getProfile();
         $recs = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
+        where('gender', 'like', $pref->pref_sex)->
+        where('pref_sex', 'like', $profile->gender)->
         whereBetween('date_of_birth', $this->ageGap($pref))->
-        where('lowerAge', '<', $age)->
-        where('upperAge', '>', $age)->
-        inRange($profile->current_longitude,$profile->current_latitude)->
-        closeTo($profile->current_longitude,$profile->current_latitude, $pref->distance)->
+        where('lowerAge', '<=', $age)->
+        where('upperAge', '>=', $age)->
+        inRange($profile->current_longitude, $profile->current_latitude)->
+        closeTo($profile->current_longitude, $profile->current_latitude, $pref->distance)->
         whereNotIn('profiles.id', [$pref->id])->get()->dd();
     }
 

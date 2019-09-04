@@ -46,17 +46,4 @@ class Profile extends Model
         ]);
     }
 
-    public function inAgeGap(Builder $query, $age)
-    {
-        return $query->whereRaw("
-       ST_Distance_Sphere(
-            point(current_longitude, current_latitude),
-            point(?, ?)
-        ) / 1000 < distance
-    ", [
-            $longitude,
-            $latitude,
-        ]);
-    }
-//'ST_Distance_Sphere(point(current_longitude, current_latitude), point(?, ?) ) / 1000 < ?'
 }

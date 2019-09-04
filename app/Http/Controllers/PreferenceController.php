@@ -97,7 +97,7 @@ class PreferenceController extends Controller
             'upperAge' => 'required|numeric|min:21|max:100',
             'distance' => 'required|numeric|min:3|max:100',
             'pref_sex' => ['required',
-                            Rule::in(['bi', 'male', 'female']),],
+                            Rule::in(['bi', 'male', '%ale']),],
             'tags' => 'sometimes|array',
             'tags.*' => 'numeric|min:1|max:' . Tag::all()->count()
         ];
