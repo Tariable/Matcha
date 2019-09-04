@@ -2,22 +2,23 @@
 
 @section('content')
   <div class="container-form">
-    <div class="form-group alert">
-      @error('email')
-      <span class="invalid-feedback" role="alert" >
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-      @enderror
-      @error('password')
 
-      <span class="invalid-feedback" role="alert" >
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-      @enderror
-    </div>
     <form method="POST" action="{{ route('login') }}">
       @csrf
 
+      <div class="form-group alert">
+        @error('email')
+        <span class="invalid-feedback" role="alert" >
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+        @enderror
+        @error('password')
+
+        <span class="invalid-feedback" role="alert" >
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+        @enderror
+      </div>
       <div class="form-group row">
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -68,7 +69,7 @@
           </button>
         </div>
 
-        <div> @if (Route::has('password.request'))
+        <div class="mt-10"> @if (Route::has('password.request'))
             <a class="btn-link" href="{{ route('password.request') }}">
               {{ __('Forgot Your Password?') }}
             </a>
