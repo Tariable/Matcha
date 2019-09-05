@@ -34,5 +34,5 @@ Route::get('/preferences/create', 'PreferenceController@create')->middleware('ve
 Route::post('/preferences', 'PreferenceController@store');
 Route::get('/like/{id}', 'LikeController@like');
 
-Route::get('/recs', 'RecommendationController@getRecommendation')->middleware('verified');
+Route::get('/recs', 'RecommendationController@getData')->middleware('verified');
 
