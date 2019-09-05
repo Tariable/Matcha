@@ -36,8 +36,7 @@
                         <div class="form-group">
                             <label class="m-2" for="description">Say some words about yourself:</label>
                             <textarea name="description" id="description" cols="30" rows="3"
-                                      class="form-control" required>{{ old('description') }}
-                            </textarea>
+                                      class="form-control" required>{{ old('description') }}</textarea>
                         </div>
 
                         <div class="form-group">
@@ -61,8 +60,8 @@
                         </div>
 
                         <div>
-                            <input type="number" id="current_longitude" name="current_longitude" hidden>
-                            <input type="number" id="current_latitude" name="current_latitude" hidden>
+                            <input type="number" id="longitude" name="longitude" hidden>
+                            <input type="number" id="latitude" name="latitude" hidden>
                         </div>
 
                         <div class="form-group" id="profileErrors">
@@ -104,15 +103,15 @@
                         let description = document.getElementById('description').value;
                         let gender = document.querySelector('input[name="gender"]:checked').value;
                         let notification = document.querySelector('input[name="notification"]:checked').value;
-                        let current_longitude = document.getElementById('current_longitude').value;
-                        let current_latitude = document.getElementById('current_latitude').value;
+                        let longitude = document.getElementById('longitude').value;
+                        let latitude = document.getElementById('latitude').value;
                         formData.append('name', name);
                         formData.append('date_of_birth', date_of_birth);
                         formData.append('description', description);
                         formData.append('gender', gender);
                         formData.append('notification', notification);
-                        formData.append('current_longitude', current_longitude);
-                        formData.append('current_latitude', current_latitude);
+                        formData.append('longitude', longitude);
+                        formData.append('latitude', latitude);
 
                         let options = {
                             method: 'POST',
@@ -153,8 +152,8 @@
 
                 function getCurrentLocation() {
                     var geoLocation = function (position) {
-                        document.getElementById('current_longitude').value = position.coords.longitude;
-                        document.getElementById('current_latitude').value = position.coords.latitude;
+                        document.getElementById('longitude').value = position.coords.longitude;
+                        document.getElementById('latitude').value = position.coords.latitude;
                     };
 
                     var ipLocation = async function () {
@@ -165,8 +164,8 @@
                         if (getLocationResponse.ok) {
                             let location = await getLocationResponse.text();
                             location = location.split(',');
-                            document.getElementById('current_latitude').value = location[0];
-                            document.getElementById('current_longitude').value = location[1];
+                            document.getElementById('latitude').value = location[0];
+                            document.getElementById('longitude').value = location[1];
                         } else {
                             console.log("Bad location request");
                         }

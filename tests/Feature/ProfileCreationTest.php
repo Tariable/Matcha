@@ -22,8 +22,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 1,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
         ]);
 
         $this->assertCount(1, Profile::all());
@@ -39,8 +39,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
 
@@ -57,8 +57,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
         $response->assertSessionHasErrors('name');
@@ -74,8 +74,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
         $response->assertSessionHasErrors('name');
@@ -91,8 +91,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
 
@@ -110,8 +110,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
 
@@ -128,8 +128,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
 
@@ -146,8 +146,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
         ]);
 
         $response->assertSessionHasErrors('date_of_birth');
@@ -163,8 +163,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
         ]);
 
         $response->assertSessionHasErrors('description');
@@ -180,8 +180,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 50,
             'notification' => '',
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
         ]);
 
         $response->assertSessionHasErrors('notification');
@@ -197,8 +197,8 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => '',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
 
         ]);
 
@@ -215,15 +215,15 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'Male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
         ]);
 
         $response->assertSessionHasErrors('gender');
     }
 
     /** @test */
-    public function a_current_latitude_is_required()
+    public function a_latitude_is_required()
     {
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
@@ -232,16 +232,16 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => '',
-            'current_longitude' => 37.618423,
+            'latitude' => '',
+            'longitude' => 37.618423,
 
         ]);
 
-        $response->assertSessionHasErrors('current_latitude');
+        $response->assertSessionHasErrors('latitude');
     }
 
     /** @test */
-    public function a_current_latitude_must_be_in_range_180()
+    public function a_latitude_must_be_in_range_180()
     {
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
@@ -250,16 +250,16 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 189,
-            'current_longitude' => 37.618423,
+            'latitude' => 189,
+            'longitude' => 37.618423,
 
         ]);
 
-        $response->assertSessionHasErrors('current_latitude');
+        $response->assertSessionHasErrors('latitude');
     }
 
     /** @test */
-    public function a_current_longitude_is_required()
+    public function a_longitude_is_required()
     {
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
@@ -268,15 +268,15 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => '',
+            'latitude' => 55.751244,
+            'longitude' => '',
         ]);
 
-        $response->assertSessionHasErrors('current_longitude');
+        $response->assertSessionHasErrors('longitude');
     }
 
     /** @test */
-    public function a_current_longitude_must_be_in_range_90()
+    public function a_longitude_must_be_in_range_90()
     {
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
@@ -285,10 +285,10 @@ class ProfileCreationTest extends TestCase
             'rating' => 100,
             'notification' => 0,
             'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => -90.34,
+            'latitude' => 55.751244,
+            'longitude' => -90.34,
         ]);
 
-        $response->assertSessionHasErrors('current_longitude');
+        $response->assertSessionHasErrors('longitude');
     }
 }
