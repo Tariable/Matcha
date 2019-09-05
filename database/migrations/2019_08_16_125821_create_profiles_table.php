@@ -19,8 +19,8 @@ class CreateProfilesTable extends Migration
             $table->date('date_of_birth');
             $table->string('description');
             $table->string('gender');
-            $table->decimal('current_latitude', 10, 5);
-            $table->decimal('current_longitude', 10, 5);
+            $table->decimal('latitude', 10, 5);
+            $table->decimal('longitude', 10, 5);
             $table->bigInteger('rating')->default(50);
             $table->boolean('notification')->default(true);
             $table->timestamps();
