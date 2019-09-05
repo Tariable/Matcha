@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
@@ -25,15 +26,14 @@ class PhotoController extends Controller
 
     public function store(StorePhoto $request)
     {
-        $this->saveImage($request);
-        return response()->json(array('message' => 'successful photo store'));
+        $statusOfSaving = $this->saveImage($request);
+        return response()->json(array('message' => $statusOfSaving));
     }
 
 
     public function destroy($id)
     {
         $this->destroyImage($id);
-
     }
 
     public function showTheLastOne(User $user)
@@ -51,22 +51,30 @@ class PhotoController extends Controller
 
     public function destroyImage($id)
     {
+        $path = Photo::where('id', $id)->pluck('path')->first();
+        $path = substr($path, strpos($path, '/', 1));
+        Storage::delete('public' . $path);
         Photo::where('id', $id)->delete();
     }
 
     public function saveImage(Request $request)
     {
-        $photo = $request->file('photo');
-        $photoExtension = $photo->getClientOriginalExtension();
-        $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
-        $photo->storeAs('public/photos', $photoNameToStore);
+        if (Photo::where('user_id', Auth::id())->count() < 5){
+            $photo = $request->file('photo');
+            $photoExtension = $photo->getClientOriginalExtension();
+            $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
+            $photo->storeAs('public/photos', $photoNameToStore);
 
-        $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
-        $image->save();
+            $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
+            $image->save();
 
-        Photo::create([
-            'user_id' => Auth::id(),
-            'path' => '/storage/photos/' . $photoNameToStore,
-        ]);
+            Photo::create([
+                'user_id' => Auth::id(),
+                'path' => '/storage/photos/' . $photoNameToStore,
+            ]);
+            return 'success';
+        } else {
+            abort(422);
+        }
     }
 }
