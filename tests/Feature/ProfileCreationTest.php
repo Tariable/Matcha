@@ -170,24 +170,6 @@ class ProfileCreationTest extends TestCase
         $response->assertSessionHasErrors('description');
     }
 
-
-    /** @test */
-    public function a_rating_is_required()
-    {
-        $response = $this->post('/profiles', [
-            'name' => 'ProfileName',
-            'date_of_birth' => '2000-09-19',
-            'description' => 'cool description',
-            'rating' => '',
-            'notification' => 0,
-            'gender' => 'male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
-        ]);
-
-        $response->assertSessionHasErrors('rating');
-    }
-
     /** @test */
     public function a_notification_is_required()
     {

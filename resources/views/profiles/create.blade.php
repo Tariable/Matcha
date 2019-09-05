@@ -196,6 +196,7 @@
 
                     let imageStoreResponse = await fetch(urlStore, options);
 
+                    input.value = '';
                     if (imageStoreResponse.ok) {
                         removeAllChildrenElemFrom("photoErrors");
                         displayLastPhoto();
@@ -235,6 +236,7 @@
 
                     if (imageDestroyResponse.ok){
                         target.remove();
+                        checkPhotoLimit();
                     }
                 }
 
@@ -281,9 +283,9 @@
 
                 function checkPhotoLimit() {
                     if (getQuantityOfPhotos() >= 5) {
-                        document.getElementById('photo-form').remove();
+                        document.getElementById('photo-form').hidden = true;
                     } else {
-                        document.getElementById('photoInput').removeAttribute("hidden");
+                        document.getElementById('photo-form').hidden = false;
                     }
                 }
 

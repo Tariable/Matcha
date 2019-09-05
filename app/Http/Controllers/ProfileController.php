@@ -29,7 +29,7 @@ class ProfileController extends Controller
         return view('profiles.edit', compact('profile'));
     }
 
-    public function update(Request $request)
+    public function update()
     {
 //        dd($request->all());
         $data = request()->validate($this->rules(), $this->error_messages());

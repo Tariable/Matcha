@@ -27,11 +27,12 @@ Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
 Route::get('/profiles/create', 'ProfileController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/profiles', 'ProfileController@store');
 Route::get('/profiles/{id}/edit', 'ProfileController@edit');
-Route::put('/profiles/{id}', 'ProfileController@update');
+Route::post('/profiles/{id}', 'ProfileController@update');
 Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
 Route::get('/preferences/create', 'PreferenceController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/preferences', 'PreferenceController@store');
+
 Route::get('/like/{id}', 'LikeController@like');
 
 Route::get('/recs', 'RecommendationController@getRecs')->middleware('verified');

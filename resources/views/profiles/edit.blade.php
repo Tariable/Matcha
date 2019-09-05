@@ -9,9 +9,9 @@
                     <form action="/photos" name="photo-form" id="photo-form" method="post"
                           enctype="multipart/form-data">
                         <label for="photoInput">Add some pretty photos:</label>
-                        <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
+                        <input name="photo" id="photoInput" onchange="sendImage()" type="file" class="pb-3">
                     </form>
-                    <div id="errorDiv"></div>
+                    <div id="photoErrors"></div>
                     <div id="gallery"></div>
                 </div>
 
@@ -195,6 +195,7 @@
 
                     let imageStoreResponse = await fetch(urlStore, options);
 
+                    input.value = '';
                     if (imageStoreResponse.ok) {
                         removeAllChildrenElemFrom("photoErrors");
                         displayLastPhoto();
@@ -234,6 +235,7 @@
 
                     if (imageDestroyResponse.ok){
                         target.remove();
+                        checkPhotoLimit();
                     }
                 }
 
@@ -280,9 +282,9 @@
 
                 function checkPhotoLimit() {
                     if (getQuantityOfPhotos() >= 5) {
-                        document.getElementById('photo-form').remove();
+                        document.getElementById('photo-form').hidden = true;
                     } else {
-                        document.getElementById('photoInput').removeAttribute("hidden");
+                        document.getElementById('photo-form').hidden = false;
                     }
                 }
 
