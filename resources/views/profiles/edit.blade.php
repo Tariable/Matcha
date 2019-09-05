@@ -36,8 +36,7 @@
                         <div class="form-group">
                             <label class="m-2" for="description">Say some words about yourself:</label>
                             <textarea name="description" id="description" cols="30" rows="3"
-                                      class="form-control">{{ old('description') ?? $profile->description }}
-                            </textarea>
+                                      class="form-control">{{ old('description') ?? $profile->description }}</textarea>
                         </div>
 
                         <div class="form-group">
@@ -65,6 +64,10 @@
                             <input type="number" id="current_latitude" name="current_latitude" hidden>
                         </div>
 
+                        <div class="form-group" id="profileErrors">
+
+                        </div>
+
                         <div class="form-group">
                             <button class="btn btn-primary m-2" id="profileUpdate" type="submit">Create profile</button>
                         </div>
@@ -80,14 +83,14 @@
 
                 // AJAX query to store profiles info
 
-                let update = document.getElementById('profileUpdate')
+                let update = document.getElementById('profileUpdate');
                 update.onclick = async function(evt) {
                     evt.preventDefault();
                     if (!getQuantityOfPhotos() && !document.getElementById('errors')){
                         displayError('You must add at least one photo', 'photoErrors');
                     } else {
                         removeAllChildrenElemFrom('profileErrors');
-                        let urlStoreProfile = '/profiles';
+                        let urlUpdateProfile = '/profiles/{{ Auth::id() }}';
 
                         let headers = new Headers();
                         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -98,8 +101,8 @@
                         let name = document.getElementById('name').value;
                         let date_of_birth = document.getElementById('date_of_birth').value;
                         let description = document.getElementById('description').value;
-                        let gender = document.querySelector('input[name="gender"]:checked').value;;
-                        let notification = document.querySelector('input[name="notification"]:checked').value;;
+                        let gender = document.querySelector('input[name="gender"]:checked').value;
+                        let notification = document.querySelector('input[name="notification"]:checked').value;
                         let current_longitude = document.getElementById('current_longitude').value;
                         let current_latitude = document.getElementById('current_latitude').value;
                         formData.append('name', name);
@@ -116,10 +119,10 @@
                             body: formData
                         }
 
-                        let profileStoreResponse = await fetch(urlStoreProfile, options);
+                        let profileStoreResponse = await fetch(urlUpdateProfile, options);
 
                         if(profileStoreResponse.ok){
-                            location.href = '/preferences/create';
+                            // location.href = '/preferences/create';
                         } else {
                             let profileJsonErrors = await profileStoreResponse.json();
                             for(let key in profileJsonErrors.errors){

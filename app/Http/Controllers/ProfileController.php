@@ -23,18 +23,18 @@ class ProfileController extends Controller
         return redirect('/preferences/create');
     }
 
-    public function edit(Profile $profile)
+    public function edit()
     {
         $profile = Profile::whereId(Auth::id())->get()->first();
         return view('profiles.edit', compact('profile'));
     }
 
-    public function update(Profile $profile)
+    public function update(Request $request)
     {
+//        dd($request->all());
         $data = request()->validate($this->rules(), $this->error_messages());
-
+        $profile = Profile::where('id', Auth::id())->get()->first();
         $profile->update($data);
-        return redirect('/preferences/create');
     }
 
     public function rules()
@@ -44,7 +44,6 @@ class ProfileController extends Controller
             'date_of_birth' => 'required|date_format:"Y-m-d"|after:-100 years|before:-18 years',
             'description' => 'required',
             'gender' => 'required|in:male,female',
-            'rating' => 'required',
             'notification' => 'required|in:1,0',
             'current_latitude' => 'required|numeric|max:180|min:-180',
             'current_longitude' => 'required|numeric|max:90|min:-90',
