@@ -20,13 +20,12 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
+            'notification' => 1,
             'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
 
-        $response->assertOk();
         $this->assertCount(1, Profile::all());
     }
 
@@ -38,9 +37,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -57,9 +55,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -75,9 +72,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -93,9 +89,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -113,9 +108,8 @@ class ProfileCreationTest extends TestCase
             'name' => 'ProfileName',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -132,9 +126,8 @@ class ProfileCreationTest extends TestCase
             'name' => 'ProfileName',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
 
@@ -151,9 +144,8 @@ class ProfileCreationTest extends TestCase
             'name' => 'ProfileName',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
@@ -169,9 +161,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => '',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
@@ -188,9 +179,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'cool description',
             'rating' => '',
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
@@ -207,33 +197,12 @@ class ProfileCreationTest extends TestCase
             'description' => 'cool description',
             'rating' => 50,
             'notification' => '',
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
 
         $response->assertSessionHasErrors('notification');
-    }
-
-    /** @test */
-    public function tags_can_be_empty()
-    {
-        $this->withoutExceptionHandling();
-        $response = $this->post('/profiles', [
-            'name' => 'ProfileName',
-            'date_of_birth' => '2000-09-19',
-            'description' => 'cool description',
-            'rating' => 50,
-            'notification' => true,
-            'tags' => '',
-            'gender' => 'Male',
-            'current_latitude' => 55.751244,
-            'current_longitude' => 37.618423,
-        ]);
-
-        $response->assertOk();
-        $this->assertCount(1, Profile::all());
     }
 
     /** @test */
@@ -244,8 +213,7 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
+            'notification' => 0,
             'gender' => '',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
@@ -256,16 +224,15 @@ class ProfileCreationTest extends TestCase
     }
 
     /** @test */
-    public function a_gender_can_only_be_Female_or_Male()
+    public function a_gender_can_only_be_female_or_male()
     {
         $response = $this->post('/profiles', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'male',
+            'notification' => 0,
+            'gender' => 'Male',
             'current_latitude' => 55.751244,
             'current_longitude' => 37.618423,
         ]);
@@ -281,9 +248,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => '',
             'current_longitude' => 37.618423,
 
@@ -300,9 +266,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 189,
             'current_longitude' => 37.618423,
 
@@ -319,9 +284,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => '',
         ]);
@@ -337,9 +301,8 @@ class ProfileCreationTest extends TestCase
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'rating' => 100,
-            'notification' => false,
-            'tags' => '1;2;3',
-            'gender' => 'Male',
+            'notification' => 0,
+            'gender' => 'male',
             'current_latitude' => 55.751244,
             'current_longitude' => -90.34,
         ]);
