@@ -32,7 +32,10 @@ Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
 Route::get('/preferences/create', 'PreferenceController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/preferences', 'PreferenceController@store');
+
+
 Route::get('/like/{id}', 'LikeController@like');
+Route::get('/ban/{id}', 'BanController@ban');
 
 Route::get('/recs', 'RecommendationController@getData')->middleware('verified');
 

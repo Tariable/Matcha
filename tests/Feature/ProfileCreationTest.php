@@ -41,7 +41,6 @@ class ProfileCreationTest extends TestCase
             'gender' => 'male',
             'latitude' => 55.751244,
             'longitude' => 37.618423,
-
         ]);
 
         $response->assertSessionHasErrors('name');

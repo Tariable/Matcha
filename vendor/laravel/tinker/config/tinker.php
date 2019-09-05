@@ -19,7 +19,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Alias Blacklist
+    | Alias Ban
     |--------------------------------------------------------------------------
     |
     | Typically, Tinker automatically aliases classes as you require them in
