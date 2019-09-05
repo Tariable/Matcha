@@ -20,7 +20,6 @@ class PreferenceController extends Controller
     public function create()
     {
         $tags = Tag::all()->pluck('name');
-
         return view('preference.create', compact('tags'));
     }
 
