@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Preference;
@@ -20,7 +21,7 @@ class PreferenceController extends Controller
     public function create()
     {
         $tags = Tag::all()->pluck('name');
-        return view('preference.create', compact('tags'));
+        return view('preferences.create', compact('tags'));
     }
 
     /**
@@ -32,8 +33,8 @@ class PreferenceController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, $this->rules(), $this->errorMessages());
-        $this->savePreferences($data);
-        return redirect("/");
+        $this->storePreferences($data);
+        return redirect("/recs");
     }
 
     /**
@@ -47,22 +48,17 @@ class PreferenceController extends Controller
         //
     }
 
-    public function savePreferences($data)
-    {
-        $data['id'] = Auth::id();
-        $data['tags'] = (isset($data['tags'])) ? serialize($data['tags']) : 0;
-        Preference::create($data);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $tags = Tag::all()->pluck('name');
+        $preference = Preference::whereId(Auth::id())->get()->first();
+        return view('preferences.edit', compact('preference', 'tags'));
     }
 
     /**
@@ -72,20 +68,28 @@ class PreferenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $this->validate($request, $this->rules(), $this->errorMessages());
+        $preferences = Preference::where('id', Auth::id())->get()->first();
+        $this->editPreferences($preferences, $data);
+        return redirect("/recs");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+
+    public function storePreferences($data)
     {
-        //
+        $data['id'] = Auth::id();
+        $data['tags'] = (isset($data['tags'])) ? serialize($data['tags']) : 0;
+        Preference::create($data);
+    }
+
+    public function editPreferences(Preference $preferences, $data)
+    {
+        $data['id'] = Auth::id();
+        $data['tags'] = (isset($data['tags'])) ? serialize($data['tags']) : 0;
+        $preferences->update($data);
     }
 
     public function rules()

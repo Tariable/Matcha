@@ -9,7 +9,7 @@
                     <form action="/photos" name="photo-form" id="photo-form" method="post"
                           enctype="multipart/form-data">
                         <label id="labelPhoto" for="photoInput">Add some pretty photos:</label>
-                        <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
+                        <input name="photo" id="photoInput"  onchange="sendImage()" type="file" class="pb-3">
                     </form>
                     <div id="photoErrors"></div>
                     <div id="gallery"></div>

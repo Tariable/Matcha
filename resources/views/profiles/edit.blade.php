@@ -17,6 +17,8 @@
 
                 <hr>
 
+                {{ $profile }}
+
                 <div class="profileContainer">
                     <h2>Profile section</h2>
                     <form action="/profiles/{{ Auth::id() }}" method="post" novalidate>
@@ -69,7 +71,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button class="btn btn-primary m-2" id="profileUpdate" type="submit">Create profile</button>
+                            <button class="btn btn-primary m-2" id="profileUpdate" type="submit">Edit profile</button>
                         </div>
                     </form>
                 </div>
@@ -122,7 +124,7 @@
                         let profileStoreResponse = await fetch(urlUpdateProfile, options);
 
                         if(profileStoreResponse.ok){
-                            // location.href = '/preferences/create';
+                            location.href = '/recs';
                         } else {
                             let profileJsonErrors = await profileStoreResponse.json();
                             for(let key in profileJsonErrors.errors){

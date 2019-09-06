@@ -31,7 +31,6 @@ class ProfileController extends Controller
 
     public function update()
     {
-//        dd($request->all());
         $data = request()->validate($this->rules(), $this->error_messages());
         $profile = Profile::where('id', Auth::id())->get()->first();
         $profile->update($data);
@@ -45,8 +44,8 @@ class ProfileController extends Controller
             'description' => 'required',
             'gender' => 'required|in:male,female',
             'notification' => 'required|in:1,0',
-            'latitude' => 'required|numeric|max:180|min:-180',
-            'longitude' => 'required|numeric|max:90|min:-90',
+            'latitude' => 'numeric|max:180|min:-180',
+            'longitude' => 'numeric|max:90|min:-90',
         ];
     }
 

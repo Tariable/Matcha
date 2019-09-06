@@ -8,11 +8,11 @@ use PhpParser\Parser;
 
 class Multiple implements Parser
 {
-    /** @var Parser[] List of parsers to try, in order of preference */
+    /** @var Parser[] List of parsers to try, in order of preferences */
     private $parsers;
 
     /**
-     * Create a parser which will try multiple parsers in an order of preference.
+     * Create a parser which will try multiple parsers in an order of preferences.
      *
      * Parsers will be invoked in the order they're provided to the constructor. If one of the
      * parsers runs without throwing, it's output is returned. Otherwise the exception that the

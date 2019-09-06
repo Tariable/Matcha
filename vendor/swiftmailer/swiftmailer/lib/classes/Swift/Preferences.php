@@ -9,7 +9,7 @@
  */
 
 /**
- * Changes some global preference settings in Swift Mailer.
+ * Changes some global preferences settings in Swift Mailer.
  *
  * @author Chris Corbyn
  */
@@ -17,6 +17,7 @@ class Swift_Preferences
 {
     /** Singleton instance */
     private static $instance = null;
+    private $distance;
 
     /** Constructor not to be used */
     private function __construct()
@@ -80,7 +81,7 @@ class Swift_Preferences
     }
 
     /**
-     * Set the QuotedPrintable dot escaper preference.
+     * Set the QuotedPrintable dot escaper preferences.
      *
      * @param bool $dotEscape
      *

@@ -26,7 +26,7 @@ class RecommendationController extends Controller
         $data['distance'] = $this->getDistance($user->latitude, $user->longitude,
             $profile->latitude, $profile->longitude);
         $data['common_tags'] = $this->getCommonTags($id);
-        return $data;
+        return view('recommendations.show', compact($data));
     }
 
     public function getRecs()
