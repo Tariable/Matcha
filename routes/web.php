@@ -38,4 +38,5 @@ Route::get('/like/{id}', 'LikeController@like');
 Route::get('/ban/{id}', 'BanController@ban');
 
 Route::get('/recs', 'RecommendationController@getData')->middleware('verified');
+Route::get('/recss', 'RecommendationController@getRecs')->middleware('verified');
 
