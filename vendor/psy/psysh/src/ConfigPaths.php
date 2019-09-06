@@ -168,7 +168,7 @@ class ConfigPaths
         // Add some Windows specific ones :)
         if (\defined('PHP_WINDOWS_VERSION_MAJOR')) {
             if ($appData = \getenv('APPDATA')) {
-                // AppData gets preference
+                // AppData gets preferences
                 \array_unshift($dirs, \strtr($appData, '\\', '/') . '/PsySH');
             }
 

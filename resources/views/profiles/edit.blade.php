@@ -17,8 +17,6 @@
 
                 <hr>
 
-                {{ $profile }}
-
                 <div class="profileContainer">
                     <h2>Profile section</h2>
                     <form action="/profiles/{{ Auth::id() }}" method="post" novalidate>
