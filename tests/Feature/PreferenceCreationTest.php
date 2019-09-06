@@ -30,7 +30,7 @@ class PreferenceCreationTest extends TestCase
         ]);
 
         $this->assertCount(1, Preference::all());
-        $response->assertRedirect('/');
+        $response->assertRedirect('/recs');
     }
 
     /** @test */
@@ -45,7 +45,7 @@ class PreferenceCreationTest extends TestCase
         ]);
 
         $this->assertCount(1, Preference::all());
-        $response->assertRedirect('/');
+        $response->assertRedirect('/recs');
     }
 
     /** @test */
