@@ -18,7 +18,7 @@ class CreatePreferencesTable extends Migration
             $table->bigInteger('lowerAge');
             $table->bigInteger('upperAge');
             $table->bigInteger('distance');
-            $table->string('pref_sex');
+            $table->string('sex');
             $table->string('tags')->nullable();
             $table->timestamps();
         });

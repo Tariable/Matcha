@@ -26,7 +26,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 28,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $this->assertCount(1, Preference::all());
@@ -40,7 +40,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 28,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
             'tags' => ['1', '2']
         ]);
 
@@ -55,7 +55,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 17,
             'upperAge' => 28,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors("lowerAge");
@@ -68,7 +68,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 98,
             'upperAge' => 28,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('lowerAge');
@@ -81,7 +81,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 101,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('upperAge');
@@ -94,7 +94,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 20,
             'distance' => 20,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('upperAge');
@@ -107,7 +107,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 2,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('distance');
@@ -120,7 +120,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 101,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('distance');
@@ -133,7 +133,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => '',
             'upperAge' => 21,
             'distance' => 101,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('lowerAge');
@@ -146,7 +146,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 20,
             'upperAge' => '',
             'distance' => 101,
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('upperAge');
@@ -159,36 +159,36 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => '',
-            'pref_sex' => 'male',
+            'sex' => 'male',
         ]);
 
         $response->assertSessionHasErrors('distance');
     }
 
     /** @test */
-    public function sex_pref_is_required()
+    public function sex_is_required()
     {
         $response = $this->post('/preferences', [
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 5,
-            'pref_sex' => '',
+            'sex' => '',
         ]);
 
-        $response->assertSessionHasErrors('pref_sex');
+        $response->assertSessionHasErrors('sex');
     }
 
     /** @test */
-    public function sex_pref_only_male_female_bi()
+    public function sex_only_male_female_bi()
     {
         $response = $this->post('/preferences', [
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 5,
-            'pref_sex' => 'b',
+            'sex' => 'b',
         ]);
 
-        $response->assertSessionHasErrors('pref_sex');
+        $response->assertSessionHasErrors('sex');
     }
 
     /** @test */
@@ -198,7 +198,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 5,
-            'pref_sex' => 'b',
+            'sex' => 'b',
             'tags' => [
                 'a',
             ]
@@ -214,7 +214,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 5,
-            'pref_sex' => 'b',
+            'sex' => 'b',
             'tags' => [
                 100000,
             ]
@@ -230,7 +230,7 @@ class PreferenceCreationTest extends TestCase
             'lowerAge' => 18,
             'upperAge' => 21,
             'distance' => 5,
-            'pref_sex' => 'b',
+            'sex' => 'b',
             'tags' => [
                 '',
             ]

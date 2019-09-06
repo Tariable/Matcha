@@ -99,8 +99,8 @@ class PreferenceController extends Controller
             'lowerAge' => 'required|numeric|min:18|max:97',
             'upperAge' => 'required|numeric|min:21|max:100',
             'distance' => 'required|numeric|min:3|max:100',
-            'pref_sex' => ['required',
-                            Rule::in(['bi', 'male', '%ale']),],
+            'sex' => ['required',
+                            Rule::in(['female', 'male', '%ale']),],
             'tags' => 'sometimes|array',
             'tags.*' => 'numeric|min:1|max:' . Tag::all()->count()
         ];
@@ -112,8 +112,8 @@ class PreferenceController extends Controller
             'lowerAge' => 'Lower age must be between 18 and 97',
             'upperAge' => 'Upper age must be between 21 and 100',
             'distance' => 'Distance must be less than 100 km',
-            'pref_sex.required' => 'Sex preferences field is required',
-            'pref_sex.in' => 'Sex preferences can be only male, female or bisexual',
+            'sex.required' => 'Sex preferences field is required',
+            'sex.in' => 'Sex preferences can be only male, female or bisexual',
             'tags.*' => 'Only given tags are available'
         ];
     }

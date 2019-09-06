@@ -23,7 +23,7 @@ class Profile extends Model
     {
         return $query->whereRaw("
        ST_Distance_Sphere(
-            point(current_longitude, current_latitude),
+            point(longitude, latitude),
             point(?, ?)
         ) / 1000 < ?
     ", [
@@ -37,7 +37,7 @@ class Profile extends Model
     {
         return $query->whereRaw("
        ST_Distance_Sphere(
-            point(current_longitude, current_latitude),
+            point(longitude, latitude),
             point(?, ?)
         ) / 1000 < distance
     ", [

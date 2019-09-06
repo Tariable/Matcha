@@ -18,7 +18,7 @@ class LikeController extends Controller
         }
     }
 
-    public function getWhoLikedThisProfile()
+    public function getLikes()
     {
         return Like::where('partner_id', Auth::id());
     }

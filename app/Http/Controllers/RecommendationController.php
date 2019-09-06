@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Preference;
 use App\Tag;
+use App\Ban;
 use App\Profile;
+use App\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -34,26 +36,42 @@ class RecommendationController extends Controller
         $age = $this->getAge();
         $pref = $this->getPreferences();
         $profile = $this->getProfile();
+        $banned_id = $this->getBanned();
+        $liked_id = $this->getLiked();
         return Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
-            $query->where('pref_sex', '=', $profile->gender)->
-            orWhere('pref_sex', '=', '%ale');
+            $query->where('sex', '=', $profile->gender)->
+            orWhere('sex', '=', '%ale');
         })->
-        where('gender', 'like', $pref->pref_sex)->
+        where('gender', 'like', $pref->sex)->
         whereBetween('date_of_birth', $this->ageGap($pref))->
         where('lowerAge', '<=', $age)->
         where('upperAge', '>=', $age)->
         inRange($profile->longitude, $profile->latitude)->
         closeTo($profile->longitude, $profile->latitude, $pref->distance)->
+        whereNotIn('profiles.id', $banned_id)->
+        whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
     }
 
     public function getCommonTags($id)
     {
-        $profileTags = unserialize(Preference::where('id', '=', $id)->get()->pluck('tags')[0]);
-        $userTags = unserialize(Preference::where('id', '=', Auth::id())->get()->pluck('tags')[0]);
+        $serializedProfileTags = Preference::where('id', '=', $id)->get()->pluck('tags')[0];
+        $profileTags = ($serializedProfileTags == '0') ? [0] : unserialize($serializedProfileTags);
+        $serializedUserTags = Preference::where('id', '=', Auth::id())->get()->pluck('tags')[0];
+        $userTags = ($serializedUserTags == '0') ? [0] : unserialize($serializedUserTags);
         $common = array_intersect($userTags, $profileTags);
         return Tag::whereIn('id', $common)->pluck('name');
+    }
+
+    public function getLiked()
+    {
+        return Like::where('profile_id', '=', Auth::id())->get()->pluck('partner_id');
+    }
+
+    public function getBanned()
+    {
+        return Ban::where('profile_id', '=', Auth::id())->get()->pluck('banned_id');
     }
 
     public function countAge($date)
