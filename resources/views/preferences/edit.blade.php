@@ -27,13 +27,13 @@
             <div class="container" style="display: flex; padding-left: 0;">
                 <div class="btn-group-toggle pr-2" data-toggle="buttons">
                     <label class="btn btn-secondary active" style="background-color:#FF7373">
-                        <input type="radio" name="pref_sex" {{ $preference->pref_sex == '%ale' ? 'checked' : '' }}
+                        <input type="radio" name="sex" {{ $preference->pref_sex == '%ale' ? 'checked' : '' }}
                         value="%ale"> Bisexual</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="pref_sex" {{ $preference->pref_sex == 'male' ? 'checked' : '' }}
+                        <input type="radio" name="sex" {{ $preference->pref_sex == 'male' ? 'checked' : '' }}
                                value="male"> Male</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="pref_sex" {{ $preference->pref_sex == 'female' ? 'checked' : '' }}
+                        <input type="radio" name="sex" {{ $preference->pref_sex == 'female' ? 'checked' : '' }}
                                value="female"> Female</label>
                 </div>
             </div>
