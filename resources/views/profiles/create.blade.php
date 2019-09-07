@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
+    <div class="container-create">
                 <div class="photoContainer">
                     <h2>Photo section</h2>
                     <form action="/photos" name="photoForm" id="photoForm" method="post" enctype="multipart/form-data">
@@ -299,7 +297,5 @@
                             return photosQuantity;
                         }
                 </script>
-            </div>
-        </div>
     </div>
 @endsection
