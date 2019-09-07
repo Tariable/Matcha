@@ -19,17 +19,17 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 
-Route::get('/photos/{user}', 'PhotoController@show');
+Route::get('/photos/{user}', 'PhotoController@show')->middleware('verified');
 Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
-Route::post('/photos', 'PhotoController@store');
-Route::delete('/photos/{photo}', 'PhotoController@destroy');
-Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
+Route::post('/photos', 'PhotoController@store')->middleware('verified');
+Route::delete('/photos/{photo}', 'PhotoController@destroy')->middleware('verified');
+Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne')->middleware('verified');
 
 Route::get('/profiles/create', 'ProfileController@create')->middleware('verified')->middleware('firstTime');
-Route::post('/profiles', 'ProfileController@store');
-Route::get('/profiles/edit', 'ProfileController@edit');
-Route::post('/profiles/{id}', 'ProfileController@update');
-Route::delete('/profiles/{id}', 'ProfileController@destroy');
+Route::post('/profiles', 'ProfileController@store')->middleware('verified');
+Route::get('/profiles/edit', 'ProfileController@edit')->middleware('verified');
+Route::post('/profiles/{id}', 'ProfileController@update')->middleware('verified');
+Route::delete('/profiles/{id}', 'ProfileController@destroy')->middleware('verified');
 
 Route::get('/preferences/create', 'PreferenceController@create')->middleware('verified')->middleware('firstTime');
 Route::post('/preferences', 'PreferenceController@store');
