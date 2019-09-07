@@ -36,9 +36,10 @@ Route::post('/preferences', 'PreferenceController@store');
 Route::get('/preferences/edit', 'PreferenceController@edit');
 Route::post('/preferences/{id}', 'PreferenceController@update');
 
-Route::get('/ban/{id}', 'BanController@ban');
-Route::get('/like/{id}', 'LikeController@like');
+Route::post('/ban/{id}', 'BanController@ban');
+Route::post('/like/{id}', 'LikeController@like');
 
-Route::get('/recs', 'RecommendationController@getData')->middleware('verified');
-Route::get('/recss', 'RecommendationController@getRecs')->middleware('verified');
+Route::get('/recs/all', 'RecommendationController@getRecs')->middleware('verified');
+Route::get('/recs/{id}', 'RecommendationController@getData')->middleware('verified');
+Route::get('/recs', 'RecommendationController@show')->middleware('verified');
 
