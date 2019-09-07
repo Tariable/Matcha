@@ -526,7 +526,7 @@ class Configuration
     /**
      * Get the Psy Shell readline service.
      *
-     * By default, this service uses (in order of preference):
+     * By default, this service uses (in order of preferences):
      *
      *  * GNU Readline
      *  * Libedit

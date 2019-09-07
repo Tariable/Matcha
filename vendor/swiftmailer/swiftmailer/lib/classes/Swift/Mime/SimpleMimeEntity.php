@@ -774,7 +774,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
 
         // Sort in order of preference, if there is one
         if ($shouldSort) {
-            // Group the messages by order of preference
+            // Group the messages by order of preferences
             $sorted = [];
             foreach ($this->immediateChildren as $child) {
                 $type = $child->getContentType();
