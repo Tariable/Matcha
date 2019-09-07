@@ -16,29 +16,31 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true]);
+Route::group(['middleware' => ['verified']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+    Route::get('/photos/{user}', 'PhotoController@show');
+    Route::get('/photos/create', 'PhotoController@create');
+    Route::post('/photos', 'PhotoController@store');
+    Route::delete('/photos/{photo}', 'PhotoController@destroy');
+    Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
 
-Route::get('/photos/{user}', 'PhotoController@show')->middleware('verified');
-Route::get('/photos/create', 'PhotoController@create')->middleware('verified');
-Route::post('/photos', 'PhotoController@store')->middleware('verified');
-Route::delete('/photos/{photo}', 'PhotoController@destroy')->middleware('verified');
-Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne')->middleware('verified');
+    Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
+    Route::post('/profiles', 'ProfileController@store');
+    Route::get('/profiles/edit', 'ProfileController@edit')->middleware('allowEdit');
+    Route::post('/profiles/{id}', 'ProfileController@update');
+    Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
-Route::get('/profiles/create', 'ProfileController@create')->middleware('verified')->middleware('firstTime');
-Route::post('/profiles', 'ProfileController@store')->middleware('verified');
-Route::get('/profiles/edit', 'ProfileController@edit')->middleware('verified');
-Route::post('/profiles/{id}', 'ProfileController@update')->middleware('verified');
-Route::delete('/profiles/{id}', 'ProfileController@destroy')->middleware('verified');
+    Route::get('/preferences/create', 'PreferenceController@create')->middleware('firstTime');
+    Route::post('/preferences', 'PreferenceController@store');
+    Route::get('/preferences/edit', 'PreferenceController@edit')->middleware('allowEdit');
+    Route::post('/preferences/{id}', 'PreferenceController@update');
 
-Route::get('/preferences/create', 'PreferenceController@create')->middleware('verified')->middleware('firstTime');
-Route::post('/preferences', 'PreferenceController@store');
-Route::get('/preferences/edit', 'PreferenceController@edit');
-Route::post('/preferences/{id}', 'PreferenceController@update');
+    Route::get('/ban/{id}', 'BanController@ban');
+    Route::get('/like/{id}', 'LikeController@like');
 
-Route::get('/ban/{id}', 'BanController@ban');
-Route::get('/like/{id}', 'LikeController@like');
+    Route::get('/recs', 'RecommendationController@getData');
+    Route::get('/recss', 'RecommendationController@getRecs');
+});
 
-Route::get('/recs', 'RecommendationController@getData')->middleware('verified');
-Route::get('/recss', 'RecommendationController@getRecs')->middleware('verified');
 
