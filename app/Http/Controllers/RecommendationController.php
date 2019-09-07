@@ -16,11 +16,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RecommendationController extends Controller
 {
-    public function getData()
+    public function show()
     {
-        $id = 3;
+        return view('recommendations.show');
+    }
+
+    public function getData($id)
+    {
         $profile = Profile::where('id', '=', $id)->first();
         $user = Profile::where('id', '=', Auth::id())->first();
+        $data['id'] = $profile->id;
         $data['name'] = $profile->name;
         $data['age'] = $this->countAge($profile->date_of_birth);
         $data['desc'] = $profile->description;
@@ -28,7 +33,7 @@ class RecommendationController extends Controller
         $data['distance'] = $this->getDistance($user->latitude, $user->longitude,
             $profile->latitude, $profile->longitude);
         $data['common_tags'] = $this->getCommonTags($id);
-        return view('recommendations.show', compact('data'));
+        return response()->json(array('profileData' => $data));
     }
 
     public function getRecs()
@@ -38,7 +43,7 @@ class RecommendationController extends Controller
         $profile = $this->getProfile();
         $banned_id = $this->getBanned();
         $liked_id = $this->getLiked();
-        return Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
+        $recommendations = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
             $query->where('sex', '=', $profile->gender)->
             orWhere('sex', '=', '%ale');
@@ -52,6 +57,7 @@ class RecommendationController extends Controller
         whereNotIn('profiles.id', $banned_id)->
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
+        return response()->json(array('recommendationsId' => $recommendations));
     }
 
     public function getCommonTags($id)
