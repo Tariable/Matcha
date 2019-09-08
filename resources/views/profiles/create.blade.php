@@ -13,16 +13,13 @@
                     <div id="photoErrors"></div>
                     <div id="gallery"></div>
                 </div>
-
-                <hr>
-
                 <div class="profileContainer">
                     <h2>Profile section</h2>
                     <form action="/profiles" method="post" id="profileForm" novalidate>
                         <div class="form-group">
-                            <label class="m-2" for="name">Name:</label>
+{{--                            <label class="m-2" for="name">Name:</label>--}}
                             <input name="name" id="name" type="text" class="form-control"
-                                   value="{{ old('name') }}">
+                                   value="{{ old('name') }}" placeholder="Your First Name">
                         </div>
 
                         <div class="form-group">
@@ -33,24 +30,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="m-2" for="description">Say some words about yourself:</label>
-                            <textarea name="description" id="description" cols="30" rows="3"
-                                      class="form-control">{{ old('description') }}
-                            </textarea>
+{{--                            <label class="m-2" for="description">Say some words about yourself:</label>--}}
+                            <textarea name="description" id="description" cols="15" rows="8"
+                                      class="form-control" placeholder="Say some words about yourself">{{ old('description') }}</textarea>
                         </div>
+                        <div class="mb-10">Your gender is:</div>
+                        <div class="form-group radio">
 
-                        <div class="form-group">
-                            <span class="m-2">Choose your gender: </span>
-                            <input class="m-2" id="genderMale" name="gender" type="radio" value="male" checked
+                            <input class="form-radio" id="genderMale" name="gender" type="radio" value="male" checked
                                 {{ old('gender') == 'male' ? 'checked' : ''}}>
                             <label for="genderMale">Male</label>
-                            <input class="m-2" id="genderFemale" name="gender" type="radio" value="female"
+                            <input class="form-radio" id="genderFemale" name="gender" type="radio" value="female"
                                 {{ old('gender') == 'female' ? 'checked' : ''}}>
                             <label for="genderFemale">Female</label>
                         </div>
 
                         <div class="form-group">
                             <span class="m-2">Notifications: </span>
+{{--                           TODO: RADIO --> CHECKBOX--}}
                             <input class="m-2" id="notificationOn" name="notification" type="radio" value='1' checked
                                 {{ old('notification') == '1' ? 'checked' : ''}}>
                             <label for="notificationOn">Turn on</label>
@@ -68,8 +65,11 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <button class="btn btn-primary m-2" id="profileStore" type="submit">Create profile</button>
+                        <div class="form-group col">
+                            <div>
+                                <button class="btn btn-primary m-2" id="profileStore" type="submit">Create profile
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -268,6 +268,8 @@
                     function createPhotoElem(photo){
                         let photoElem = document.createElement('img');
                         photoElem.src = photo.path;
+                        photo.path = photo.path.substring(6);
+                        console.log(photo.path);
                         photoElem.id = photo.id;
                         photoElem.width = 150;
                         document.getElementById('gallery').append(photoElem);

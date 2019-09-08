@@ -54,10 +54,31 @@ html, body {
 }
 
        /*UTILITY*/
+
+textarea {
+    resize: none;
+    outline: none;
+    caret-color: rgba(229, 75, 75, 1);
+    border-radius: 5px;
+    border-color: #d7d9dc;
+    width: 260px;
+    transition: 0.15s ease-in;
+}
+
+textarea:hover,
+textarea:focus {
+    border-color: #ff4b4b;
+}
 .fas {
     color: rgba(241, 228, 232, 1);
     /*padding: 1rem;*/
     padding-left: 1rem;
+}
+
+.form-group.radio {
+    /*display: flex;*/
+    flex-direction: row;
+    /*justify-content: center;*/
 }
 
  a.nav-link:hover,
@@ -113,6 +134,52 @@ html, body {
     margin-top: 10px;
 }
 
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+input[type="radio"].form-radio
+{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    position: relative;
+    background-color: #f1f1f1;
+    color: #666;
+    top: -2px;
+    height: 25px;
+    width: 25px;
+    border: 0;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 7px;
+    outline: none;
+}
+
+.form-group.radio {
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+.form-radio:checked::before
+{
+    position: absolute;
+    font: 13px/1 'Open Sans', sans-serif;
+    left: 9px;
+    top: 5px;
+    content: '\02143';
+    transform: rotate(40deg);
+    color: rgba(229, 75, 75, 1);
+}
+.form-radio:hover
+{
+    background-color: #f7f7f7;
+}
+.form-radio:checked
+{
+    background-color: #f1f1f1;
+}
+
         /*Header*/
 .navbar {
     width: 100%;
@@ -132,7 +199,7 @@ html, body {
 
 .navbar-brand {
     padding-left: .25rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .navbar .navbar-toggler {
@@ -242,6 +309,12 @@ label:not(:last-child) {
     margin-right: 0.3rem;
 }
 
+.form-group label {
+    /*text-align: right;*/
+    /*width: 120px;*/
+    margin-right: 8px;
+}
+
 .verify {
     padding: 2rem;
     text-align: center;
@@ -251,7 +324,7 @@ label:not(:last-child) {
 
 .container-create {
     display: flex;
-    width: 1100px;
+    max-width: 1100px;
     margin: 0 auto;
     flex-direction: column;
     /*justify-content: center;*/
@@ -270,7 +343,10 @@ label:not(:last-child) {
         margin-bottom: 20px;
     }
 
-    .form-group input[type='text'] {
+    .form-group input[type='text'],
+    .form-group input[type='date'],
+    .form-group input[type='textarea']
+    {
         width: 250px;
         height: initial;
     }
@@ -285,11 +361,7 @@ label:not(:last-child) {
         /*margin-top: 4rem;*/
     }
 
-    .form-group label {
-        /*text-align: right;*/
-        /*width: 120px;*/
-        /*padding-right: 20px;*/
-    }
+
 
     .form-group.check {
         justify-content: center;

@@ -20,7 +20,7 @@
   <!-- Styles -->
 
   <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-{{--  <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+{{--  <link href="{{ asset('css/ap3p.css') }}" rel="stylesheet">--}}
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <link href="{{ asset('css/nouislider.css') }}" rel="stylesheet">
 </head>
