@@ -434,6 +434,34 @@ input#photoInput {
     flex-flow: row wrap;
 }
 
+
+
+        /*CREATE BLADE*/
+
+.container-pref {
+    /*display: flex;*/
+    /*flex-flow: column;*/
+}
+
+.container-pref form {
+    display: flex;
+    flex-flow: column;
+    padding: 2rem;
+    text-align: center;
+}
+
+.container-tag {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    /*width: 100%;*/
+}
+.container-tag > * {
+    flex: 1 1 10%;
+    margin: 1rem 0.5rem 0rem 0rem;
+}
+
+
 @media only screen and (min-width: 700px) {
     .form {
         width: 600px;
@@ -488,6 +516,17 @@ input#photoInput {
 
     #gallery:hover ~ span {
         color: #000;
+    }
+
+    .container-pref {
+        margin: 2rem auto;
+        border: 1px solid #aaacaf;
+        border-radius: 5px;
+        max-width: 35vw;
+        /*height: 25vh;*/
+        padding: 2rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        /*margin-top: 4rem;*/
     }
 
     /*.invalid-feedback {*/

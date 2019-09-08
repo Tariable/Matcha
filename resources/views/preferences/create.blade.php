@@ -3,6 +3,8 @@
 @section('title', 'Preferences')
 
 @section('content')
+    <div class="container-pref">
+
     <form action="/preferences" method="post">
         <div class="col-3">
             <p class="pt-4" style="margin-bottom: 0 !important;">Age preference</p>
@@ -24,15 +26,13 @@
         </div>
         <div class="col-3">
             <p class="pt-4" style="margin-bottom: 0 !important;">Sex preferences</p>
-            <div class="container" style="display: flex; padding-left: 0;">
-                <div class="btn-group-toggle pr-2" data-toggle="buttons">
-                    <label class="btn btn-secondary active" style="background-color:#FF7373">
-                        <input type="radio" name="sex" checked value="%ale"> Bisexual</label>
-                    <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="sex" value="male"> Male</label>
-                    <label class="btn btn-secondary" style="background-color:#FF7373">
-                        <input type="radio" name="sex" value="female"> Female</label>
-                </div>
+            <div class="form-group radio">
+                <input type="radio" id="genderBi" class="form-radio" name="sex" checked value="%ale">
+                <label for="genderBi">Bisexual</label>
+                <input type="radio" id="genderMale" class="form-radio" name="sex" value="male">
+                <label for="genderMale">Male</label>
+                <input type="radio" id="genderFemale" class="form-radio" name="sex" value="female">
+                <label for="genderFemale">Female</label>
             </div>
         </div>
         <div class="col-3">
@@ -40,25 +40,10 @@
         </div>
         <div class="col-3">
 
-            <div class="container pb-4" style="
-                    display: flex;
-                    padding-left: 0;
-                    margin-left: 0;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                    width: 85%;
-                    align-items: center;
-                    height: 150px;">
+            <div class="container-tag form-group radio" data-toggle="buttons">
                 @foreach($tags as $i => $tag)
-                    <div class="btn-group-toggle pr-2" data-toggle="buttons">
-                        <label class="btn btn-info" style="
-                            background-color: #6cb2eb;
-                            border-radius: 5px;
-                            text-align: center;
-                            width: 100px;">
-                            <input name="tags[]" type="checkbox" value="{{ $i + 1 }}"> {{ $tag }}
-                        </label>
-                    </div>
+                    <div><label for="t{{ $i + 1 }}"><input name="tags[]" id="t{{ $i + 1 }}" type="checkbox" value="{{ $i + 1 }}" checked>
+                         {{ $tag }}</label></div>
                 @endforeach
             </div>
         </div>
@@ -76,6 +61,7 @@
             </ul>
         </div>
     @endif
+    </div>
 
     <script>
 
