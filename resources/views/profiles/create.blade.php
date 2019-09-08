@@ -3,23 +3,24 @@
 @section('content')
     <div class="container-create">
                 <div class="photoContainer">
-                    <h2>Photo section</h2>
+                    <h2>Your photos</h2>
                     <form action="/photos" name="photoForm" id="photoForm" method="post" enctype="multipart/form-data">
                         <div id="photoFormContent">
-                            <label id="labelPhotoInput" for="photoInput">Add some pretty photos:</label>
+                            <label id="labelPhotoInput" for="photoInput">Choose a photo</label>
                             <input name="photoInput" id="photoInput" onchange="sendImage()" type="file" class="pb-3">
                         </div>
                     </form>
                     <div id="photoErrors"></div>
                     <div id="gallery"></div>
+                    <span class="hidden">Click on a picture to delete</span>
                 </div>
                 <div class="profileContainer">
-                    <h2>Profile section</h2>
+                    <h2>Your data</h2>
                     <form action="/profiles" method="post" id="profileForm" novalidate>
                         <div class="form-group">
 {{--                            <label class="m-2" for="name">Name:</label>--}}
                             <input name="name" id="name" type="text" class="form-control"
-                                   value="{{ old('name') }}" placeholder="Your First Name">
+                                   value="{{ old('name') }}" placeholder="First Name">
                         </div>
 
                         <div class="form-group">
@@ -32,7 +33,7 @@
                         <div class="form-group">
 {{--                            <label class="m-2" for="description">Say some words about yourself:</label>--}}
                             <textarea name="description" id="description" cols="15" rows="8"
-                                      class="form-control" placeholder="Say some words about yourself">{{ old('description') }}</textarea>
+                                      class="form-control" placeholder="Here you can describe yourself.&#10;What do you like to do in your freetime?">{{ old('description') }}</textarea>
                         </div>
                         <div class="mb-10">Your gender is:</div>
                         <div class="form-group radio">
@@ -214,6 +215,11 @@
                         if (target.tagName === 'IMG'){
                             destroyPhoto(target);
                         }
+                        // console.log(getQuantityOfPhotos());
+                        if (getQuantityOfPhotos() === 1) {
+                            let hiddenSpan = document.querySelector('.hidden');
+                            hiddenSpan.style.display = 'none';
+                        }
                     }
 
                     async function destroyPhoto(target){
@@ -267,12 +273,13 @@
 
                     function createPhotoElem(photo){
                         let photoElem = document.createElement('img');
-                        photoElem.src = photo.path;
+                        let hiddenSpan = document.querySelector('.hidden');
                         photo.path = photo.path.substring(6);
-                        console.log(photo.path);
+                        photoElem.src = photo.path;
                         photoElem.id = photo.id;
                         photoElem.width = 150;
                         document.getElementById('gallery').append(photoElem);
+                        hiddenSpan.style.display = 'inline';
                     }
 
                     function removeAllChildrenElemFrom(Div) {
@@ -290,9 +297,6 @@
                             document.getElementById('photoFormContent').style.display = "block";
                         }
                     }
-
-                    // <label id="labelPhotoInput" for="photoInput">Add some pretty photos:</label>
-                    // <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
 
                         function getQuantityOfPhotos() {
                             let photosQuantity = document.getElementById('gallery').childElementCount;
