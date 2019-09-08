@@ -70,7 +70,7 @@ class PhotoController extends Controller
 
             Photo::create([
                 'user_id' => Auth::id(),
-                'path' => '/storage/photos/' . $photoNameToStore,
+                'path' => 'public/storage/photos/' . $photoNameToStore,
             ]);
             return 'success';
         } else {

@@ -267,6 +267,7 @@
 
                 function createPhotoElem(photo){
                     let photoElem = document.createElement('img');
+                    photo.path = photo.path.substring(6);
                     photoElem.src = photo.path;
                     photoElem.id = photo.id;
                     photoElem.width = 150;

@@ -35,8 +35,7 @@
                         <div class="form-group">
                             <label class="m-2" for="description">Say some words about yourself:</label>
                             <textarea name="description" id="description" cols="30" rows="3"
-                                      class="form-control">{{ old('description') }}
-                            </textarea>
+                                      class="form-control">{{ old('description') }}</textarea>
                         </div>
 
                         <div class="form-group">
@@ -267,6 +266,7 @@
 
                     function createPhotoElem(photo){
                         let photoElem = document.createElement('img');
+                        photo.path = photo.path.substring(6);
                         photoElem.src = photo.path;
                         photoElem.id = photo.id;
                         photoElem.width = 150;
@@ -292,10 +292,10 @@
                     // <label id="labelPhotoInput" for="photoInput">Add some pretty photos:</label>
                     // <input name="photo" id="photoInput" hidden onchange="sendImage()" type="file" class="pb-3">
 
-                        function getQuantityOfPhotos() {
-                            let photosQuantity = document.getElementById('gallery').childElementCount;
-                            return photosQuantity;
-                        }
+                    function getQuantityOfPhotos() {
+                        let photosQuantity = document.getElementById('gallery').childElementCount;
+                        return photosQuantity;
+                    }
                 </script>
     </div>
 @endsection
