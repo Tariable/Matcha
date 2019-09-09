@@ -26,6 +26,7 @@
                         </div>
 
                         <div class="form-group">
+                            <input class="datedropper-init" type="text">
                             <label class="m-2" for="date_of_birth">Date of birth</label>
                             <input name="date_of_birth" id="date_of_birth" type="date" class="form-control"
                                    max="2002-01-01"
