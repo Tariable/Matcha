@@ -3,6 +3,7 @@
 @section('title', 'Preferences')
 
 @section('content')
+    <div class="container-pref">
     <form action="/preferences/{{ Auth::id() }}" method="post">
         <div class="col-3">
             <p class="pt-4" style="margin-bottom: 0 !important;">Age preference
@@ -85,7 +86,7 @@
             </ul>
         </div>
     @endif
-
+    </div>
     <script>
         $("#ageSlider").ionRangeSlider({
             type: "int",
