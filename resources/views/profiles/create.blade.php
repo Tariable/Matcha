@@ -120,7 +120,7 @@
                             let profileStoreResponse = await fetch(urlStoreProfile, options);
 
                             if(profileStoreResponse.ok){
-                                // location.href = '/preferences/create';
+                                location.href = '/preferences/create';
                             } else {
                                 let profileJsonErrors = await profileStoreResponse.json();
                                 for(let key in profileJsonErrors.errors){

@@ -14,6 +14,7 @@ class CreateBansTable extends Migration
     public function up()
     {
         Schema::create('bans', function (Blueprint $table) {
+            $table->bigIncrements('ban_id');
             $table->bigInteger('profile_id');
             $table->bigInteger('banned_id');
             $table->timestamps();

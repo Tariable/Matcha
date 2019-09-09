@@ -10,6 +10,7 @@
 
 
     <div class="container my-3 py-5 text-center">
+        {{ $data['lowerAge'] }}
         <div class="row mb-5">
 
         </div>
@@ -18,8 +19,8 @@
         <div class="card">
             <div class="card-body" id="cardBody" hidden>
                 <div id="mainInfo">
-                    <h1 id="name"></h1>
-                    <h5 id="age"></h5>
+                    <h1 id="cardName"></h1>
+                    <h5 id="cardAge"></h5>
                 </div>
 
                 <div id="gallery">
@@ -27,25 +28,30 @@
                 </div>
 
                 <div id="info">
-                    <p id="distance"></p>
-                    <p id="description"></p>
+                    <p id="cardDistance"></p>
+                    <p id="cardDescription"></p>
                     <p>Common tags:
 
                     </p>
+                    <p id="cardId" hidden></p>
                 </div>
             </div>
         </div>
 
     </div>
     <script>
-        let recommendation;
+        let recommendations;
+        let iterator;
+        let profile;
+        let photos;
 
         window.onload = async function () {
             recommendations = await getRecommendations();
-            let profileNum = 0;
-            let profile = await getProfile(recommendations[profileNum]);
-            let photos = await getPhotos(recommendations[profileNum]);
-            showProfile(profile, photos);
+            iterator = 0;
+            profile = await getProfile(recommendations[iterator]);
+            photos = await getPhotos(recommendations[iterator]);
+            showProfile(profile);
+            showPhotos(photos);
         };
 
         async function getRecommendations() {
@@ -77,6 +83,15 @@
 
             let photos = await showAllPhotosResponse.json();
 
+            return photos;
+        }
+
+        function showPhotos(photos) {
+            let gallery = document.getElementById('gallery');
+            while (gallery.firstChild){
+                gallery.firstChild.remove();
+            }
+
             photos.forEach(function (photo) {
                 createPhotoElem(photo);
             });
@@ -91,23 +106,19 @@
             document.getElementById('gallery').append(photoElem);
         }
 
-        function showProfile(profile, photos) {
-            let id = document.createElement('span');
-            id.innerHTML = profile['id'];
-            id.hidden = true;
-
-            document.getElementById('cardBody').append(id);
-            document.getElementById('name').innerHTML = profile['name'];
-            document.getElementById('age').innerHTML = profile['age'];
-            document.getElementById('distance').innerHTML = profile['distance'] + ' km from you';
-            document.getElementById('description').innerHTML = profile['desc'];
+        function showProfile(profile) {
+            document.getElementById('cardId').innerHTML = profile['id'];
+            document.getElementById('cardName').innerHTML = profile['name'];
+            document.getElementById('cardAge').innerHTML = profile['age'];
+            document.getElementById('cardDistance').innerHTML = profile['distance'] + ' km from you';
+            document.getElementById('cardDescription').innerHTML = profile['desc'];
             document.getElementById('cardBody').removeAttribute('hidden');
         }
 
         // AJAX query to like account
 
         async function like() {
-            let id = document.getElementById('id');
+            let id = document.getElementById('cardId').innerHTML;
             let urlLike = '/like/' + id;
 
             let headers = new Headers();
@@ -122,12 +133,36 @@
             let LikeResponse = await fetch(urlLike, options);
 
             if (LikeResponse.ok) {
-                console.log(recommendation);
+                iterator++;
+                profile = await getProfile(recommendations[iterator]);
+                photos = await getPhotos(recommendations[iterator]);
+                showProfile(profile);
+                showPhotos(photos);
             }
         }
 
         async function ban() {
+            let id = document.getElementById('cardId').innerHTML;
+            let urlBan = '/ban/' + id;
 
+            let headers = new Headers();
+            let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            headers.append('X-CSRF-TOKEN', token);
+
+            let options = {
+                method: 'POST',
+                headers: headers
+            }
+
+            let BanResponse = await fetch(urlBan, options);
+
+            if (BanResponse.ok) {
+                iterator++;
+                profile = await getProfile(recommendations[iterator]);
+                photos = await getPhotos(recommendations[iterator]);
+                showProfile(profile);
+                showPhotos(photos);
+            }
         }
 
 
