@@ -6,22 +6,28 @@
     <div class="container-pref">
     <form action="/preferences/{{ Auth::id() }}" method="post">
         <div class="col-3">
-            <p class="pt-4" style="margin-bottom: 0 !important;">Age preference</p>
-            <div class="age-slider">
+            <p class="pt-4" style="margin-bottom: 0 !important;">Age preference
                 <span id="lowerAge" class="custom-span"></span>
+                <span id="upperAge" class="custom-span"></span>
+            </p>
+            <div class="age-slider">
+
                 <input type="number" id="lowerAgeInput" name="lowerAge" value="{{ $preference->lowerAge }}" hidden>
                 <div>
-                    <div id="ageSlider"></div>
+                    <div><input type="text" id="ageSlider"></div>
                 </div>
                 <input type="number" id="upperAgeInput" name="upperAge" value="{{ $preference->upperAge }}" hidden>
-                <span id="upperAge" class="custom-span"></span>
+
             </div>
         </div>
         <div class="col-3">
-            <p class="pt-4" style="margin-bottom: 0 !important;">Max distance</p>
+            <p class="pt-4" style="margin-bottom: 0 !important;">Max distance
+                <span id="distance"></span>
+            </p>
             <input type="number" id="distanceInput" name="distance" value="{{ $preference->distance }}" hidden>
-            <span id="distance"></span>
-            <div id="distanceSlider"></div>
+            <div>
+                <div><input type="text" id="distanceSlider"></div>
+            </div>
         </div>
         <div class="col-3">
             <p class="pt-4" style="margin-bottom: 0 !important;">Sex preference</p>
@@ -32,10 +38,10 @@
                         value="%ale"> Bisexual</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
                         <input type="radio" name="sex" {{ $preference->pref_sex === 'male' ? 'checked' : '' }}
-                               value="male"> Male</label>
+                        value="male"> Male</label>
                     <label class="btn btn-secondary" style="background-color:#FF7373">
                         <input type="radio" name="sex" {{ $preference->pref_sex === 'female' ? 'checked' : '' }}
-                               value="female"> Female</label>
+                        value="female"> Female</label>
                 </div>
             </div>
         </div>
@@ -82,46 +88,55 @@
     @endif
     </div>
     <script>
+        $("#ageSlider").ionRangeSlider({
+            type: "int",
+            skin: "round",
+            min: 18,
+            max: 100,
+            from: $("#lowerAgeInput")[0].value,
+            min_interval: 3,
+            to: $("#upperAgeInput")[0].value,
+            hide_min_max: true,
+            hide_from_to: true,
+            grid: false,
 
-        let ageSlider = document.getElementById('ageSlider');
-        let distanceSlider = document.getElementById('distanceSlider');
-        let lowerAge = document.getElementById("lowerAgeInput").value;
-        let upperAge = document.getElementById("upperAgeInput").value;
-        let distance = document.getElementById("distanceInput").value;
+            onChange: function (data) {
+                $("#lowerAge")[0].innerHTML = data.from + " -";
+                $("#lowerAgeInput")[0].value = data.from;
+                $("#upperAge")[0].innerHTML = data.to;
+                $("#upperAgeInput")[0].value = data.to;
+            },
+            onStart: function (data) {
+                $("#lowerAge")[0].innerHTML = data.from + " -";
+                $("#lowerAgeInput")[0].value = data.from;
+                $("#upperAge")[0].innerHTML = data.to;
+                $("#upperAgeInput")[0].value = data.to;
+            },
 
-        noUiSlider.create(distanceSlider, {
-            start: [distance],
-            step: 1,
-            connect: 'lower',
-            range: {
-                'min': [3],
-                'max': [100]
-            }
         });
 
-        noUiSlider.create(ageSlider, {
-            start: [lowerAge, upperAge],
-            connect: true,
-            margin: 3,
-            step: 1,
-            range: {
-                'min': [18],
-                'max': [100]
-            }
+        $("#distanceSlider").ionRangeSlider({
+            type: "single",
+            skin: "round",
+            min: 5,
+            max: 100,
+            from: $("#distanceInput")[0].value,
+            hide_min_max: true,
+            hide_from_to: true,
+            grid: false,
+
+            onStart: function (data) {
+                $("#distance")[0].innerHTML = data.from + " km";
+                $("#distanceInput")[0].value = data.from;
+            },
+
+            onChange: function (data) {
+                $("#distance")[0].innerHTML = data.from + " km";
+                $("#distanceInput")[0].value = data.from;
+            },
+
         });
 
-        ageSlider.noUiSlider.on('update', function (values, handle) {
-            let ageGap = ageSlider.noUiSlider.get();
-            document.getElementById("lowerAge").innerHTML = parseInt(ageGap[0]);
-            document.getElementById("lowerAgeInput").value = parseInt(ageGap[0]);
-            document.getElementById("upperAge").innerHTML = parseInt(ageGap[1]);
-            document.getElementById("upperAgeInput").value = parseInt(ageGap[1]);
-        });
-
-        distanceSlider.noUiSlider.on('update', function (values, handle) {
-            let distanceGap = distanceSlider.noUiSlider.get();
-            document.getElementById("distance").innerHTML = parseInt(distanceGap) + " km";
-            document.getElementById("distanceInput").value = parseInt(distanceGap);
-        });
     </script>
+
 @endsection

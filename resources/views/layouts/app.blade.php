@@ -11,7 +11,7 @@
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/nouislider.js') }}"></script>
+  <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
 {{--  <link href="{{ asset('css/ap3p.css') }}" rel="stylesheet">--}}
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-  <link href="{{ asset('css/nouislider.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
 </head>
 <body>
 
