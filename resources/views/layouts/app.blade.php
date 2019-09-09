@@ -23,6 +23,7 @@
 {{--  <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/datestyle.css') }}" rel="stylesheet">
 </head>
 <body>
 
