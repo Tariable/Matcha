@@ -76,8 +76,6 @@ class PreferenceController extends Controller
         return redirect("/recs");
     }
 
-
-
     public function storePreferences($data)
     {
         $data['id'] = Auth::id();
