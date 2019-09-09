@@ -8,12 +8,17 @@
         <h4><a href="/preferences/edit">Edit preferences</a></h4>
     </div>
 
+    <hr>
 
-    <div class="container my-3 py-5 text-center">
-        {{ $data['lowerAge'] }}
-        <div class="row mb-5">
+    <div class="m-2">
+        <h3>Selection criteria</h3>
+        <p><strong>Age gap: </strong><span>{{ $pref['lowerAge'] }}</span> ~ <span>{{ $pref['upperAge'] }}</span></p>
+        <p>Distance: {{ $pref['distance'] }}</p>
+    </div>
 
-        </div>
+    <hr>
+
+    <div class="container my-3 py-5 text-center" id="recsDiv">
         <button  class="btn btn-success" id="like" onclick="like()" style="float:right">Like</button>
         <button  class="btn btn-danger" id="ban" onclick="ban()" style="float:left">Dislike</button>
         <div class="card">
@@ -37,8 +42,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="expandDiv">
 
     </div>
+
     <script>
         let recommendations;
         let iterator;
@@ -50,8 +59,7 @@
             iterator = 0;
             profile = await getProfile(recommendations[iterator]);
             photos = await getPhotos(recommendations[iterator]);
-            showProfile(profile);
-            showPhotos(photos);
+            displayProfile(profile, photos);
         };
 
         async function getRecommendations() {
@@ -84,6 +92,11 @@
             let photos = await showAllPhotosResponse.json();
 
             return photos;
+        }
+
+        function displayProfile(profile, photos) {
+            showPhotos(photos);
+            showProfile(profile);
         }
 
         function showPhotos(photos) {
@@ -134,10 +147,13 @@
 
             if (LikeResponse.ok) {
                 iterator++;
-                profile = await getProfile(recommendations[iterator]);
-                photos = await getPhotos(recommendations[iterator]);
-                showProfile(profile);
-                showPhotos(photos);
+                if (recommendations[iterator]){
+                    profile = await getProfile(recommendations[iterator]);
+                    photos = await getPhotos(recommendations[iterator]);
+                    displayProfile(profile, photos);
+                } else {
+                    createSuggestionToExpandPref();
+                }
             }
         }
 
@@ -158,12 +174,30 @@
 
             if (BanResponse.ok) {
                 iterator++;
-                profile = await getProfile(recommendations[iterator]);
-                photos = await getPhotos(recommendations[iterator]);
-                showProfile(profile);
-                showPhotos(photos);
+                if (recommendations[iterator]){
+                    profile = await getProfile(recommendations[iterator]);
+                    photos = await getPhotos(recommendations[iterator]);
+                    displayProfile(profile, photos);
+                } else {
+                    createSuggestionToExpandPref();
+                }
             }
         }
+
+        function createSuggestionToExpandPref() {
+            document.getElementById('recsDiv').style.display = "none";
+            let expandButton = document.createElement('button');
+            expandButton.setAttribute('class', 'btn btn-danger');
+            expandButton.setAttribute('id', 'expandButton');
+            expandButton.setAttribute('onclick', 'expandPref');
+            expandButton.innerHTML = 'You can expand selection criteria';
+            document.getElementById('expandDiv').append(expandButton);
+        }
+
+        function expandPref() {
+
+        }
+
 
 
 
