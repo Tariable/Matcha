@@ -16,7 +16,6 @@ class ProfileController extends Controller
 
     public function store()
     {
-        dd(request()->input());
         $data = request()->validate($this->rules(), $this->error_messages());
         $data['id'] = Auth::id();
         Profile::create($data);

@@ -59,8 +59,8 @@
                         </div>
 
                         <div>
-                            <input type="number" id="current_longitude" name="current_longitude" hidden>
-                            <input type="number" id="current_latitude" name="current_latitude" hidden>
+                            <input type="number" id="longitude" name="longitude" hidden>
+                            <input type="number" id="latitude" name="latitude" hidden>
                         </div>
 
                         <div class="form-group" id="profileErrors">
@@ -101,15 +101,15 @@
                             let description = document.getElementById('description');
                             let gender = document.querySelector('input[name="gender"]:checked');
                             let notification = document.querySelector('input[name="notification"]:checked');
-                            let current_longitude = document.getElementById('current_longitude');
-                            let current_latitude = document.getElementById('current_latitude');
+                            let longitude = document.getElementById('longitude');
+                            let latitude = document.getElementById('latitude');
                             formData.append('name', name.value);
                             formData.append('date_of_birth', date_of_birth.value);
                             formData.append('description', description.value);
                             formData.append('gender', gender.value);
                             formData.append('notification', notification.value);
-                            formData.append('current_longitude', current_longitude.value);
-                            formData.append('current_latitude', current_latitude.value);
+                            formData.append('longitude', longitude.value);
+                            formData.append('latitude', latitude.value);
 
                             let options = {
                                 method: 'POST',
@@ -120,7 +120,7 @@
                             let profileStoreResponse = await fetch(urlStoreProfile, options);
 
                             if(profileStoreResponse.ok){
-                                location.href = '/preferences/create';
+                                // location.href = '/preferences/create';
                             } else {
                                 let profileJsonErrors = await profileStoreResponse.json();
                                 for(let key in profileJsonErrors.errors){
@@ -150,8 +150,8 @@
 
                     function getCurrentLocation() {
                         var geoLocation = function (position) {
-                            document.getElementById('current_longitude').value = position.coords.longitude;
-                            document.getElementById('current_latitude').value = position.coords.latitude;
+                            document.getElementById('longitude').value = position.coords.longitude;
+                            document.getElementById('latitude').value = position.coords.latitude;
                         };
 
                         var ipLocation = async function () {
@@ -162,8 +162,8 @@
                             if (getLocationResponse.ok) {
                                 let location = await getLocationResponse.text();
                                 location = location.split(',');
-                                document.getElementById('current_latitude').value = location[0];
-                                document.getElementById('current_longitude').value = location[1];
+                                document.getElementById('latitude').value = location[0];
+                                document.getElementById('longitude').value = location[1];
                             } else {
                                 console.log("Bad location request");
                             }
