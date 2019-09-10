@@ -45,15 +45,12 @@
           <label for="genderFemale">Female</label>
         </div>
 
-        <div class="form-group">
-          <span class="m-2">Notifications: </span>
+        <div class="form-group check">
           {{--                           TODO: RADIO --> CHECKBOX--}}
-          <input class="m-2" id="notificationOn" name="notification" type="radio" value=1
-                  {{ $profile->notification == 1 ? 'checked' : '' }} >
-          <label for="notificationOn">Turn on</label>
-          <input class="m-2" id="notificationOff" name="notification" type="radio" value=0
-                  {{ $profile->notification == 0 ? 'checked' : '' }} >
-          <label for="notificationOff">Turn off</label>
+          <input class="form-check-input" id="notification" name="notification" type="checkbox"
+                  {{ $profile->notification == '1' ? 'checked' : '' }} >
+          <label for="notificationOn">Notifications</label>
+
         </div>
 
         <div>
@@ -102,7 +99,9 @@
         let date_of_birth = document.getElementById('date_of_birth').value;
         let description = document.getElementById('description').value;
         let gender = document.querySelector('input[name="gender"]:checked').value;
-        let notification = document.querySelector('input[name="notification"]:checked').value;
+        let notification = document.getElementById('notification');
+        notification.hasAttribute('checked') ? notification = '1' : notification = '0';
+        console.log(notification);
         let current_longitude = document.getElementById('current_longitude').value;
         let current_latitude = document.getElementById('current_latitude').value;
         formData.append('name', name);
@@ -117,7 +116,7 @@
           method: 'POST',
           headers: headers,
           body: formData
-        }
+        };
 
         let profileStoreResponse = await fetch(urlUpdateProfile, options);
 

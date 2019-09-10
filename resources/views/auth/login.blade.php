@@ -2,7 +2,6 @@
 
 @section('content')
   <div class="container-form">
-    <h1>Login</h1>
     <form method="POST" action="{{ route('login') }}">
       @csrf
 
@@ -10,6 +9,8 @@
 
 
 {{--      </div>--}}
+      <h1>Login</h1>
+
       <div class="form-group row">
 {{--        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>--}}
 {{----}}

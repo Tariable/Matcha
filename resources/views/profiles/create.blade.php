@@ -45,15 +45,11 @@
           <label for="genderFemale">Female</label>
         </div>
 
-        <div class="form-group">
-          <span class="m-2">Notifications: </span>
+        <div class="form-group check">
           {{--                           TODO: RADIO --> CHECKBOX--}}
-          <input class="m-2" id="notificationOn" name="notification" type="radio" value='1' checked
-                  {{ old('notification') == '1' ? 'checked' : ''}}>
-          <label for="notificationOn">Turn on</label>
-          <input class="m-2" id="notificationOff" name="notification" type="radio" value='0'
-                  {{ old('notification') == '0' ? 'checked' : ''}}>
-          <label for="notificationOff">Turn off</label>
+          <input class="form-check-input" id="notification" name="notification" type="checkbox"
+                  {{ old('remember') ? 'checked' : '' }} >
+          <label for="notificationOn">Notifications</label>
         </div>
 
         <div>
@@ -98,26 +94,27 @@
         headers.append('Accept', 'application/json');
 
         let formData = new FormData();
-        let name = document.getElementById('name');
-        let date_of_birth = document.getElementById('date_of_birth');
-        let description = document.getElementById('description');
-        let gender = document.querySelector('input[name="gender"]:checked');
-        let notification = document.querySelector('input[name="notification"]:checked');
-        let longitude = document.getElementById('longitude');
-        let latitude = document.getElementById('latitude');
-        formData.append('name', name.value);
-        formData.append('date_of_birth', date_of_birth.value);
-        formData.append('description', description.value);
-        formData.append('gender', gender.value);
-        formData.append('notification', notification.value);
-        formData.append('longitude', longitude.value);
-        formData.append('latitude', latitude.value);
+        let name = document.getElementById('name').value;
+        let date_of_birth = document.getElementById('date_of_birth').value;
+        let description = document.getElementById('description').value;
+        let gender = document.querySelector('input[name="gender"]:checked').value;
+        let notification = document.getElementById('notification');
+        notification.hasAttribute('checked') ? notification = '1' : notification = '0';
+        let longitude = document.getElementById('longitude').value;
+        let latitude = document.getElementById('latitude').value;
+        formData.append('name', name);
+        formData.append('date_of_birth', date_of_birth);
+        formData.append('description', description);
+        formData.append('gender', gender);
+        formData.append('notification', notification);
+        formData.append('longitude', longitude);
+        formData.append('latitude', latitude);
 
         let options = {
           method: 'POST',
           headers: headers,
           body: formData
-        }
+        };
 
         let profileStoreResponse = await fetch(urlStoreProfile, options);
 
