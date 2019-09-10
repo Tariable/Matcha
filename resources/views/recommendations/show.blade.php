@@ -3,46 +3,44 @@
 @section('title', 'Matcha')
 
 @section('content')
-    <div class="m-2">
-        <h4><a href="/profiles/edit">Edit profile</a></h4>
-        <h4><a href="/preferences/edit">Edit preferences</a></h4>
+
+  <div class="container-card">
+    <div class="row mb-5">
     </div>
-
-    <hr>
-
-    <div class="container my-3 py-5 text-center" id="recsDiv">
-        <button  class="btn btn-success" id="like" onclick="like()" style="float:right">Like</button>
-        <button  class="btn btn-danger" id="ban" onclick="ban()" style="float:left">Dislike</button>
-        <div class="card">
-            <div class="card-body" id="cardBody" hidden>
-                <div id="mainInfo">
-                    <h1 id="cardName"></h1>
-                    <h5 id="cardAge"></h5>
-                </div>
-
-                <div id="gallery">
-
-                </div>
-
-                <div id="info">
-                    <p id="cardDistance"></p>
-                    <p id="cardDescription"></p>
-                    <p id="cardId" hidden></p>
-                </div>
-            </div>
+    <div class="card">
+      <div class="card-body" id="cardBody" hidden>
+        <div class="carousel-wrapper">
+          <div id="carousel">
+          </div>
         </div>
+        <div class="carousel__button--next"></div>
+        <div class="carousel__button--prev"></div>
+        <div id="mainInfo">
+          <h1 id="cardName"></h1>
+          <h5 id="cardAge"></h5>
+        </div>
+        <div id="info">
+          <p id="cardDistance"></p>
+          <p id="cardDescription"></p>
+          <p id="cardId" hidden></p>
+        </div>
+      </div>
     </div>
+    <button  class="btn btn-success" id="like" onclick="like()">Like</button>
+    <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+  </div>
+  <div class="m-2">
+    <h4><a href="/profiles/edit">Edit profile</a></h4>
+    <h4><a href="/preferences/edit">Edit preferences</a></h4>
+  </div>
+  <div id="expandDiv">
 
-    <div id="expandDiv">
-
-    </div>
-
-    <script>
-        let recommendations;
-        let iterator;
-        let profile;
-        let photos;
-        let pref;
+  </div>
+  <script>
+    let recommendations;
+    let iterator;
+    let profile;
+    let photos;
 
         window.onload = async function () {
             recommendations = await getRecommendations();
@@ -105,24 +103,25 @@
         }
 
         function showPhotos(photos) {
-            let gallery = document.getElementById('gallery');
+            let gallery = document.getElementById('carousel');
             while (gallery.firstChild){
                 gallery.firstChild.remove();
             }
 
-            photos.forEach(function (photo) {
-                createPhotoElem(photo);
-            });
-        }
+      photos.forEach((photo, i) => createPhotoElem(photo, i));
+    }
 
-        function createPhotoElem(photo){
-            let photoElem = document.createElement('img');
-            photo.path = photo.path.substring(6);
-            photoElem.src = photo.path;
-            photoElem.id = photo.id;
-            photoElem.width = 150;
-            document.getElementById('gallery').append(photoElem);
-        }
+    function createPhotoElem(photo, i) {
+      let photoElem = document.createElement('img');
+      console.dir(photoElem);
+      photo.path = photo.path.substring(6);
+      photoElem.src = photo.path;
+      photoElem.id = photo.id;
+      photoElem.style.width = '100%';
+      photoElem.classList.add('carousel__photo');
+      i === 0 ? photoElem.classList.add('initial') : 0;
+      document.getElementById('carousel').append(photoElem);
+    }
 
         function showProfile(profile) {
             document.getElementById('cardId').innerHTML = profile['id'];
@@ -239,6 +238,16 @@
                 document.getElementById('expandDiv').append(cantExpand);
             }
         }
+
+        (function(d){
+            let itemClassName = "carousel__photo";
+            let items = d.getElementsByClassName(itemClassName);
+            let totalItems = items.length;
+            let slide = 0;
+            let moving = true;
+
+            items[totalItems - 1].classList.add
+        }(document));
 
     </script>
 

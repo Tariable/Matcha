@@ -74,6 +74,10 @@ textarea:focus {
     border-color: #ff4b4b;
 }
 
+.justify-content-center {
+    justify-content: center;
+}
+
 .hidden {
     /*visibility: hidden;*/
     display: none;
@@ -158,7 +162,7 @@ textarea:focus {
 }
 
 .mb-10 {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 input[type="radio"].form-radio
@@ -210,10 +214,6 @@ input[type="checkbox"]:checked::before {
     color: rgba(229, 75, 75, 1);
 }
 
-.form-group.radio {
-    /*align-items: center;*/
-    /*justify-content: center;*/
-}
 .form-radio:checked::before
 {
     position: absolute;
@@ -247,7 +247,7 @@ input[type="checkbox"]:checked::before {
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
 }
 
 .navbar-brand {
@@ -318,7 +318,7 @@ label:not(:last-child) {
     flex-flow: column;
     /*border: 1px solid black;*/
     margin-bottom: 0.3rem;
-    justify-content: flex-start;
+    /*justify-content: flex-start;*/
     width: 20rem;
     /*flex: 0 1 100%;*/
 }
@@ -373,6 +373,8 @@ label:not(:last-child) {
     padding: 2rem;
     text-align: center;
 }
+
+
 
 /*CREATE BLADE*/
 
@@ -450,17 +452,124 @@ input#photoInput {
     text-align: center;
 }
 
+.center {
+    margin: 1rem auto;
+}
+
+.container-pref p {
+    margin: 0;
+}
+
 .container-tag {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     /*width: 100%;*/
 }
+
 .container-tag > * {
     flex: 1 1 10%;
     margin: 1rem 0.5rem 0rem 0rem;
 }
 
+.slider-info {
+    position: relative;
+    top: 20px;
+}
+
+
+ /*RECS BLADE*/
+
+.container-card {
+    display: flex;
+    flex-flow: column;
+    /*align-items: center;*/
+}
+
+.card-body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+ /* CAROUSEL */
+
+.carousel-wrapper {
+    overflow: hidden;
+    width: 90%;
+}
+
+.carousel {
+    transform-style: preserve-3d;
+}
+
+.carousel__photo {
+    opacity: 0;
+    position: absolute;
+    top:0;
+    width: 100%;
+    margin: auto;
+    border-radius: 5px;
+    /*padding: 1rem 4rem;*/
+    z-index: 100;
+    transition: transform .5s, opacity .5s, z-index .5s;
+}
+
+.carousel__photo.initial,
+.carousel__photo.active {
+    opacity: 1;
+    position: relative;
+    z-index: 900;
+}
+
+.carousel__photo.prev,
+.carousel__photo.next {
+    z-index: 800;
+}
+
+.carousel__photo.prev {
+    transform: translateX(-100%); /* Move 'prev' item to the left */
+}
+
+.carousel__photo.next {
+    transform: translateX(100%); /* Move 'next' item to the right */
+}
+
+.carousel__button--prev,
+.carousel__button--next {
+    position: absolute;
+    top:50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: #FFF;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001; /* Sit on top of everything */
+    border: 1px solid black;
+}
+.carousel__button--prev {
+    left:0;
+}
+.carousel__button--next {
+    right:0;
+}
+.carousel__button--prev::after,
+.carousel__button--next::after {
+    content: " ";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 54%;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+.carousel__button--next::after {
+    left: 47%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
 
 @media only screen and (min-width: 700px) {
     .form {
@@ -474,6 +583,9 @@ input#photoInput {
         margin-bottom: 20px;
     }
 
+    .photoContainer {
+        min-height: 664px;
+    }
     .form-group input[type='text'],
     .form-group input[type='date'],
     .form-group input[type='textarea']
@@ -483,6 +595,8 @@ input#photoInput {
     }
 
     .container-form form {
+        /*margin: 50px 1rem 1rem 1rem;*/
+
         border: 1px solid #aaacaf;
         border-radius: 5px;
         max-width: 35vw;
@@ -497,7 +611,7 @@ input#photoInput {
         padding: 0;
     }
 
-    /*    CREATE BLADE   */
+    /* CREATE BLADE   */
     .container-create {
         flex-direction: row;
         align-items: flex-start;
@@ -528,6 +642,8 @@ input#photoInput {
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         /*margin-top: 4rem;*/
     }
+
+
 
     /*.invalid-feedback {*/
     /*    position: absolute;*/
