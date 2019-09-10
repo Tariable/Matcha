@@ -19,10 +19,7 @@ class RecommendationController extends Controller
     public function show()
     {
         $pref = $this->getPreferences();
-        $data['lowerAge'] = $pref->lowerAge;
-        $data['upperAge'] = $pref->upperAge;
-        $data['distance'] = $pref->distance;
-        return view('recommendations.show', compact('data'));
+        return view('recommendations.show', compact('pref'));
     }
 
     public function getData($id)
