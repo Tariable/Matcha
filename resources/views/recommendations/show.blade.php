@@ -52,7 +52,7 @@
                 photos = await getPhotos(recommendations[iterator]);
                 displayProfile(profile, photos);
             } else {
-                alert('pull is empty');
+                createSuggestion('Edit preferences to get more', 'redirectToEditPref');
             }
         };
 
@@ -157,7 +157,7 @@
                     photos = await getPhotos(recommendations[iterator]);
                     displayProfile(profile, photos);
                 } else {
-                    createSuggestionToExpandPref();
+                    createSuggestion('You can expand selection criteria', 'expandPref');
                 }
             }
         }
@@ -184,18 +184,18 @@
                     photos = await getPhotos(recommendations[iterator]);
                     displayProfile(profile, photos);
                 } else {
-                    createSuggestionToExpandPref();
+                    createSuggestion('You can expand selection criteria', 'expandPref');
                 }
             }
         }
 
-        function createSuggestionToExpandPref() {
+        function createSuggestion(text, onclick) {
             document.getElementById('card').style.display = "none";
             let expandButton = document.createElement('button');
             expandButton.setAttribute('class', 'btn btn-danger');
             expandButton.setAttribute('id', 'expandButton');
-            expandButton.setAttribute('onclick', 'expandPref()');
-            expandButton.innerHTML = 'You can expand selection criteria';
+            expandButton.setAttribute('onclick', onclick+'()');
+            expandButton.innerHTML = text;
             document.getElementById('expandDiv').append(expandButton);
         }
 
@@ -238,6 +238,10 @@
                 cantExpand.innerHTML = 'Sorry, we cant expand you preferences';
                 document.getElementById('expandDiv').append(cantExpand);
             }
+        }
+
+        function redirectToEditPref(){
+            location.href = '/preferences/edit';
         }
 
         (function(d){
