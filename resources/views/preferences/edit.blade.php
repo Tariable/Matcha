@@ -49,30 +49,6 @@
             <p class="pt-4" style="margin-bottom: 0 !important;">Tags</p>
         </div>
         <div class="col-3">
-
-            <div class="container pb-4" style="
-                    display: flex;
-                    padding-left: 0;
-                    margin-left: 0;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                    width: 85%;
-                    align-items: center;
-                    height: 150px;">
-                @foreach($tags as $i => $tag)
-                    <div class="btn-group-toggle pr-2" data-toggle="buttons">
-                        <label class="btn btn-info" style="
-                            background-color: #6cb2eb;
-                            border-radius: 5px;
-                            text-align: center;
-                            width: 100px;">
-                            <input name="tags[]" type="checkbox" value="{{ $i + 1 }}"> {{ $tag }}
-                        </label>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="col-3">
             <button class="btn btn-primary" type="submit">Submit</button>
             @csrf
         </div>

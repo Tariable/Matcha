@@ -6,10 +6,7 @@ use App\Preference;
 use Faker\Generator as Faker;
 
 $factory->define(Preference::class, function (Faker $faker) {
-    $tags = array();
-    for ($i = 0; $i < $faker->numberBetween(2, 5); $i++) {
-        $tags[] = $faker->numberBetween(1, 6);
-    }
+
     $lowerAge = $faker->numberBetween(18, 50);
 
     return [
@@ -17,6 +14,5 @@ $factory->define(Preference::class, function (Faker $faker) {
         'upperAge' => $faker->numberBetween($lowerAge + 3, 53),
         'distance' => $faker->numberBetween(3, 100),
         'sex' => $faker->randomElement($array = array ('male', 'female', '%ale')),
-        'tags' => serialize(array_unique($tags)),
     ];
 });

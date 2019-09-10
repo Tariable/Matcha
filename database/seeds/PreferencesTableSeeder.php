@@ -11,6 +11,7 @@ class PreferencesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Preference::class, 10)->create();
+        $quantity = 1000;
+        factory(\App\Preference::class, $quantity)->create();
     }
 }

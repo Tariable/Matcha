@@ -10,14 +10,6 @@
 
     <hr>
 
-    <div class="m-2">
-        <h3>Selection criteria</h3>
-        <p><strong>Age gap: </strong><span>{{ $pref['lowerAge'] }}</span> ~ <span>{{ $pref['upperAge'] }}</span></p>
-        <p>Distance: {{ $pref['distance'] }}</p>
-    </div>
-
-    <hr>
-
     <div class="container my-3 py-5 text-center" id="recsDiv">
         <button  class="btn btn-success" id="like" onclick="like()" style="float:right">Like</button>
         <button  class="btn btn-danger" id="ban" onclick="ban()" style="float:left">Dislike</button>
@@ -35,9 +27,6 @@
                 <div id="info">
                     <p id="cardDistance"></p>
                     <p id="cardDescription"></p>
-                    <p>Common tags:
-
-                    </p>
                     <p id="cardId" hidden></p>
                 </div>
             </div>
@@ -53,14 +42,30 @@
         let iterator;
         let profile;
         let photos;
+        let pref;
 
         window.onload = async function () {
             recommendations = await getRecommendations();
             iterator = 0;
-            profile = await getProfile(recommendations[iterator]);
-            photos = await getPhotos(recommendations[iterator]);
-            displayProfile(profile, photos);
+            pref = await getMyPref();
+            if(recommendations[iterator]){
+                profile = await getProfile(recommendations[iterator]);
+                photos = await getPhotos(recommendations[iterator]);
+                displayProfile(profile, photos);
+            } else {
+                alert('pull is empty');
+            }
         };
+
+        async function getMyPref(){
+            let urlGetMyPref = '/preferences';
+
+            let getPrefResponse = await fetch(urlGetMyPref);
+
+            let response = await getPrefResponse.json();
+
+            return response.pref;
+        }
 
         async function getRecommendations() {
             let urlGetRecommendations = '/recs/all';
@@ -189,17 +194,51 @@
             let expandButton = document.createElement('button');
             expandButton.setAttribute('class', 'btn btn-danger');
             expandButton.setAttribute('id', 'expandButton');
-            expandButton.setAttribute('onclick', 'expandPref');
+            expandButton.setAttribute('onclick', 'expandPref()');
             expandButton.innerHTML = 'You can expand selection criteria';
             document.getElementById('expandDiv').append(expandButton);
         }
 
-        function expandPref() {
+        async function expandPref() {
+            if (pref.distance <= 90 || pref.upperAge <= 98 || pref.lowerAge >= 20) {
+                if (pref.distance + 10 <= 100)
+                    pref.distance += 10;
+                if(pref.lowerAge - 2 >= 18)
+                    pref.lowerAge -= 2;
+                if (pref.upperAge + 2 <= 100)
+                    pref.upperAge += 2;
 
+                let urlUpdatePref = '/preferences/{{ Auth::id() }}';
+
+                let headers = new Headers();
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                headers.append('X-CSRF-TOKEN', token);
+
+                let formData = new FormData();
+                formData.append('lowerAge', pref.lowerAge);
+                formData.append('upperAge', pref.upperAge);
+                formData.append('distance', pref.distance);
+                formData.append('sex', pref.sex);
+
+                let options = {
+                    method: 'POST',
+                    headers: headers,
+                    body: formData
+                }
+
+                let preferencesUpdateResponse = await fetch (urlUpdatePref, options);
+
+                if (preferencesUpdateResponse.ok){
+                    location.href = '/recs';
+                }
+
+            } else {
+                document.getElementById('expandButton').hidden = true;
+                let cantExpand = document.createElement('h3');
+                cantExpand.innerHTML = 'Sorry, we cant expand you preferences';
+                document.getElementById('expandDiv').append(cantExpand);
+            }
         }
-
-
-
 
     </script>
 

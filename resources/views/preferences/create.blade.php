@@ -45,15 +45,6 @@
             <p class="pt-4" style="margin-bottom: 0 !important;">Tags</p>
         </div>
         <div class="col-3">
-
-            <div class="container-tag form-group radio" data-toggle="buttons">
-                @foreach($tags as $i => $tag)
-                    <div><label for="t{{ $i + 1 }}"><input name="tags[]" id="t{{ $i + 1 }}" type="checkbox" value="{{ $i + 1 }}" checked>
-                         {{ $tag }}</label></div>
-                @endforeach
-            </div>
-        </div>
-        <div class="col-3">
             <button class="btn btn-primary" type="submit">Submit</button>
             @csrf
         </div>

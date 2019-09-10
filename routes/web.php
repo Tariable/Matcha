@@ -31,6 +31,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/profiles/{id}', 'ProfileController@update');
     Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
+    Route::get('/preferences', 'PreferenceController@index');
     Route::get('/preferences/create', 'PreferenceController@create')->middleware('firstTime');
     Route::post('/preferences', 'PreferenceController@store');
     Route::get('/preferences/edit', 'PreferenceController@edit')->middleware('allowEdit');

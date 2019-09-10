@@ -33,7 +33,6 @@ class RecommendationController extends Controller
         $data['rating'] = $profile->rating;
         $data['distance'] = $this->getDistance($user->latitude, $user->longitude,
             $profile->latitude, $profile->longitude);
-        $data['common_tags'] = $this->getCommonTags($id);
         return response()->json(array('profileData' => $data));
     }
 
@@ -59,16 +58,6 @@ class RecommendationController extends Controller
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
         return response()->json(array('recommendationsId' => $recommendations));
-    }
-
-    public function getCommonTags($id)
-    {
-        $serializedProfileTags = Preference::where('id', '=', $id)->get()->pluck('tags')[0];
-        $profileTags = ($serializedProfileTags == '0') ? [0] : unserialize($serializedProfileTags);
-        $serializedUserTags = Preference::where('id', '=', Auth::id())->get()->pluck('tags')[0];
-        $userTags = ($serializedUserTags == '0') ? [0] : unserialize($serializedUserTags);
-        $common = array_intersect($userTags, $profileTags);
-        return Tag::whereIn('id', $common)->pluck('name');
     }
 
     public function getLiked()
