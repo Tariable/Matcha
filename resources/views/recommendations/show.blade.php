@@ -7,7 +7,7 @@
   <div class="container-card">
     <div class="row mb-5">
     </div>
-    <div class="card">
+    <div class="card" id="card">
       <div class="card-body" id="cardBody" hidden>
         <div class="carousel-wrapper">
           <div id="carousel">
@@ -25,9 +25,10 @@
           <p id="cardId" hidden></p>
         </div>
       </div>
+        <button  class="btn btn-success" id="like" onclick="like()">Like</button>
+        <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
     </div>
-    <button  class="btn btn-success" id="like" onclick="like()">Like</button>
-    <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+
   </div>
   <div class="m-2">
     <h4><a href="/profiles/edit">Edit profile</a></h4>
@@ -189,7 +190,7 @@
         }
 
         function createSuggestionToExpandPref() {
-            document.getElementById('recsDiv').style.display = "none";
+            document.getElementById('card').style.display = "none";
             let expandButton = document.createElement('button');
             expandButton.setAttribute('class', 'btn btn-danger');
             expandButton.setAttribute('id', 'expandButton');
@@ -246,7 +247,7 @@
             let slide = 0;
             let moving = true;
 
-            items[totalItems - 1].classList.add
+            // items[totalItems - 1].classList.add
         }(document));
 
     </script>
