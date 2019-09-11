@@ -11,8 +11,8 @@ class PhotosTableSeeder extends Seeder
      */
     public function run()
     {
-        $quantity = 1000;
-        for ($i = 1; $i <= $quantity; $i++) {
+        $numberOfUsers = 1000;
+        for ($i = 1; $i <= $numberOfUsers; $i++) {
             $numberOfPhotos = random_int(1,5);
             for ($j = 0; $j < $numberOfPhotos; $j++) {
                 factory(\App\Photo::class)->create(['user_id' => $i]);
