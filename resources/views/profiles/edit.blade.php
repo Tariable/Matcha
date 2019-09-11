@@ -54,8 +54,8 @@
         </div>
 
         <div>
-          <input type="number" id="current_longitude" name="current_longitude" hidden>
-          <input type="number" id="current_latitude" name="current_latitude" hidden>
+          <input type="number" id="current_longitude" name="longitude" hidden>
+          <input type="number" id="current_latitude" name="latitude" hidden>
         </div>
 
         <div class="form-group" id="profileErrors">
@@ -109,8 +109,8 @@
         formData.append('description', description);
         formData.append('gender', gender);
         formData.append('notification', notification);
-        formData.append('current_longitude', current_longitude);
-        formData.append('current_latitude', current_latitude);
+        formData.append('longitude', current_longitude);
+        formData.append('latitude', current_latitude);
 
         let options = {
           method: 'POST',

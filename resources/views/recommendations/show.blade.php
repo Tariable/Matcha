@@ -42,6 +42,7 @@
     let iterator;
     let profile;
     let photos;
+    let pref;
 
         window.onload = async function () {
             recommendations = await getRecommendations();

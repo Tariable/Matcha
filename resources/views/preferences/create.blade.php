@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="col-3">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary" type="submit" id="storePref">Submit</button>
         @csrf
       </div>
     </form>
@@ -53,6 +53,60 @@
       </div>
     @endif
   </div>
+
+  <script>
+      let store = document.getElementById('storePref');
+      store.onclick = async function (evt) {
+          evt.preventDefault();
+          let urlStorePref = '/preferences';
+
+          let headers = new Headers();
+          let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+          headers.append('X-CSRF-TOKEN', token);
+          headers.append('Accept', 'application/json');
+
+          let formData = new FormData();
+          let lowerAge = document.getElementById('lowerAgeInput').value;
+          let upperAge = document.getElementById('upperAgeInput').value;
+          let distance = document.getElementById('distanceInput').value;
+          let sex = document.querySelector('input[name="sex"]:checked').value;
+
+          formData.append('lowerAge', lowerAge);
+          formData.append('upperAge', upperAge);
+          formData.append('distance', distance);
+          formData.append('sex', sex);
+
+          let options = {
+              method: 'POST',
+              headers: headers,
+              body: formData
+          };
+
+          let updatePrefResponse = await fetch(urlStorePref, options);
+
+          if (updatePrefResponse.ok) {
+              location.href = '/recs';
+          } else {
+              let prefJsonErrors = await updatePrefResponse.json();
+              for (let key in prefJsonErrors.errors) {
+                  let value = prefJsonErrors.errors[key];
+                  displayError(value, 'prefErrors');
+              }
+          }
+      };
+
+      function displayError(textOfError, typeOfError){
+          if (!document.getElementById('errors')){
+              let errorDiv = document.createElement('div');
+              errorDiv.setAttribute('class', 'alert alert-danger');
+              errorDiv.setAttribute('id', 'errors');
+              document.getElementById(typeOfError).append(errorDiv);
+          }
+          let error = document.createElement('p');
+          error.innerHTML = textOfError;
+          document.getElementById('errors').append(error);
+      }
+  </script>
 
   <script>
     $("#ageSlider").ionRangeSlider({

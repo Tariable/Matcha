@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePreferences;
+use App\Http\Requests\UpdatePreferences;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -18,64 +20,35 @@ class PreferenceController extends Controller
         return response()->json(array('pref' => $data));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('preferences.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StorePreferences $request)
     {
-        $data = $this->validate($request, $this->rules(), $this->errorMessages());
+        $data = $request->input();
         $data['id'] = Auth::id();
         Preference::create($data);
         return redirect("/recs");
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit()
     {
         $preference = Preference::whereId(Auth::id())->get()->first();
         return view('preferences.edit', compact('preference'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id)
+
+    public function update(UpdatePreferences $request)
     {
-        if(!($_SERVER['CONTENT_TYPE'] == 'application/x-www-form-urlencoded')) {
-            $data = request()->validate($this->ajaxRules(), $this->errorMessages());
-            $data['id'] = Auth::id();
-            $preferences = Preference::whereId($id)->get()->first();
-            $preferences->update($data);
-        } else {
-            $data = request()->validate($this->rules(), $this->errorMessages());
-            $data['id'] = Auth::id();
-            $preferences = Preference::whereId($id)->get()->first();
-            $preferences->update($data);
-            return redirect("/recs");
-        }
+        $data = $request->input();
+        $data['id'] = Auth::id();
+        $preferences = Preference::whereId(Auth::id())->get()->first();
+        $preferences->update($data);
     }
 
     public function rules()
@@ -85,7 +58,7 @@ class PreferenceController extends Controller
             'upperAge' => 'required|numeric|min:21|max:100',
             'distance' => 'required|numeric|min:3|max:100',
             'sex' => ['required',
-                            Rule::in(['female', 'male', '%ale']),]
+                Rule::in(['female', 'male', '%ale']),]
         ];
     }
 
