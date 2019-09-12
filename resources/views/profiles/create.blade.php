@@ -192,6 +192,7 @@
 
       let imageStoreResponse = await fetch(urlStore, options);
 
+        input.value = '';
       if (imageStoreResponse.ok) {
         removeAllChildrenElemFrom("photoErrors");
         displayLastPhoto();
