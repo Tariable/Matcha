@@ -19,11 +19,11 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['verified']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/photos/{user}', 'PhotoController@show');
+    Route::get('/photos/{profileId}', 'PhotoController@show');
     Route::get('/photos/create', 'PhotoController@create');
     Route::post('/photos', 'PhotoController@store');
     Route::delete('/photos/{photo}', 'PhotoController@destroy');
-    Route::get('/lastPhoto/{user}', 'PhotoController@showTheLastOne');
+    Route::get('/lastPhoto/{profile}', 'PhotoController@showTheLastOne');
 
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');
@@ -37,8 +37,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/preferences/edit', 'PreferenceController@edit')->middleware('allowEdit');
     Route::post('/preferences/{id}', 'PreferenceController@update');
 
-    Route::post('/ban/{id}', 'BanController@ban');
-    Route::post('/like/{id}', 'LikeController@like');
+    Route::post('/ban/{id}', 'BanController@store');
+    Route::post('/like/{id}', 'LikeController@store');
 
     Route::get('/recs/all', 'RecommendationController@getRecs');
     Route::get('/recs/{id}', 'RecommendationController@getData');

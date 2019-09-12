@@ -19,6 +19,10 @@ class Profile extends Model
         return $this->hasOne(Preference::class, 'id');
     }
 
+
+    //--------------------------------------scope section--------------------------------------//
+
+
     public function scopeCloseTo(Builder $query, $longitude, $latitude, $range)
     {
         return $query->whereRaw("

@@ -14,13 +14,15 @@ use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
 {
+    protected $photosModel;
 
-    use ValidatesRequests;
+    public function __construct(Photo $model){
+        $this->photosModel = $model;
+    }
 
-    public function show(User $user)
+    public function show($profileId)
     {
-        $photos = $photos = Photo::where('user_id', $user->id)->get();
-        return response()->json($photos);
+        return response()->json($this->photosModel->getProfilePhotos($profileId));
     }
 
 

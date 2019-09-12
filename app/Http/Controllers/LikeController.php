@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    public function like($partnerId)
-    {
-        if (Profile::where('id', $partnerId)->exists())
-            Like::create(['profile_id' => Auth::id(), 'partner_id' => $partnerId]);
+    protected $likeModel;
+
+    public function __construct(Like $model){
+        $this->likeModel = $model;
     }
 
-    public function getLikes()
+    public function store($partnerId)
     {
-        return Like::where('partner_id', Auth::id());
+        $this->likeModel->saveIfExist(Auth::id(), $partnerId);
     }
 }

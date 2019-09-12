@@ -9,29 +9,27 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function create()
-    {
+    protected $profilesModel;
+
+    public function __construct(Profile $model){
+        $this->profilesModel = $model;
+    }
+
+    public function create(){
         return view('profiles.create');
     }
 
-    public function store(StoreProfile $request)
-    {
-        $data = $request->input();
-        $data['id'] = Auth::id();
-        Profile::create($data);
+    public function store(StoreProfile $request){
+        $this->profilesModel->saveWithId($request->input(), Auth::id());
         return redirect('/preferences/create');
     }
 
-    public function edit()
-    {
-        $profile = Profile::whereId(Auth::id())->get()->first();
+    public function edit(){
+        $profile = $this->profilesModel->getById(Auth::id());
         return view('profiles.edit', compact('profile'));
     }
 
-    public function update(UpdateProfile $request)
-    {
-        $data = $request->input();
-        $profile = Profile::where('id', Auth::id())->get()->first();
-        $profile->update($data);
+    public function update(UpdateProfile $request){
+        $this->profilesModel->updateWithId($request->input(), Auth::id());
     }
 }
