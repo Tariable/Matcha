@@ -19,8 +19,10 @@
             <p id="cardId" hidden></p>
           </div>
         </div>
-      <button  class="btn btn-success" id="like" onclick="like()">Like</button>
-      <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+      <div class="buttons">
+        <button class="btn btn-success" id="like" onclick="like()">Like</button>
+        <button class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+      </div>
       <p id="cardDescription"></p>
       </div>
     </div>
@@ -40,7 +42,6 @@
     let pref;
 
         window.onload = async function () {
-          console.log
             recommendations = await getRecommendations();
             iterator = 0;
             pref = await getMyPref();
