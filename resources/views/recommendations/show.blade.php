@@ -11,22 +11,20 @@
       <div class="card-body" id="cardBody" hidden>
           <div id="carousel" class="carousel">
           </div>
-        </div>
-        <div id="mainInfo" class="card-info">
-          <div>
-            <p id="cardName"></p>
+          <div id="mainInfo" class="card-info">
+            <div>
+              <p id="cardName"></p>
+            </div>
+            <p id="cardDistance"></p>
+            <p id="cardId" hidden></p>
           </div>
-          <p id="cardDistance"></p>
-          <p id="cardId" hidden></p>
         </div>
+      <button  class="btn btn-success" id="like" onclick="like()">Like</button>
+      <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
       <p id="cardDescription"></p>
-
-    </div>
-        <button  class="btn btn-success" id="like" onclick="like()">Like</button>
-        <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+      </div>
     </div>
 
-  </div>
   <div class="m-2">
     <h4><a href="/profiles/edit">Edit profile</a></h4>
     <h4><a href="/preferences/edit">Edit preferences</a></h4>
@@ -50,7 +48,6 @@
                 profile = await getProfile(recommendations[iterator]);
                 photos = await getPhotos(recommendations[iterator]);
                 displayProfile(profile, photos);
-                await carousel(document);
             } else {
                 createSuggestion('Edit preferences to get more', 'redirectToEditPref');
             }
@@ -101,6 +98,7 @@
         function displayProfile(profile, photos) {
             showPhotos(photos);
             showProfile(profile);
+            carousel(document);
         }
 
         function showPhotos(photos) {
@@ -239,12 +237,12 @@
             location.href = '/preferences/edit';
         }
 
-        async function carousel(d) {
+        function carousel(d) {
+          'use strict';
           const _C = d.querySelector('.carousel');
           const _CI = d.querySelector('.carousel img');
-          const totalImages = _C.children.length;
-          console.log(totalImages);
-          document.documentElement.style.setProperty('--n', '0');
+          let totalImages = _C.children.length;
+          document.documentElement.style.setProperty('--n', 0);
           document.documentElement.style.setProperty('--n', `${totalImages}`);
           _C.style.setProperty('--i', 0);
 
@@ -257,16 +255,13 @@
           let i = 0;
 
           function move(e) {
-            if (x0 || x0 === 0) {
+            let totalImages = _C.children.length;
+            if ((x0 || x0 === 0) && totalImages !== 1) {
               let dx = unify(e).clientX - x0;
               let sign = Math.sign(dx);
-              // console.log(' sign = ' + sign);
-              // console.log('total = ' + totalImages);
               if ((i > 0 || sign < 0) && (i < totalImages - 1 || sign > 0)) {
                 i -= sign;
-                // console.log(i);
                 _C.style.setProperty('--i', (totalImages * i));
-                // console.log(_C.style.transform);
                 _C.style.setProperty('--tx', '0px');
               }
               x0 = null;

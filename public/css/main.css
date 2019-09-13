@@ -238,7 +238,7 @@ input[type="checkbox"]:checked::before {
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 20px auto;
 }
 
 .navbar-brand {
@@ -473,6 +473,7 @@ input#photoInput {
     min-width: 100%;
     width: 100%;
     width: calc(100%/var(--n));
+    /*height: 100%;*/
     border-radius: 5px;
     pointer-events: none;
     transition: transform .5s ease-out;
@@ -484,13 +485,13 @@ input#photoInput {
 
 /*    CARD INFO    */
 
-.card {
+.card-body {
     position: relative;
 }
 
 .card-info {
     position: absolute;
-    bottom: 61px;
+    bottom: 9px;
     left: 5%;
     width: 90%;
     height: 80px;
@@ -498,11 +499,23 @@ input#photoInput {
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #fff;
+    font-size: 1.25rem;
 }
 
-.card-info * {
+#cardDistance {
+    font-size: 1rem;
+}
+
+.card-info > * {
     padding: 0 1rem;
+}
+
+.card > p {
+    /*padding: 1rem;*/
+    width: 90%;
+    margin: 1rem auto;
 }
 
 @media only screen and (min-width: 700px) {
@@ -514,6 +527,10 @@ input#photoInput {
         margin-bottom: 20px;
     }
 
+    .navbar .container {
+        margin: 0 auto 40px auto;
+
+    }
     .photoContainer {
         min-height: 664px;
     }
@@ -567,6 +584,7 @@ input#photoInput {
         padding: 2rem;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
+
 
 
 
