@@ -9,22 +9,19 @@
     </div>
     <div class="card" id="card">
       <div class="card-body" id="cardBody" hidden>
-        <div class="carousel-wrapper">
-          <div id="carousel">
+          <div id="carousel" class="carousel">
           </div>
         </div>
-        <div class="carousel__button--next"></div>
-        <div class="carousel__button--prev"></div>
-        <div id="mainInfo">
-          <h1 id="cardName"></h1>
-          <h5 id="cardAge"></h5>
-        </div>
-        <div id="info">
+        <div id="mainInfo" class="card-info">
+          <div>
+            <p id="cardName"></p>
+          </div>
           <p id="cardDistance"></p>
-          <p id="cardDescription"></p>
           <p id="cardId" hidden></p>
         </div>
-      </div>
+      <p id="cardDescription"></p>
+
+    </div>
         <button  class="btn btn-success" id="like" onclick="like()">Like</button>
         <button  class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
     </div>
@@ -45,6 +42,7 @@
     let pref;
 
         window.onload = async function () {
+          console.log
             recommendations = await getRecommendations();
             iterator = 0;
             pref = await getMyPref();
@@ -52,6 +50,7 @@
                 profile = await getProfile(recommendations[iterator]);
                 photos = await getPhotos(recommendations[iterator]);
                 displayProfile(profile, photos);
+                await carousel(document);
             } else {
                 createSuggestion('Edit preferences to get more', 'redirectToEditPref');
             }
@@ -115,20 +114,15 @@
 
     function createPhotoElem(photo, i) {
       let photoElem = document.createElement('img');
-      console.dir(photoElem);
       photo.path = photo.path.substring(6);
       photoElem.src = photo.path;
       photoElem.id = photo.id;
-      photoElem.style.width = '100%';
-      photoElem.classList.add('carousel__photo');
-      i === 0 ? photoElem.classList.add('initial') : 0;
       document.getElementById('carousel').append(photoElem);
     }
 
         function showProfile(profile) {
             document.getElementById('cardId').innerHTML = profile['id'];
-            document.getElementById('cardName').innerHTML = profile['name'];
-            document.getElementById('cardAge').innerHTML = profile['age'];
+            document.getElementById('cardName').innerHTML = `${profile['name']}, ${profile['age']}`;
             document.getElementById('cardDistance').innerHTML = profile['distance'] + ' km from you';
             document.getElementById('cardDescription').innerHTML = profile['desc'];
             document.getElementById('cardBody').removeAttribute('hidden');
@@ -147,7 +141,7 @@
             let options = {
                 method: 'POST',
                 headers: headers
-            }
+            };
 
             let LikeResponse = await fetch(urlLike, options);
 
@@ -174,7 +168,7 @@
             let options = {
                 method: 'POST',
                 headers: headers
-            }
+            };
 
             let BanResponse = await fetch(urlBan, options);
 
@@ -225,7 +219,7 @@
                     method: 'POST',
                     headers: headers,
                     body: formData
-                }
+                };
 
                 let preferencesUpdateResponse = await fetch (urlUpdatePref, options);
 
@@ -245,15 +239,50 @@
             location.href = '/preferences/edit';
         }
 
-        (function(d){
-            let itemClassName = "carousel__photo";
-            let items = d.getElementsByClassName(itemClassName);
-            let totalItems = items.length;
-            let slide = 0;
-            let moving = true;
+        async function carousel(d) {
+          const _C = d.querySelector('.carousel');
+          const _CI = d.querySelector('.carousel img');
+          const totalImages = _C.children.length;
+          console.log(totalImages);
+          document.documentElement.style.setProperty('--n', '0');
+          document.documentElement.style.setProperty('--n', `${totalImages}`);
+          _C.style.setProperty('--i', 0);
 
-            // items[totalItems - 1].classList.add
-        }(document));
+          let x0 = null;
+
+          function lock(e) {
+            x0 = unify(e).clientX;
+          }
+
+          let i = 0;
+
+          function move(e) {
+            if (x0 || x0 === 0) {
+              let dx = unify(e).clientX - x0;
+              let sign = Math.sign(dx);
+              // console.log(' sign = ' + sign);
+              // console.log('total = ' + totalImages);
+              if ((i > 0 || sign < 0) && (i < totalImages - 1 || sign > 0)) {
+                i -= sign;
+                // console.log(i);
+                _C.style.setProperty('--i', (totalImages * i));
+                // console.log(_C.style.transform);
+                _C.style.setProperty('--tx', '0px');
+              }
+              x0 = null;
+            }
+          }
+
+          function unify(e) {
+            return e.changedTouches ? e.changedTouches[0] : e;
+          }
+
+          _C.addEventListener('mousedown', lock, false);
+          _C.addEventListener('touchstart', lock, false);
+
+          _C.addEventListener('mouseup', move, false);
+          _C.addEventListener('touchend', move, false);
+        }
 
     </script>
 

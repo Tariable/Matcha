@@ -1,5 +1,6 @@
 :root {
     --main: #ff4b4b;
+    --n: 1;
 }
 
 html, body {
@@ -79,7 +80,6 @@ textarea:focus {
 }
 
 .hidden {
-    /*visibility: hidden;*/
     display: none;
     transition: 0.2s ease-in;
 }
@@ -90,14 +90,11 @@ textarea:focus {
 
 .fas {
     color: rgba(241, 228, 232, 1);
-    /*padding: 1rem;*/
     padding-left: 1rem;
 }
 
 .form-group.radio {
-    /*display: flex;*/
     flex-direction: row;
-    /*justify-content: center;*/
 }
 
  a.nav-link:hover,
@@ -112,7 +109,6 @@ textarea:focus {
      outline: none;
      padding: 0.5rem 2rem;
      border-radius: 5px;
-     /*box-shadow: 0 0 2px;*/
      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
      background-color: rgba(229, 75, 75, 1);
@@ -123,7 +119,6 @@ textarea:focus {
      letter-spacing: .1rem;
      text-decoration: none;
      text-transform: uppercase;
-     /*flex: 1;*/
  }
 
  .btn:hover {
@@ -137,7 +132,6 @@ textarea:focus {
     border-bottom: 1px solid #646B6E;
     color: #646B6E;
     transition: 0.2s ease-in;
-    /*padding: 1rem;*/
 }
 .btn-link:hover {
     border-color: var(--main);
@@ -152,9 +146,6 @@ textarea:focus {
     padding: 1rem;
     background-color: rgba(255,88,88,0.55);
     border-radius: 5px;
-    /*position: absolute;*/
-    /*top: 90px;*/
-    /*left: 10%*/
 }
 
 .mt-10 {
@@ -260,12 +251,10 @@ input[type="checkbox"]:checked::before {
 }
 
 .nav-item {
-    /*padding: 2rem;*/
 }
 
 .nav-link {
     transition: all 0.2s ease-out;
-    /*transition: border-bottom 0.1s ease-out, color 0.1s ease-out;*/
 }
 
 .nav-link:hover {
@@ -295,32 +284,23 @@ input[type="checkbox"]:checked::before {
     align-items: center;
     justify-content: center;
     height: 35vh;
-
-    /*margin-top: 2rem;*/
-    /*justify-content: center;*/
 }
 
 .form-check {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    /*padding: 1rem;*/
-    /*border: 1px solid black;*/
 }
 label:not(:last-child) {
     display:block;
-    /*text-align: right;*/
     margin-bottom: 0.5rem;
 }
 
 .form-group {
     display: flex;
     flex-flow: column;
-    /*border: 1px solid black;*/
     margin-bottom: 0.3rem;
-    /*justify-content: flex-start;*/
     width: 20rem;
-    /*flex: 0 1 100%;*/
 }
 
 .form-group.col {
@@ -335,7 +315,6 @@ label:not(:last-child) {
 
 .form-group.check {
     flex-direction: row;
-    /*height: 20px*/
     align-items: center;
     padding: 1rem;
 }
@@ -344,10 +323,8 @@ label:not(:last-child) {
     background-color: #FFFFFF;
     border: 1px solid #D6D9DC;
     border-radius: 3px;
-    /*width: 100%;*/
     padding: 7px;
     caret-color: rgba(229, 75, 75, 1);
-    /*font-size: 14px;*/
     margin-bottom: 0.5rem;
     outline: none;
 
@@ -364,8 +341,6 @@ label:not(:last-child) {
 }
 
 .form-group label {
-    /*text-align: right;*/
-    /*width: 120px;*/
     margin-right: 8px;
 }
 
@@ -408,11 +383,6 @@ input#photoInput {
     color: #efe4e8;
     position: relative;
     background-color: rgba(229, 75, 75, 1);
-    /*border-radius: 50%;*/
-    /*border: 1px solid #aaacaf;*/
-    /*box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);*/
-    /*height: 20px;*/
-    /*width: 20px;*/
     display: inline-block;
     cursor: pointer;
     padding: 0.625rem 1.25rem;
@@ -441,8 +411,6 @@ input#photoInput {
         /*CREATE BLADE*/
 
 .container-pref {
-    /*display: flex;*/
-    /*flex-flow: column;*/
 }
 
 .container-pref form {
@@ -464,7 +432,6 @@ input#photoInput {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    /*width: 100%;*/
 }
 
 .container-tag > * {
@@ -483,7 +450,6 @@ input#photoInput {
 .container-card {
     display: flex;
     flex-flow: column;
-    /*align-items: center;*/
 }
 
 .card-body {
@@ -494,81 +460,49 @@ input#photoInput {
 
  /* CAROUSEL */
 
-.carousel-wrapper {
-    overflow: hidden;
-    width: 90%;
-}
-
 .carousel {
-    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 70vh;
+    overflow-y: hidden;
+    overflow: hidden;
 }
 
-.carousel__photo {
-    opacity: 0;
-    position: absolute;
-    top:0;
+.carousel img {
+    min-width: 100%;
     width: 100%;
-    margin: auto;
+    width: calc(100%/var(--n));
     border-radius: 5px;
-    /*padding: 1rem 4rem;*/
-    z-index: 100;
-    transition: transform .5s, opacity .5s, z-index .5s;
+    pointer-events: none;
+    transition: transform .5s ease-out;
+    transform: translate(calc(var(--i, 0)/var(--n) * -100%));
 }
 
-.carousel__photo.initial,
-.carousel__photo.active {
-    opacity: 1;
+.smooth { transition: transform .5s ease-out; }
+
+
+/*    CARD INFO    */
+
+.card {
     position: relative;
-    z-index: 900;
 }
 
-.carousel__photo.prev,
-.carousel__photo.next {
-    z-index: 800;
-}
-
-.carousel__photo.prev {
-    transform: translateX(-100%); /* Move 'prev' item to the left */
-}
-
-.carousel__photo.next {
-    transform: translateX(100%); /* Move 'next' item to the right */
-}
-
-.carousel__button--prev,
-.carousel__button--next {
+.card-info {
     position: absolute;
-    top:50%;
-    width: 3rem;
-    height: 3rem;
-    background-color: #FFF;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1001; /* Sit on top of everything */
-    border: 1px solid black;
+    bottom: 61px;
+    left: 5%;
+    width: 90%;
+    height: 80px;
+    background: rgba(0,0,0, 0.4);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
 }
-.carousel__button--prev {
-    left:0;
-}
-.carousel__button--next {
-    right:0;
-}
-.carousel__button--prev::after,
-.carousel__button--next::after {
-    content: " ";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    top: 50%;
-    left: 54%;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
-    transform: translate(-50%, -50%) rotate(135deg);
-}
-.carousel__button--next::after {
-    left: 47%;
-    transform: translate(-50%, -50%) rotate(-45deg);
+
+.card-info * {
+    padding: 0 1rem;
 }
 
 @media only screen and (min-width: 700px) {
@@ -577,9 +511,6 @@ input#photoInput {
     }
 
     .form-group {
-        /*flex-direction: row;*/
-        /*align-items: center; !* To avoid stretching *!*/
-        /*justify-content: center;*/
         margin-bottom: 20px;
     }
 
@@ -595,15 +526,11 @@ input#photoInput {
     }
 
     .container-form form {
-        /*margin: 50px 1rem 1rem 1rem;*/
-
         border: 1px solid #aaacaf;
         border-radius: 5px;
         max-width: 35vw;
-        /*height: 25vh;*/
         padding: 2rem;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        /*margin-top: 4rem;*/
     }
 
     .form-group.check {
@@ -637,10 +564,8 @@ input#photoInput {
         border: 1px solid #aaacaf;
         border-radius: 5px;
         max-width: 35vw;
-        /*height: 25vh;*/
         padding: 2rem;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        /*margin-top: 4rem;*/
     }
 
 
