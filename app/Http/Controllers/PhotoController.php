@@ -3,76 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePhoto;
-use App\Profile;
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Photo;
-use App\User;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class PhotoController extends Controller
 {
     protected $photosModel;
+    protected $photoLimit;
 
     public function __construct(Photo $model){
         $this->photosModel = $model;
+        $this->photoLimit = 5;
     }
 
-    public function show($profileId)
+    public function show($userId)
     {
-        return response()->json($this->photosModel->getProfilePhotos($profileId));
+        return response()->json($this->photosModel->getProfilePhotos($userId));
     }
 
 
     public function store(StorePhoto $request)
     {
-        $statusOfSaving = $this->saveImage($request);
-        return response()->json(array('message' => $statusOfSaving));
+        if ($this->photosModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
+            $this->photosModel->savePhoto($request->file('photo'), Auth::id());
+        else
+            abort('422');
     }
 
 
-    public function destroy($id)
+    public function destroy($photoId)
     {
-        $this->destroyImage($id);
+        $this->photosModel->destroyPhoto($photoId);
     }
 
-    public function showTheLastOne(User $user)
+    public function getLastPhoto($userId)
     {
-        $photo = Photo::where('user_id', $user->id)->orderBy('id', 'desc')->first();
-        return response()->json($photo);
-    }
-
-
-//????????????????????????????????? Move to model ????????????????????????????????????????????????
-
-    public function destroyImage($id)
-    {
-        $path = Photo::where('id', $id)->pluck('path')->first();
-        $path = substr($path, strpos($path, '/', 1));
-        Storage::delete('public' . $path);
-        Photo::where('id', $id)->delete();
-    }
-
-    public function saveImage(Request $request)
-    {
-        if (Photo::where('user_id', Auth::id())->count() < 5){
-            $photo = $request->file('photo');
-            $photoExtension = $photo->getClientOriginalExtension();
-            $photoNameToStore = bin2hex(random_bytes(10)) . '.' . $photoExtension;
-            $photo->storeAs('public/photos', $photoNameToStore);
-
-            $image = Image::make(public_path("/storage/photos/{$photoNameToStore}"))->fit(480, 640);
-            $image->save();
-
-            Photo::create([
-                'user_id' => Auth::id(),
-                'path' => 'public/storage/photos/' . $photoNameToStore,
-            ]);
-            return 'success';
-        } else {
-            abort(422);
-        }
+        return response()->json($this->photosModel->getProfileLastPhoto($userId));
     }
 }

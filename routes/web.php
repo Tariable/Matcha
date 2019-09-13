@@ -19,11 +19,11 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['verified']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/photos/last/{profileId}', 'PhotoController@getLastPhoto');
     Route::get('/photos/{profileId}', 'PhotoController@show');
-    Route::get('/photos/create', 'PhotoController@create');
     Route::post('/photos', 'PhotoController@store');
-    Route::delete('/photos/{photo}', 'PhotoController@destroy');
-    Route::get('/lastPhoto/{profile}', 'PhotoController@showTheLastOne');
+    Route::delete('/photos/{photoId}', 'PhotoController@destroy');
+
 
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');

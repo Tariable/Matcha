@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,10 @@ class Profile extends Model
         return $this->hasOne(Preference::class, 'id');
     }
 
+    public function getAge($profileId){
+        $date = $this->whereId($profileId)->pluck('date_of_birth')->first();
+        return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
+    }
 
     //--------------------------------------scope section--------------------------------------//
 

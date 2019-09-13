@@ -241,7 +241,7 @@
     // AJAX query to get the last one photo
 
     async function displayLastPhoto() {
-      let urlShowLastPhoto = "/lastPhoto/{{ Auth::id() }}";
+      let urlShowLastPhoto = "/photos/last/{{ Auth::id() }}";
 
       let showLastPhotoResponse = await fetch(urlShowLastPhoto);
 

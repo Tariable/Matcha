@@ -13,4 +13,8 @@ class Ban extends Model
         if (Profile::where('id', $banned_id)->exists())
             $this->create(['profile_id' => $profile_id, 'banned_id' => $banned_id]);
     }
+
+    public function getBannedId($profileId){
+        return $this->where('profile_id', '=', $profileId)->get()->pluck('banned_id');
+    }
 }

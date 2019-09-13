@@ -3,28 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Preference;
-use App\Tag;
 use App\Ban;
 use App\Profile;
 use App\Like;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class RecommendationController extends Controller
 {
+    protected $profileModel;
+    protected $preferencesModel;
+    protected $likeModel;
+    protected $banModel;
+
+    public function __construct(Profile $profile, Preference $preferences, Like $like, Ban $ban){
+        $this->profileModel = $profile;
+        $this->preferencesModel = $preferences;
+        $this->likeModel = $like;
+        $this->banModel = $ban;
+    }
+
     public function show()
     {
-        $pref = $this->getPreferences();
+        $pref = $this->preferencesModel->getById(Auth::id());
         return view('recommendations.show', compact('pref'));
     }
 
     public function getData($id)
     {
-        $profile = Profile::where('id', '=', $id)->first();
+        $profile = $this->profileModel->getById($id);
         $user = Profile::where('id', '=', Auth::id())->first();
         $data['id'] = $profile->id;
         $data['name'] = $profile->name;
@@ -38,11 +45,11 @@ class RecommendationController extends Controller
 
     public function getRecs()
     {
-        $age = $this->getAge();
-        $pref = $this->getPreferences();
-        $profile = $this->getProfile();
-        $banned_id = $this->getBanned();
-        $liked_id = $this->getLiked();
+        $age = $this->profileModel->getAge(Auth::id());
+        $pref = $this->preferencesModel->getById(Auth::id());
+        $profile = $this->profileModel->getById(Auth::id());
+        $banned_id = $this->banModel->getBannedId(Auth::id());
+        $liked_id = $this->likeModel->getLikedId(Auth::id());
         $recommendations = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
             $query->where('sex', '=', $profile->gender)->
@@ -60,29 +67,9 @@ class RecommendationController extends Controller
         return response()->json(array('recommendationsId' => $recommendations));
     }
 
-    public function getLiked()
-    {
-        return Like::where('profile_id', '=', Auth::id())->get()->pluck('partner_id');
-    }
-
-    public function getBanned()
-    {
-        return Ban::where('profile_id', '=', Auth::id())->get()->pluck('banned_id');
-    }
-
     public function countAge($date)
     {
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
-    }
-
-    public function getPreferences()
-    {
-        return Preference::where('id', Auth::id())->get()->first();
-    }
-
-    public function getProfile()
-    {
-        return Profile::where('id', Auth::id())->get()->first();
     }
 
     public function ageGap($pref)
@@ -90,12 +77,6 @@ class RecommendationController extends Controller
         $from = Carbon::now()->subYear($pref->upperAge);
         $to = Carbon::now()->subYear($pref->lowerAge);
         return array($from, $to);
-    }
-
-    public function getAge()
-    {
-        $date = Profile::where('id', Auth::id())->pluck('date_of_birth')->first();
-        return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
     }
 
     public function getDistance($lat1, $lon1, $lat2, $lon2)
