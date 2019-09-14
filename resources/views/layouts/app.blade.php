@@ -10,7 +10,6 @@
   <title>{{ config('app.name') }}</title>
 
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
   <!-- Fonts -->
@@ -76,8 +75,11 @@
   </nav>
 
   <main class="py-4">
-    @yield('content')
+    <div id="app">
+      @yield('content')
+    </div>
   </main>
 {{--</div>--}}
 </body>
+<script src="{{ asset('js/app.js') }}"></script>
 </html>
