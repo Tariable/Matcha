@@ -49,7 +49,7 @@ class Photo extends Model
         return bin2hex(random_bytes(10)) . '.' . $photoExtension;
     }
 
-    public function getPhotoQuantityOfProfile($userId){
+    public function getPhotoNumberOfProfile($userId){
         return $this->where('user_id', $userId)->count();
     }
 
