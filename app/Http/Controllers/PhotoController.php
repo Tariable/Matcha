@@ -24,7 +24,6 @@ class PhotoController extends Controller
         return response()->json($this->photosModel->getProfilePhotos($userId));
     }
 
-
     public function store(StorePhoto $request)
     {
         if ($this->photosModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
@@ -32,7 +31,6 @@ class PhotoController extends Controller
         else
             abort('422');
     }
-
 
     public function destroy($photoId)
     {
