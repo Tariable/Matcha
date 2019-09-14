@@ -15,6 +15,11 @@ class Profile extends Model
         return $this->belongsTo(User::class, 'id');
     }
 
+    public function photo()
+    {
+        return $this->hasMany(Photo::class, 'user_id');
+    }
+
     public function preference()
     {
         return $this->hasOne(Preference::class, 'id');

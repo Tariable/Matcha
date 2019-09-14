@@ -11,7 +11,7 @@ class PhotosTableSeeder extends Seeder
      */
     public function run()
     {
-        $numberOfUsers = 1000;
+        $numberOfUsers = 10;
         for ($i = 1; $i <= $numberOfUsers; $i++) {
             $numberOfPhotos = random_int(1,5);
             for ($j = 0; $j < $numberOfPhotos; $j++) {
