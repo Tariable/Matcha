@@ -33,7 +33,6 @@
 
   <div class="content">
     <div class="title m-b-md">
-        <example-component></example-component>
       Laravel
     </div>
 
