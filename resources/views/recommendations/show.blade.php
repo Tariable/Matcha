@@ -7,6 +7,7 @@
   <div class="container-card">
     <div class="row mb-5">
     </div>
+      <example-component></example-component>
     <div class="card" id="card">
       <div class="card-body" id="cardBody" hidden>
         <div class="carousel-wrapper">
