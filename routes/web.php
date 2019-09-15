@@ -42,7 +42,7 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::get('/recs/all', 'RecommendationController@getRecs');
     Route::get('/recs/{id}', 'RecommendationController@getData');
-    Route::get('/recs', 'RecommendationController@show');
+    Route::get('/recs', 'RecommendationController@show')->middleware('profileExists');
 });
 
 
