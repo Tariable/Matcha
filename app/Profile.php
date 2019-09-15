@@ -25,6 +25,16 @@ class Profile extends Model
         return $this->hasOne(Preference::class, 'id');
     }
 
+    public function like()
+    {
+        return $this->hasMany(Like::class, 'profile_id');
+    }
+
+    public function ban()
+    {
+        return $this->hasMany(Ban::class, 'profile_id');
+    }
+
     public function getAge($profileId){
         $date = $this->whereId($profileId)->pluck('date_of_birth')->first();
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);

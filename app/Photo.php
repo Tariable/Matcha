@@ -12,8 +12,7 @@ class Photo extends Model
 {
     protected $guarded = [];
 
-    public function profile()
-    {
+    public function profile(){
         return $this->belongsTo(Profile::class, 'user_id');
     }
 

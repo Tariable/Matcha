@@ -41,7 +41,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/like/{id}', 'LikeController@store');
 
     Route::get('/recs/all', 'RecommendationController@getRecs');
-    Route::get('/recs/{id}', 'RecommendationController@getData');
+    Route::get('/recs/{id}', 'RecommendationController@getProfile');
     Route::get('/recs', 'RecommendationController@show');
 });
 

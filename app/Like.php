@@ -8,6 +8,11 @@ class Like extends Model
 {
     protected $guarded = [];
 
+    public function profile(){
+        return $this->belongsTo(Profile::class, 'user_id');
+    }
+
+
     public function saveIfExist($profile_id, $like_id){
         if (Profile::whereId($like_id)->exists())
             $this->create(['profile_id' => $profile_id, 'partner_id' => $like_id]);
