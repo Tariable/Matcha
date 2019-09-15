@@ -40,7 +40,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/ban/{id}', 'BanController@store');
     Route::post('/like/{id}', 'LikeController@store');
 
-    Route::get('/recs/all', 'RecommendationController@getRecs');
+    Route::get('/recs/all/{filter}', 'RecommendationController@getRecs');
     Route::get('/recs/{id}', 'RecommendationController@getData');
     Route::get('/recs', 'RecommendationController@show')->middleware('profileExists');
 });
