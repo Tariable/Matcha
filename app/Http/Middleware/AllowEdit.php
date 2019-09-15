@@ -7,7 +7,7 @@ use App\Preference;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-class allowEdit
+class AllowEdit
 {
     /**
      * Handle an incoming request.
