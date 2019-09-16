@@ -55,7 +55,7 @@ class RecommendationService
         whereNotIn('profiles.id', $banned_id)->
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
-
+        $recommendations = $this->filterByDistance($recommendations);
         return $recommendations;
     }
 
@@ -83,5 +83,15 @@ class RecommendationService
         return array($from, $to);
     }
 
-
+    public function filterByDistance($recommendations)
+    {
+        $user = Profile::where('id', '=', Auth::id())->first();
+        $filtered = Profile::join('preferences', 'profiles.id', '=', 'preferences.id')->
+        whereIn('profiles.id', $recommendations)->get(['latitude', 'longitude', 'profiles.id']);
+        foreach ($filtered as $profile) {
+            $distances[$profile->id] = $this->getDistance($profile->latitude, $profile->longitude, $user->latitude, $user->longitude);
+        }
+        asort($distances);
+        return array_keys($distances);
+    }
 }
