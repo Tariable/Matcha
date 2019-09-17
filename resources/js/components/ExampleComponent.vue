@@ -4,7 +4,9 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Example Component</div>
-                        <h1>{{ title }}</h1>
+                        <h1 v-bind:title="menu">{{ title }}</h1>
+                        <p v-text="content"></p>
+                        <input type="text" v-model="content">
                     <div class="card-body">
                     </div>
                 </div>
@@ -17,7 +19,9 @@
     export default {
         data: function () {
             return {
-                title: 'Maksik'
+                title: 'Pashok',
+                content: 'Kok',
+                menu: 'Menu'
             }
         }
     }
