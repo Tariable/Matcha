@@ -88,7 +88,7 @@
             return response.profileData;
         }
 
-        // AJAX query to get profiles photo
+        // AJAX query to get profiles photos
 
         async function getPhotos(id) {
             let urlShowAllPhotos = '/photos/' + id;

@@ -12,10 +12,13 @@ class PhotosTableSeeder extends Seeder
     public function run()
     {
         $numberOfUsers = 1000;
+        $numberOfPhotos = 3;
+        $numberOfProfiles = 10;
         for ($i = 1; $i <= $numberOfUsers; $i++) {
-            $numberOfPhotos = random_int(1,5);
-            for ($j = 0; $j < $numberOfPhotos; $j++) {
-                factory(\App\Photo::class)->create(['user_id' => $i]);
+            $profileNumber = random_int(1, $numberOfProfiles);
+            for ($j = 1; $j <= $numberOfPhotos; $j++) {
+                factory(\App\Photo::class)->create(['user_id' => $i,
+                    'path' => 'public/storage/photos/maleProfile' . $profileNumber . '.' . $j . '.jpg']);
             }
         }
     }

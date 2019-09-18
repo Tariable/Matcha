@@ -27,7 +27,7 @@ class PhotoController extends Controller
     public function store(StorePhoto $request)
     {
         if ($this->photosModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
-            $this->photosModel->savePhoto($request->file('photo'), Auth::id());
+            $this->photosModel->savePhoto($request->file('photos'), Auth::id());
         else
             abort('422');
     }

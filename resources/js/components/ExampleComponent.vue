@@ -4,10 +4,9 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Example Component</div>
-                        <h1 v-bind:title="menu">{{ title }}</h1>
-                        <p v-text="content"></p>
-                        <input type="text" v-model="content">
+
                     <div class="card-body">
+                        I'm an example component.
                     </div>
                 </div>
             </div>
@@ -17,12 +16,8 @@
 
 <script>
     export default {
-        data: function () {
-            return {
-                title: 'Pashok',
-                content: 'Kok',
-                menu: 'Menu'
-            }
+        mounted() {
+            console.log('Component mounted.')
         }
     }
 </script>

@@ -84,7 +84,7 @@
     update.onclick = async function(evt) {
       evt.preventDefault();
       if (!getQuantityOfPhotos() && !document.getElementById('errors')){
-        displayError('You must add at least one photo', 'photoErrors');
+        displayError('You must add at least one photos', 'photoErrors');
       } else {
         removeAllChildrenElemFrom('profileErrors');
         let urlUpdateProfile = '/profiles/{{ Auth::id() }}';
@@ -132,7 +132,7 @@
       }
     };
 
-    // AJAX query to get profiles photo
+    // AJAX query to get profiles photos
 
     async function showAllPhotos() {
       let urlShowAllPhotos = "/photos/{{ Auth::id() }}";
@@ -172,7 +172,7 @@
       navigator.geolocation.getCurrentPosition(geoLocation, ipLocation);
     }
 
-    // AJAX query to store profile photo
+    // AJAX query to store profile photos
 
     async function sendImage() {
       let urlStore = '/photos';
@@ -184,7 +184,7 @@
 
       let formData = new FormData();
       let input = document.querySelector('input[type="file"]');
-      formData.append('photo', input.files[0]);
+      formData.append('photos', input.files[0]);
 
       let options = {
         method: 'POST',
@@ -207,7 +207,7 @@
       }
     }
 
-    // AJAX query to delete photo
+    // AJAX query to delete photos
 
     let gallery = document.getElementById('gallery');
     gallery.onclick = function(event){
@@ -238,7 +238,7 @@
       }
     }
 
-    // AJAX query to get the last one photo
+    // AJAX query to get the last one photos
 
     async function displayLastPhoto() {
       let urlShowLastPhoto = "/photos/last/{{ Auth::id() }}";
