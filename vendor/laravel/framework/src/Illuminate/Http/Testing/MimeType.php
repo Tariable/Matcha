@@ -660,7 +660,7 @@ class MimeType
         'mmr' => 'image/vnd.fujixerox.edmics-mmr',
         'rlc' => 'image/vnd.fujixerox.edmics-rlc',
         'mdi' => 'image/vnd.ms-modi',
-        'wdp' => 'image/vnd.ms-photo',
+        'wdp' => 'image/vnd.ms-photos',
         'npx' => 'image/vnd.net-fpx',
         'wbmp' => 'image/vnd.wap.wbmp',
         'xif' => 'image/vnd.xiff',

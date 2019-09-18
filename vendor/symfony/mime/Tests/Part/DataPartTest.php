@@ -63,34 +63,34 @@ class DataPartTest extends TestCase
             new ParameterizedHeader('Content-Disposition', 'attachment')
         ), $p->getPreparedHeaders());
 
-        $p = new DataPart('content', 'photo.jpg', 'text/html');
+        $p = new DataPart('content', 'photos.jpg', 'text/html');
         $this->assertEquals(new Headers(
-            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photo.jpg']),
+            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photos.jpg']),
             new UnstructuredHeader('Content-Transfer-Encoding', 'base64'),
-            new ParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'photo.jpg', 'filename' => 'photo.jpg'])
+            new ParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'photos.jpg', 'filename' => 'photos.jpg'])
         ), $p->getPreparedHeaders());
     }
 
     public function testAsInline()
     {
-        $p = new DataPart('content', 'photo.jpg', 'text/html');
+        $p = new DataPart('content', 'photos.jpg', 'text/html');
         $p->asInline();
         $this->assertEquals(new Headers(
-            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photo.jpg']),
+            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photos.jpg']),
             new UnstructuredHeader('Content-Transfer-Encoding', 'base64'),
-            new ParameterizedHeader('Content-Disposition', 'inline', ['name' => 'photo.jpg', 'filename' => 'photo.jpg'])
+            new ParameterizedHeader('Content-Disposition', 'inline', ['name' => 'photos.jpg', 'filename' => 'photos.jpg'])
         ), $p->getPreparedHeaders());
     }
 
     public function testAsInlineWithCID()
     {
-        $p = new DataPart('content', 'photo.jpg', 'text/html');
+        $p = new DataPart('content', 'photos.jpg', 'text/html');
         $p->asInline();
         $cid = $p->getContentId();
         $this->assertEquals(new Headers(
-            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photo.jpg']),
+            new ParameterizedHeader('Content-Type', 'text/html', ['name' => 'photos.jpg']),
             new UnstructuredHeader('Content-Transfer-Encoding', 'base64'),
-            new ParameterizedHeader('Content-Disposition', 'inline', ['name' => 'photo.jpg', 'filename' => 'photo.jpg']),
+            new ParameterizedHeader('Content-Disposition', 'inline', ['name' => 'photos.jpg', 'filename' => 'photos.jpg']),
             new IdentificationHeader('Content-ID', $cid)
         ), $p->getPreparedHeaders());
     }
@@ -113,7 +113,7 @@ class DataPartTest extends TestCase
 
     public function testFromPathWithMeta()
     {
-        $p = DataPart::fromPath($file = __DIR__.'/../Fixtures/mimetypes/test.gif', 'photo.gif', 'image/jpeg');
+        $p = DataPart::fromPath($file = __DIR__.'/../Fixtures/mimetypes/test.gif', 'photos.gif', 'image/jpeg');
         $content = file_get_contents($file);
         $this->assertEquals($content, $p->getBody());
         $this->assertEquals(base64_encode($content), $p->bodyToString());
@@ -121,9 +121,9 @@ class DataPartTest extends TestCase
         $this->assertEquals('image', $p->getMediaType());
         $this->assertEquals('jpeg', $p->getMediaSubType());
         $this->assertEquals(new Headers(
-            new ParameterizedHeader('Content-Type', 'image/jpeg', ['name' => 'photo.gif']),
+            new ParameterizedHeader('Content-Type', 'image/jpeg', ['name' => 'photos.gif']),
             new UnstructuredHeader('Content-Transfer-Encoding', 'base64'),
-            new ParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'photo.gif', 'filename' => 'photo.gif'])
+            new ParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'photos.gif', 'filename' => 'photos.gif'])
         ), $p->getPreparedHeaders());
     }
 
