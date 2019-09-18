@@ -35,6 +35,10 @@ class Profile extends Model
         return $this->hasMany(Ban::class, 'profile_id');
     }
 
+    public function getAll(){
+        return $this->All();
+    }
+
     public function getAge($profileId){
         $date = $this->whereId($profileId)->pluck('date_of_birth')->first();
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);

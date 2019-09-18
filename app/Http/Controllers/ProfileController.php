@@ -32,4 +32,9 @@ class ProfileController extends Controller
     public function update(UpdateProfile $request){
         $this->profilesModel->updateWithId($request->input(), Auth::id());
     }
+
+    public function get(){
+        $profiles = $this->profilesModel->getAll();
+        return response()->json($profiles);
+    }
 }
