@@ -44,14 +44,6 @@
                   {{ old('gender') == 'female' ? 'checked' : ''}}>
           <label for="genderFemale">Female</label>
         </div>
-
-        <div class="form-group check">
-          {{--                           TODO: RADIO --> CHECKBOX--}}
-          <input class="form-check-input" id="notification" name="notification" type="checkbox"
-                  {{ old('remember') ? 'checked' : '' }} >
-          <label for="notificationOn">Notifications</label>
-        </div>
-
         <div>
           <input type="number" id="longitude" name="longitude" hidden>
           <input type="number" id="latitude" name="latitude" hidden>
@@ -98,15 +90,12 @@
         let date_of_birth = document.getElementById('date_of_birth').value;
         let description = document.getElementById('description').value;
         let gender = document.querySelector('input[name="gender"]:checked').value;
-        let notification = document.getElementById('notification');
-        notification.hasAttribute('checked') ? notification = '1' : notification = '0';
         let longitude = document.getElementById('longitude').value;
         let latitude = document.getElementById('latitude').value;
         formData.append('name', name);
         formData.append('date_of_birth', date_of_birth);
         formData.append('description', description);
         formData.append('gender', gender);
-        formData.append('notification', notification);
         formData.append('longitude', longitude);
         formData.append('latitude', latitude);
 

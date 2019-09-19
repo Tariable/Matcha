@@ -14,6 +14,5 @@ $factory->define(Profile::class, function (Faker $faker) {
         'latitude' => $faker->latitude(55.89, 55.6),
         'longitude' => $faker->longitude(37.14, 37.89),
         'rating' => $faker->numberBetween(40, 75),
-        'notification' => true
     ];
 });

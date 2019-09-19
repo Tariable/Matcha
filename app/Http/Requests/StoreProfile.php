@@ -28,7 +28,6 @@ class StoreProfile extends FormRequest
             'date_of_birth' => 'required|date_format:"Y-m-d"|after:-100 years|before:-18 years',
             'description' => 'required',
             'gender' => 'required|in:male,female',
-            'notification' => 'required|in:1,0',
             'latitude' => 'numeric|max:180|min:-180',
             'longitude' => 'numeric|max:90|min:-90',
         ];

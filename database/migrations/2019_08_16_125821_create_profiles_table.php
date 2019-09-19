@@ -22,7 +22,6 @@ class CreateProfilesTable extends Migration
             $table->decimal('latitude', 10, 5);
             $table->decimal('longitude', 10, 5);
             $table->bigInteger('rating')->default(50);
-            $table->boolean('notification')->default(true);
             $table->timestamps();
         });
     }
