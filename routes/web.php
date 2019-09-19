@@ -47,5 +47,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/recs', 'RecommendationController@show')->middleware('profileExists');
 
     Route::get('/messages', 'MessageController@index');
+    Route::get('/messages/{id}', 'MessageController@show');
+    Route::get('/messages/getAllChats', 'MessageController@getChats');
     Route::get('/contacts', 'ContactsController@get');
 });

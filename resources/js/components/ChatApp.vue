@@ -1,8 +1,7 @@
 <template>
     <div id="chat-app">
-        <p>Chat App</p>
         <Conversation :contact="selectedContact" :messages="messages"/>
-        <ContactsList :contacts="contacts"/>
+        <ContactsList :contacts="contacts" @selected="startConversationWith"/>
     </div>
 </template>
 
@@ -25,13 +24,26 @@
             };
         },
         mounted() {
-            console.log(this.user);
             axios.get('/profiles/all')
                 .then((response) => {
-                    console.log(response.data);
                     this.contacts = response.data;
                 });
+        },
+        methods: {
+            startConversationWith(contact) {
+                axios.get(`/messages/${contact.id}`)
+                    .then((response) => {
+                        this.messages = response.data;
+                        this.selectedContact = contact;
+                    })
+            }
         },
         components: {Conversation, ContactsList}
     }
 </script>
+
+<style lang="scss" scoped>
+    .chat-app {
+        display: flex;
+    }
+</style>

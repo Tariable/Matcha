@@ -12,8 +12,15 @@ class MessageController extends Controller
         $this->messageModel = $model;
     }
 
-    public function index()
-    {
+    public function index(){
         return view('messages.show');
+    }
+
+    public function show($id){
+        return response()->json($this->messageModel->getProfileMessages($id));
+    }
+
+    public function getChats(){
+
     }
 }

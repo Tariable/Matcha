@@ -36,7 +36,7 @@ class Profile extends Model
     }
 
     public function getAll(){
-        return $this->All();
+        return $this->take(20)->get();
     }
 
     public function getAge($profileId){

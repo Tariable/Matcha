@@ -16,6 +16,6 @@ $factory->define(Message::class, function (Faker $faker) {
     return [
         'from' => $from,
         'to' => $to,
-        'content' => $faker->sentence
+        'text' => $faker->sentence
     ];
 });
