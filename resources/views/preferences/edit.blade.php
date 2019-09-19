@@ -64,7 +64,7 @@
         let update = document.getElementById('updatePref');
         update.onclick = async function (evt) {
             evt.preventDefault();
-            let urlUpdatePref = '/preferences/{{ Auth::id() }}';
+            let urlUpdatePref = '/preferences/update';
 
             let headers = new Headers();
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

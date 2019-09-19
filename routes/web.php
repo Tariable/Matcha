@@ -29,7 +29,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');
     Route::get('/profiles/edit', 'ProfileController@edit')->middleware('allowEdit');
-    Route::post('/profiles/{id}', 'ProfileController@update');
+    Route::post('/profiles/update', 'ProfileController@update');
     Route::delete('/profiles/{id}', 'ProfileController@destroy');
 
 
@@ -37,7 +37,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/preferences/create', 'PreferenceController@create')->middleware('firstTime');
     Route::post('/preferences', 'PreferenceController@store');
     Route::get('/preferences/edit', 'PreferenceController@edit')->middleware('allowEdit');
-    Route::post('/preferences/{id}', 'PreferenceController@update');
+    Route::post('/preferences/update', 'PreferenceController@update');
 
     Route::post('/ban/{id}', 'BanController@store');
     Route::post('/like/{id}', 'LikeController@store');

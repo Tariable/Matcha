@@ -37,7 +37,7 @@ class StoreProfile extends FormRequest
     {
         return [
             'date_of_birth.after' => 'Your age must be less than 100 years old',
-            'date_of_birth.before' => 'Your age must be over 18',
+            'date_of_birth.before' => 'Your age must be more than 18',
         ];
     }
 }

@@ -70,7 +70,24 @@ class ProfileCreationTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user)->post('/profiles', [
-            'name' => '1111111111111111111111111111111111111111111111111111111111111',
+            'name' => 'jwefhlkjafhljkasdhalskdjfhalskdjfhlakjsdhflaksjdhflkajsdfhlja',
+            'date_of_birth' => '2000-09-19',
+            'description' => 'Profile_description',
+            'gender' => 'male',
+            'latitude' => 55.751244,
+            'longitude' => 37.618423,
+
+        ]);
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function a_name_cant_have_numbers()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->post('/profiles', [
+            'name' => 'max1',
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',
             'gender' => 'male',

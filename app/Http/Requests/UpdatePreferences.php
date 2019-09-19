@@ -27,7 +27,7 @@ class UpdatePreferences extends FormRequest
         return [
             'lowerAge' => 'required|numeric|max:97|min:18',
             'upperAge' => 'required|numeric|min:21|max:100',
-            'distance' => 'required',
+            'distance' => 'required|numeric|min:5|max:100',
             'sex' => ['required',
                 Rule::in(['female', 'male', '%ale'])],
         ];

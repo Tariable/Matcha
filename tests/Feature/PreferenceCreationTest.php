@@ -13,11 +13,9 @@ class PreferenceCreationTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_preference_can_be_created_without_tags()
+    public function a_preference_can_be_created()
     {
         $user = factory(User::class)->create();
-
-        $this->withoutExceptionHandling();
 
         $response = $this->actingAs($user)->post('/preferences', [
             'lowerAge' => 18,
