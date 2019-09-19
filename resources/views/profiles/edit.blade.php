@@ -45,14 +45,6 @@
           <label for="genderFemale">Female</label>
         </div>
 
-        <div class="form-group check">
-          {{--                           TODO: RADIO --> CHECKBOX--}}
-          <input class="form-check-input" id="notification" name="notification" type="checkbox"
-                  {{ $profile->notification == '1' ? 'checked' : '' }} >
-          <label for="notificationOn">Notifications</label>
-
-        </div>
-
         <div>
           <input type="number" id="current_longitude" name="longitude" hidden>
           <input type="number" id="current_latitude" name="latitude" hidden>
@@ -87,7 +79,7 @@
         displayError('You must add at least one photos', 'photoErrors');
       } else {
         removeAllChildrenElemFrom('profileErrors');
-        let urlUpdateProfile = '/profiles/{{ Auth::id() }}';
+        let urlUpdateProfile = '/profiles/update';
 
         let headers = new Headers();
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -99,16 +91,12 @@
         let date_of_birth = document.getElementById('date_of_birth').value;
         let description = document.getElementById('description').value;
         let gender = document.querySelector('input[name="gender"]:checked').value;
-        let notification = document.getElementById('notification');
-        notification.hasAttribute('checked') ? notification = '1' : notification = '0';
-        console.log(notification);
         let current_longitude = document.getElementById('current_longitude').value;
         let current_latitude = document.getElementById('current_latitude').value;
         formData.append('name', name);
         formData.append('date_of_birth', date_of_birth);
         formData.append('description', description);
         formData.append('gender', gender);
-        formData.append('notification', notification);
         formData.append('longitude', current_longitude);
         formData.append('latitude', current_latitude);
 
