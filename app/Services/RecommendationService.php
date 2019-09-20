@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Like;
 use App\Profile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class RecommendationService
 {
     protected   $profileModel;
+    protected   $likeModel;
 
-    public function __construct(Profile $profileModel){
+    public function __construct(Profile $profileModel, Like $likeModel){
         $this->profileModel = $profileModel;
+        $this->likeModel = $likeModel;
     }
 
     public function getPreferences($profileId){
@@ -20,6 +23,8 @@ class RecommendationService
     }
 
     public function getProfileData($myId, $partnerId){
+        $isLiked = $this->likeModel->where('profile_id', '=', $partnerId)->
+        where('partner_id', '=', $myId)->exists();
         $myProfile = $this->profileModel->getById($myId);
         $partnerProfile = $this->profileModel->getById($partnerId);
         $data['id'] = $myProfile->id;
@@ -32,7 +37,6 @@ class RecommendationService
         return $data;
     }
 
-
     public function getRecommendations($myId)
     {
         $profile = $this->profileModel->getById($myId);
@@ -41,6 +45,7 @@ class RecommendationService
         $banned_id = $profile->ban;
         $liked_id = $profile->like;
 
+        $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
         $recommendations = $this->profileModel->join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
             $query->where('sex', '=', $profile->gender)->
@@ -56,9 +61,9 @@ class RecommendationService
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
         $recommendations = $this->filterByDistance($recommendations);
+        array_splice($recommendations, 0, 0, array_values($usersWhoLiked));
         return $recommendations;
     }
-
 
     public function getDistance($lat1, $lon1, $lat2, $lon2){
         if (($lat1 == $lat2) && ($lon1 == $lon2)) {
