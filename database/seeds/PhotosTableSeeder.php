@@ -18,7 +18,7 @@ class PhotosTableSeeder extends Seeder
             $profileNumber = random_int(1, $numberOfProfiles);
             for ($j = 1; $j <= $numberOfPhotos; $j++) {
                 factory(\App\Photo::class)->create(['user_id' => $i,
-                    'path' => 'public/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
+                    'path' => '/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
             }
         }
     }

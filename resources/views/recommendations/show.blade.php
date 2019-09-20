@@ -117,7 +117,6 @@
     function createPhotoElem(photo, i) {
       let photoElem = document.createElement('img');
       console.dir(photoElem);
-      photo.path = photo.path.substring(6);
       photoElem.src = photo.path;
       photoElem.id = photo.id;
       photoElem.style.width = '100%';
