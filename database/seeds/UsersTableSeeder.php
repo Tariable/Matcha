@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $numberOfUsers = 1000;
+        $numberOfUsers = 2000;
 
         factory(\App\User::class, $numberOfUsers)->create();
         DB::table('users')->insert([

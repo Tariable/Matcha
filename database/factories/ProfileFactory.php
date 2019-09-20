@@ -7,8 +7,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Profile::class, function (Faker $faker) {
     return [
-        'gender' => 'male',
-        'name' => $faker->firstNameMale,
+//        'gender' => 'male',
+//        'name' => $faker->firstNameMale,
+
+        'gender' => 'female',
+        'name' => $faker->firstNameFemale,
         'date_of_birth' => $faker->dateTimeBetween($startDate = '-50 years', $endDate = '-18 years'),
         'description' => $faker->sentence($nbSentences = 5, $variableNBSentences = true),
         'latitude' => $faker->latitude(55.89, 55.6),
