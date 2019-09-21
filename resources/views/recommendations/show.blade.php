@@ -125,7 +125,6 @@
     }
 
         function showProfile(profile) {
-            console.log(profile);
             document.getElementById('cardId').innerHTML = profile['id'];
             document.getElementById('cardName').innerHTML = profile['name'];
             document.getElementById('cardAge').innerHTML = profile['age'];

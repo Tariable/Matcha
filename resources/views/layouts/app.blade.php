@@ -30,7 +30,7 @@
   <nav class="navbar">
     <div class="container">
       <div class="logo">
-        <a class="navbar-brand .nav-link" href="{{ url('/') }}"><i class="fas fa-heart"></i>
+        <a class="navbar-brand .nav-link" href="{{ url('/recs') }}"><i class="fas fa-heart"></i>
           {{ config('app.name') }}
         </a>
       </div>

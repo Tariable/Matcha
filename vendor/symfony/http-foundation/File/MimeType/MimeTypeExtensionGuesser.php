@@ -691,7 +691,7 @@ class MimeTypeExtensionGuesser implements ExtensionGuesserInterface
         'image/vnd.fujixerox.edmics-mmr' => 'mmr',
         'image/vnd.fujixerox.edmics-rlc' => 'rlc',
         'image/vnd.ms-modi' => 'mdi',
-        'image/vnd.ms-photos' => 'wdp',
+        'image/vnd.ms-photo' => 'wdp',
         'image/vnd.net-fpx' => 'npx',
         'image/vnd.wap.wbmp' => 'wbmp',
         'image/vnd.xiff' => 'xif',

@@ -38,6 +38,7 @@ trait ResetsPasswords
     public function reset(Request $request)
     {
         $request->validate($this->rules(), $this->validationErrorMessages());
+
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
@@ -46,6 +47,7 @@ trait ResetsPasswords
                 $this->resetPassword($user, $password);
             }
         );
+
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
@@ -64,7 +66,7 @@ trait ResetsPasswords
         return [
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|confirmed|min:8',
         ];
     }
 

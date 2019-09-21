@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Like;
+use App\Ban;
 use App\Profile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,12 @@ class RecommendationService
 {
     protected   $profileModel;
     protected   $likeModel;
+    protected   $banModel;
 
-    public function __construct(Profile $profileModel, Like $likeModel){
+    public function __construct(Profile $profileModel, Like $likeModel, Ban $banModel){
         $this->profileModel = $profileModel;
         $this->likeModel = $likeModel;
+        $this->banModel = $banModel;
     }
 
     public function getPreferences($profileId){
@@ -42,8 +45,8 @@ class RecommendationService
         $profile = $this->profileModel->getById($myId);
         $age = $profile->getAge($myId);
         $pref = $profile->preference;
-        $banned_id = $profile->ban;
-        $liked_id = $profile->like;
+        $banned_id = $this->banModel->getBannedId(Auth::id());
+        $liked_id = $this->likeModel->getLikedId(Auth::id());
 
         $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
         $recommendations = $this->profileModel->join('preferences', 'profiles.id', '=', 'preferences.id')->
