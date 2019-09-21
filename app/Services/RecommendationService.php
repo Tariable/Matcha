@@ -22,7 +22,7 @@ class RecommendationService
         return $this->profileModel->getById($profileId)->preference;
     }
 
-    public function getProfileData($myId, $partnerId){
+    public function getProfileData($partnerId, $myId){
         $isLiked = $this->likeModel->where('profile_id', '=', $partnerId)->
         where('partner_id', '=', $myId)->exists();
         $myProfile = $this->profileModel->getById($myId);
@@ -31,9 +31,9 @@ class RecommendationService
         $data['name'] = $myProfile->name;
         $data['age'] = $this->countAge($myProfile->date_of_birth);
         $data['desc'] = $myProfile->description;
-        $data['rating'] = $myProfile->rating;
         $data['distance'] = $this->getDistance($partnerProfile->latitude, $partnerProfile->longitude,
             $myProfile->latitude, $myProfile->longitude);
+        $data['like'] = $isLiked;
         return $data;
     }
 
@@ -61,7 +61,15 @@ class RecommendationService
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
         $recommendations = $this->filterByDistance($recommendations);
-        array_splice($recommendations, 0, 0, array_values($usersWhoLiked));
+        $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
+        return $recommendations;
+    }
+
+    public function mixLikedUsers($recommendations, $usersWhoLiked)
+    {
+        foreach ($usersWhoLiked as $user) {
+            array_splice($recommendations, random_int(2, 10), 0, $user);
+        }
         return $recommendations;
     }
 
