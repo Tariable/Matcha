@@ -34,7 +34,7 @@ class ProfileController extends Controller
     }
 
     public function get(){
-        $profiles = $this->profilesModel->getAll();
+        $profiles = $this->profilesModel->where('id', '!=', auth()->id())->get();
         return response()->json($profiles);
     }
 }

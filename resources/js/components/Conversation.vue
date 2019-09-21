@@ -23,7 +23,15 @@
         },
         methods: {
             sendMessage(text) {
-                console.log(text);
+                if (!this.contact){
+                    return;
+                }
+                axios.post('/messages', {
+                    to: this.contact.id,
+                    text: text
+                }).then((response) => {
+                    this.$emit('newMessage', response.data);
+                })
             }
         },
         components: {MessagesFeed, MessageComposer}

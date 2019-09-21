@@ -1,6 +1,6 @@
 <template>
     <div id="chat-app">
-        <Conversation :contact="selectedContact" :messages="messages"/>
+        <Conversation :contact="selectedContact" :messages="messages" @newMessage="saveNewMessage"/>
         <ContactsList :contacts="contacts" @selected="startConversationWith"/>
     </div>
 </template>
@@ -24,6 +24,11 @@
             };
         },
         mounted() {
+            Echo.private(`messages.${this.user.id}`)
+                .listen('NewMessage', (e) => {
+                    this.handleIncoming(e.message);
+                });
+
             axios.get('/profiles/all')
                 .then((response) => {
                     this.contacts = response.data;
@@ -36,6 +41,16 @@
                         this.messages = response.data;
                         this.selectedContact = contact;
                     })
+            },
+            saveNewMessage(message) {
+                this.messages.push(message);
+            },
+            handleIncoming(message){
+                if(this.selectedContact && message.from === this.selectedContact.id) {
+                    this.saveNewMessage(message);
+                    return;
+                }
+                alert(message.text);
             }
         },
         components: {Conversation, ContactsList}
