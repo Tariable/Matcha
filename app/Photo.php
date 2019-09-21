@@ -36,7 +36,7 @@ class Photo extends Model
         $photoName = $this->createName($photo);
         $photo->storeAs('public/photos', $photoName);
         $this->fitImage($photoName)->save();
-        $this->create(['user_id' => $userId, 'path' => 'public/storage/photos/' . $photoName]);
+        $this->create(['user_id' => $userId, 'path' => '/storage/photos/' . $photoName]);
     }
 
     public function fitImage($photoName){
@@ -67,10 +67,10 @@ class Photo extends Model
     }
 
     public function removeFromStorage($path){
-        Storage::delete('public', $this->modifyPathToStorage($path));
+        Storage::delete($this->modifyPathToStorage($path));
     }
 
     public function modifyPathToStorage($path){
-        return substr($path, strpos($path, '/', 1));
+        return str_replace('storage', 'public', $path);
     }
 }

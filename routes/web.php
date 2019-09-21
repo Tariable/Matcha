@@ -24,14 +24,12 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/photos', 'PhotoController@store');
     Route::delete('/photos/{photoId}', 'PhotoController@destroy');
 
-
     Route::get('/profiles/all', 'ProfileController@get');
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');
     Route::get('/profiles/edit', 'ProfileController@edit')->middleware('allowEdit');
     Route::post('/profiles/update', 'ProfileController@update');
     Route::delete('/profiles/{id}', 'ProfileController@destroy');
-
 
     Route::get('/preferences', 'PreferenceController@index');
     Route::get('/preferences/create', 'PreferenceController@create')->middleware('firstTime');

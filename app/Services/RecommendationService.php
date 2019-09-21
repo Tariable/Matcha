@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Like;
 use App\Profile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -10,28 +11,31 @@ use Illuminate\Support\Facades\Auth;
 class RecommendationService
 {
     protected   $profileModel;
+    protected   $likeModel;
 
-    public function __construct(Profile $profileModel){
+    public function __construct(Profile $profileModel, Like $likeModel){
         $this->profileModel = $profileModel;
+        $this->likeModel = $likeModel;
     }
 
     public function getPreferences($profileId){
         return $this->profileModel->getById($profileId)->preference;
     }
 
-    public function getProfileData($myId, $partnerId){
+    public function getProfileData($partnerId, $myId){
+        $isLiked = $this->likeModel->where('profile_id', '=', $partnerId)->
+        where('partner_id', '=', $myId)->exists();
         $myProfile = $this->profileModel->getById($myId);
         $partnerProfile = $this->profileModel->getById($partnerId);
         $data['id'] = $myProfile->id;
         $data['name'] = $myProfile->name;
         $data['age'] = $this->countAge($myProfile->date_of_birth);
         $data['desc'] = $myProfile->description;
-        $data['rating'] = $myProfile->rating;
         $data['distance'] = $this->getDistance($partnerProfile->latitude, $partnerProfile->longitude,
             $myProfile->latitude, $myProfile->longitude);
+        $data['like'] = $isLiked;
         return $data;
     }
-
 
     public function getRecommendations($myId)
     {
@@ -41,6 +45,7 @@ class RecommendationService
         $banned_id = $profile->ban;
         $liked_id = $profile->like;
 
+        $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
         $recommendations = $this->profileModel->join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
             $query->where('sex', '=', $profile->gender)->
@@ -56,9 +61,17 @@ class RecommendationService
         whereNotIn('profiles.id', $liked_id)->
         whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
         $recommendations = $this->filterByDistance($recommendations);
+        $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         return $recommendations;
     }
 
+    public function mixLikedUsers($recommendations, $usersWhoLiked)
+    {
+        foreach ($usersWhoLiked as $user) {
+            array_splice($recommendations, random_int(2, 10), 0, $user);
+        }
+        return $recommendations;
+    }
 
     public function getDistance($lat1, $lon1, $lat2, $lon2){
         if (($lat1 == $lat2) && ($lon1 == $lon2)) {
