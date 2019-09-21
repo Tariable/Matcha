@@ -22,7 +22,7 @@ class RecommendationService
         return $this->profileModel->getById($profileId)->preference;
     }
 
-    public function getProfileData($partnerId, $myId){
+    public function getProfileData($myId, $partnerId){
         $isLiked = $this->likeModel->where('profile_id', '=', $partnerId)->
         where('partner_id', '=', $myId)->exists();
         $myProfile = $this->profileModel->getById($myId);

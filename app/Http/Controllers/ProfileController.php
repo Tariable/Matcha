@@ -34,7 +34,7 @@ class ProfileController extends Controller
     }
 
     public function get(){
-        $profiles = $this->profilesModel->where('id', '!=', auth()->id())->get();
+        $profiles = $this->profilesModel->getChatProfiles(auth()->id());
         return response()->json($profiles);
     }
 }

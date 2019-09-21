@@ -1783,6 +1783,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -48417,7 +48418,13 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "description" }, [
                 _vm._v(_vm._s(contact.description))
-              ])
+              ]),
+              _vm._v(" "),
+              contact.unread
+                ? _c("span", { staticClass: "unreadCounter" }, [
+                    _vm._v(_vm._s(contact.unread))
+                  ])
+                : _vm._e()
             ])
           ]
         )

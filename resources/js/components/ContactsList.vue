@@ -5,6 +5,7 @@
                 <div class="contact">
                     <p class="name">{{ contact.name }}</p>
                     <p class="description">{{ contact.description }}</p>
+                    <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>
         </ul>

@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use App\Message;
 
 class Profile extends Model
 {
@@ -37,6 +38,24 @@ class Profile extends Model
 
     public function getAll(){
         return $this->take(20)->get();
+    }
+
+    public function getChatProfiles($myId){
+        $profiles = $this->where('id', '!=', $myId)->get();
+
+        $unreadIds = Message::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
+            ->where('to', auth()->id())
+            ->where('read', false)
+            ->groupBy('from')
+            ->get();
+
+        $profiles = $profiles->map(function($contact) use ($unreadIds) {
+            $contactUnread = $unreadIds->where('sender_id', $contact->id)->first();
+            $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
+            return $contact;
+        });
+
+        return $profiles;
     }
 
     public function getAge($profileId){
