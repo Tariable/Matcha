@@ -20,8 +20,8 @@
           </div>
         </div>
       <div class="buttons">
-        <button class="btn btn-success" id="like" onclick="like()">Like</button>
         <button class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
+          <button class="btn btn-success" id="like" onclick="like()">Like</button>
       </div>
       <p id="cardDescription"></p>
       </div>
