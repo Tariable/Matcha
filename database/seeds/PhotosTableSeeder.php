@@ -16,20 +16,20 @@ class PhotosTableSeeder extends Seeder
         $numberOfProfiles = 20;
 
 
-        $numberOfUsers = 1000; // FIRST TIME
-        for ($i = 1; $i <= $numberOfUsers; $i++) { // FIRST TIME
+//        $numberOfUsers = 1000; // FIRST TIME
+//        for ($i = 1; $i <= $numberOfUsers; $i++) { // FIRST TIME
 
-//        $numberOfUsers = 2000; // SECOND TIME
-//        for ($i = 1001; $i <= $numberOfUsers; $i++) { // SECOND TIME
+        $numberOfUsers = 2000; // SECOND TIME
+        for ($i = 1001; $i <= $numberOfUsers; $i++) { // SECOND TIME
 
 
             $profileNumber = random_int(1, $numberOfProfiles);
             for ($j = 1; $j <= $numberOfPhotos; $j++) {
                 factory(\App\Photo::class)->create(['user_id' => $i,
                     //                                  FIRST TIME
-                    'path' => '/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
+//                    'path' => '/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
 //                                                      SECOND TIME
-//                    'path' => '/storage/photos/maleProfile' . $profileNumber . '.' . $j . '.jpg']);
+                    'path' => '/storage/photos/maleProfile' . $profileNumber . '.' . $j . '.jpg']);
             }
         }
     }

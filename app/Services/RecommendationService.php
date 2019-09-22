@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Like;
 use App\Ban;
 use App\Profile;
+use App\Chat;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,11 +15,13 @@ class RecommendationService
     protected   $profileModel;
     protected   $likeModel;
     protected   $banModel;
+    protected   $chatModel;
 
-    public function __construct(Profile $profileModel, Like $likeModel, Ban $banModel){
+    public function __construct(Profile $profileModel, Like $likeModel, Ban $banModel, Chat $chatModel){
         $this->profileModel = $profileModel;
         $this->likeModel = $likeModel;
         $this->banModel = $banModel;
+        $this->chatModel = $chatModel;
     }
 
     public function getPreferences($profileId){
@@ -47,22 +50,28 @@ class RecommendationService
         $pref = $profile->preference;
         $banned_id = $this->banModel->getBannedId(Auth::id());
         $liked_id = $this->likeModel->getLikedId(Auth::id());
+        $chat_id = $this->chatModel->getChatId(Auth::id());
 
         $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
-        $recommendations = $this->profileModel->join('preferences', 'profiles.id', '=', 'preferences.id')->
+
+        $recommendations = $this->profileModel->
+        join('preferences', 'profiles.id', '=', 'preferences.id')->
         where(function ($query) use ($profile) {
             $query->where('sex', '=', $profile->gender)->
             orWhere('sex', '=', '%ale');
         })->
         where('gender', 'like', $pref->sex)->
-        whereBetween('date_of_birth', $this->ageGap($pref))->
         where('lowerAge', '<=', $age)->
         where('upperAge', '>=', $age)->
-        inRange($profile->longitude, $profile->latitude)->
-        closeTo($profile->longitude, $profile->latitude, $pref->distance)->
         whereNotIn('profiles.id', $banned_id)->
         whereNotIn('profiles.id', $liked_id)->
-        whereNotIn('profiles.id', [$pref->id])->get()->pluck('id');
+        whereNotIn('profiles.id', $chat_id)->
+        whereNotIn('profiles.id', [$pref->id])->
+        whereBetween('date_of_birth', $this->ageGap($pref))->
+        inRange($profile->longitude, $profile->latitude)->
+        closeTo($profile->longitude, $profile->latitude, $pref->distance)->
+        get()->pluck('id');
+
         $recommendations = $this->filterByDistance($recommendations);
         $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         return $recommendations;

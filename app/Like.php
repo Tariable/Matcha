@@ -16,10 +16,13 @@ class Like extends Model
     public function saveIfExist($profile_id, $partner_id)
     {
         if (Profile::where('id', $partner_id)->exists()) {
-//            if (Like::where('profile_id', '=', $partner_id)->where('partner_id', '=', $partner_id)) {
-//                dd('here');
-//            }
-            $this->create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
+            if ($likeId = $this->where('profile_id', $partner_id)->
+            where('partner_id', $profile_id)->pluck('like_id')->toArray()) {
+                Chat::create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
+                $this->where('like_id', array_values($likeId))->delete();
+            } else {
+                $this->create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
+            }
         }
     }
 
