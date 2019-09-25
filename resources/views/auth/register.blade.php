@@ -62,6 +62,14 @@
           <a href="login/github" class="btn btn-primary">
             Login with GitHub
           </a>
+          <div class="g-recaptcha" data-sitekey={{env('CAPTCHA_KEY')}}></div>
+          @if ($errors->has('g-recaptcha-response'))
+            <span>
+                    <strong>
+                        {{$errors->first('g-captcha-response')}}
+                    </strong>
+                </span>
+          @endif
         </div>
       </div>
     </form>
