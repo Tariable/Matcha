@@ -50,3 +50,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/messages/{id}', 'MessageController@show');
     Route::get('/contacts', 'ContactsController@get');
 });
+
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+

@@ -69,6 +69,9 @@
           <button type="submit" class="btn btn-primary">
             {{ __('Login') }}
           </button>
+            <a href="login/github" class="btn btn-primary">
+                Login with GitHub
+            </a>
         </div>
 
         <div class="mt-10"> @if (Route::has('password.request'))
