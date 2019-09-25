@@ -1728,7 +1728,8 @@ __webpack_require__.r(__webpack_exports__);
     Echo["private"]("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
       _this.handleIncoming(e.message);
     });
-    axios.get('/profiles/all').then(function (response) {
+    axios.get('/chats').then(function (response) {
+      console.log(response.data);
       _this.contacts = response.data;
     });
   },
@@ -48421,7 +48422,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               contact.unread
-                ? _c("span", { staticClass: "unreadCounter" }, [
+                ? _c("span", { staticClass: "unread" }, [
                     _vm._v(_vm._s(contact.unread))
                   ])
                 : _vm._e()

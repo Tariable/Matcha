@@ -11,11 +11,13 @@ $factory->define(Message::class, function (Faker $faker) {
     do {
         $from = rand(1, $profileLimit);
         $to = rand(1, $profileLimit);
+        $chat_id = rand(1, $profileLimit);
     } while($to === $from);
 
     return [
         'from' => $from,
         'to' => $to,
+        'chat_id' => $chat_id,
         'text' => $faker->sentence
     ];
 });

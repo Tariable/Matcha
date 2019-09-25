@@ -29,7 +29,7 @@
                     this.handleIncoming(e.message);
                 });
 
-            axios.get('/profiles/all')
+            axios.get('/chats')
                 .then((response) => {
                     console.log(response.data);
                     this.contacts = response.data;
