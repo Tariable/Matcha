@@ -6,9 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Message;
+use App\Traits\IdFunctions;
 
 class Profile extends Model
 {
+    use IdFunctions;
+
     protected $guarded = [];
 
     public function user()
