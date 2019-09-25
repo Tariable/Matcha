@@ -201,7 +201,7 @@
                 if (pref.upperAge + 2 <= 100)
                     pref.upperAge += 2;
 
-                let urlUpdatePref = '/preferences/{{ Auth::id() }}';
+                let urlUpdatePref = '/preferences/update';
 
                 let headers = new Headers();
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -211,7 +211,6 @@
                 formData.append('lowerAge', pref.lowerAge);
                 formData.append('upperAge', pref.upperAge);
                 formData.append('distance', pref.distance);
-                formData.append('sex', pref.sex);
 
                 let options = {
                     method: 'POST',
