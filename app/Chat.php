@@ -9,15 +9,20 @@ class Chat extends Model
     protected $guarded = [];
 
     public function profile(){
-        return $this->belongsToMany(Profile::class);
+        return $this->belongsTo(Profile::class, 'partner_id');
     }
 
     public function messages(){
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class, 'chat_id');
     }
 
     public function getProfileChats($myId){
-        return $this->where('profile_id', $myId)->orWhere('partner_id', $myId)->get();
+        $chats = $this->where('profile_id', $myId)->orWhere('partner_id', $myId)->get();
+        foreach ($chats as $chat){
+            $chat->messages;
+            $chat->profile;
+        }
+        return $chats;
     }
 
     public function getChatId($profileId)

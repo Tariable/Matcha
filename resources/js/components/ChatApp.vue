@@ -20,7 +20,7 @@
             return {
                 selectedContact: null,
                 messages: [],
-                contacts: []
+                contacts: [],
             };
         },
         mounted() {
@@ -31,8 +31,8 @@
 
             axios.get('/chats')
                 .then((response) => {
-                    console.log(response.data);
                     this.contacts = response.data;
+                    console.log(this.contacts);
                 });
         },
         methods: {

@@ -1729,8 +1729,8 @@ __webpack_require__.r(__webpack_exports__);
       _this.handleIncoming(e.message);
     });
     axios.get('/chats').then(function (response) {
-      console.log(response.data);
       _this.contacts = response.data;
+      console.log(_this.contacts);
     });
   },
   methods: {
@@ -1771,6 +1771,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -48415,10 +48416,18 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "contact" }, [
-              _c("p", { staticClass: "name" }, [_vm._v(_vm._s(contact.name))]),
+              _c("p", { staticClass: "name" }, [
+                _vm._v(_vm._s(contact.profile.name))
+              ]),
               _vm._v(" "),
-              _c("p", { staticClass: "description" }, [
-                _vm._v(_vm._s(contact.description))
+              _c("p", { staticClass: "last_message_text" }, [
+                _vm._v(
+                  _vm._s(contact.messages[contact.messages.length - 1].text)
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "last_message_created_at" }, [
+                _vm._v(_vm._s(contact.created_at))
               ]),
               _vm._v(" "),
               contact.unread

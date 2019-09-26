@@ -8,6 +8,10 @@ class Message extends Model
 {
     protected $guarded = [];
 
+    public function chats(){
+        $this->belongsTo(Chat::class, 'id');
+    }
+
     public function saveMessage($data, $fromId){
         $data['from'] = $fromId;
         return $this->create($data);

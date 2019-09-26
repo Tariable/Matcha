@@ -38,6 +38,10 @@ class Profile extends Model
         return $this->hasMany(Ban::class, 'profile_id');
     }
 
+    public function chats(){
+        return $this->hasMany(Chat::class, 'profile_id');
+    }
+
     public function getAll(){
         return $this->take(20)->get();
     }

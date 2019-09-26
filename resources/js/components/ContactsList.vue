@@ -3,8 +3,9 @@
         <ul>
             <li v-for="(contact, index) in contacts" :key="contact.id" @click="selectContact(index, contact)" :class="{'selected': index === selected}" >
                 <div class="contact">
-                    <p class="name">{{ contact.name }}</p>
-                    <p class="description">{{ contact.description }}</p>
+                    <p class="name">{{ contact.profile.name }}</p>
+                    <p class="last_message_text">{{ contact.messages[contact.messages.length - 1].text }}</p>
+                    <p class="last_message_created_at">{{ contact.created_at }}</p>
                     <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>

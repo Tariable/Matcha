@@ -27,9 +27,9 @@ class PhotosTableSeeder extends Seeder
             for ($j = 1; $j <= $numberOfPhotos; $j++) {
                 factory(\App\Photo::class)->create(['user_id' => $i,
                     //                                  FIRST TIME
-                    'path' => '/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
+//                    'path' => '/storage/photos/femaleProfile' . $profileNumber . '.' . $j . '.jpg']);
 //                                                      SECOND TIME
-//                    'path' => '/storage/photos/maleProfile' . $profileNumber . '.' . $j . '.jpg']);
+                    'path' => '/storage/photos/maleProfile' . $profileNumber . '.' . $j . '.jpg']);
             }
         }
     }
