@@ -71,8 +71,9 @@ class RecommendationService
         inRange($profile->longitude, $profile->latitude)->
         closeTo($profile->longitude, $profile->latitude, $pref->distance)->
         get()->pluck('id');
-
-        $recommendations = $this->filterByDistance($recommendations);
+        if ($recommendations->count() !== 0) {
+            $recommendations = $this->filterByDistance($recommendations);
+        }
         $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         return $recommendations;
     }
