@@ -66,7 +66,7 @@
           @if ($errors->has('g-recaptcha-response'))
             <span>
                     <strong>
-                        {{$errors->first('g-captcha-response')}}
+                        {{$errors->first('g-recaptcha-response')}}
                     </strong>
                 </span>
           @endif
