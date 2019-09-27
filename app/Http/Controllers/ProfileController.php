@@ -37,4 +37,15 @@ class ProfileController extends Controller
         $profiles = $this->profilesModel->getChatProfiles(auth()->id());
         return response()->json($profiles);
     }
+
+    public function partners(){
+        $partners = [];
+        $chats = ($this->profilesModel->getById(auth()->id()))->chats;
+        foreach ($chats as $chat){
+            foreach ($chat->profiles as $profile) {
+                array_push($partners, $profile);
+            }
+        }
+        return response()->json($partners);
+    }
 }

@@ -39,7 +39,7 @@ class Profile extends Model
     }
 
     public function chats(){
-        return $this->hasMany(Chat::class, 'profile_id');
+        return $this->belongsToMany(Chat::class, 'chat_profile');
     }
 
     public function getAll(){

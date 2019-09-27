@@ -8,8 +8,12 @@ class Chat extends Model
 {
     protected $guarded = [];
 
-    public function profile(){
-        return $this->belongsTo(Profile::class, 'partner_id');
+    public function profiles(){
+        return $this->belongsToMany(Profile::class, 'chat_profile');
+    }
+
+    public function chats(){
+        return $this->belongsToMany(Chat::class, 'chat_profile');
     }
 
     public function messages(){
@@ -25,10 +29,14 @@ class Chat extends Model
         return $chats;
     }
 
-    public function getChatId($profileId)
+    public function getChatId($myId)
     {
-        $numberOfProfileChats = $this->where('profile_id', $profileId)->pluck('partner_id')->toArray();
-        $numberOfPartnerChats = $this->where('partner_id', $profileId)->pluck('profile_id')->toArray();
-        return array_merge($numberOfPartnerChats, $numberOfProfileChats);
+        $profile = Profile::whereId('2001')->first();
+        foreach ($profile->chats as $chat){
+            array_push($array, $chat->pivot->profile_id);
+        }
+        dd($array);
+//        dd($chats->profiles()->pluck('profiles.id'));
+        return $chats;
     }
 }

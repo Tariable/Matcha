@@ -25,6 +25,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::delete('/photos/{photoId}', 'PhotoController@destroy');
 
     Route::get('/profiles/all', 'ProfileController@get');
+    Route::get('/partners', 'ProfileController@partners');
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');
     Route::get('/profiles/edit', 'ProfileController@edit')->middleware('allowEdit');

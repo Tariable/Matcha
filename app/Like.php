@@ -18,7 +18,10 @@ class Like extends Model
         if (Profile::where('id', $partner_id)->exists()) {
             if ($likeId = $this->where('profile_id', $partner_id)->
             where('partner_id', $profile_id)->pluck('like_id')->toArray()) {
-                Chat::create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
+                $chat = Chat::create();
+                $chat->profiles()->attach($profile_id);
+                $chat->profiles()->attach($partner_id);
+                $chat->messages()->create(['from' => $profile_id, 'to' => $partner_id, 'text' => 'init message']);
                 $this->where('like_id', array_values($likeId))->delete();
             } else {
                 $this->create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
