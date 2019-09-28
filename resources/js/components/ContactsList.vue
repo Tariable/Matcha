@@ -3,9 +3,12 @@
         <ul>
             <li v-for="(contact, index) in contacts" :key="contact.id" @click="selectContact(index, contact)" :class="{'selected': index === selected}" >
                 <div class="contact">
-                    <p class="name">{{ contact.profile.name }}</p>
-                    <p class="last_message_text">{{ contact.messages[contact.messages.length - 1].text }}</p>
-                    <p class="last_message_created_at">{{ contact.created_at }}</p>
+                    <p class="name">{{ contact[0] }}</p>
+                    <p>{{ contact[1].from }}</p>
+<!--                    <p class="last_message_from" v-if="myId !== contact[1].from">-></p>-->
+<!--                    <p class="last_message_from" v-else=""><-</p>-->
+                    <p class="last_message_text">{{ contact[1].text }}</p>
+                    <p class="last_message_created_at">{{ contact[1].created_at }}</p>
                     <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>
@@ -19,7 +22,8 @@
             contacts: {
                 type: Array,
                 default : []
-            }
+            },
+            myId: String
         },
         data() {
             return {
@@ -29,7 +33,7 @@
         methods: {
             selectContact(index, contact) {
                 this.selected = index;
-                this.$emit('selected', contact)
+                this.$emit('selected', contact[1])
             }
         }
     }

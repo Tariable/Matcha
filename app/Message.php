@@ -12,6 +12,10 @@ class Message extends Model
         $this->belongsTo(Chat::class, 'id');
     }
 
+    public function getMessagesByChatId($chatId){
+        
+    }
+
     public function saveMessage($data, $fromId){
         $data['from'] = $fromId;
         return $this->create($data);

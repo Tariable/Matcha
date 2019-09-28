@@ -1,7 +1,7 @@
 <template>
     <div id="chat-app">
         <Conversation :contact="selectedContact" :messages="messages" @newMessage="saveNewMessage"/>
-        <ContactsList :contacts="contacts" @selected="startConversationWith"/>
+        <ContactsList :myId="myId" :contacts="contacts" @selected="startConversationWith"/>
     </div>
 </template>
 
@@ -21,6 +21,7 @@
                 selectedContact: null,
                 messages: [],
                 contacts: [],
+                myId: document.querySelector("meta[name='auth_id']").getAttribute('content')
             };
         },
         mounted() {
@@ -29,7 +30,7 @@
                     this.handleIncoming(e.message);
                 });
 
-            axios.get('/chats')
+            axios.get('/profiles/contacts')
                 .then((response) => {
                     this.contacts = response.data;
                     console.log(this.contacts);
@@ -37,7 +38,7 @@
         },
         methods: {
             startConversationWith(contact) {
-                axios.get(`/messages/${contact.id}`)
+                axios.get(`/chats/${contact.chat_id}`)
                     .then((response) => {
                         this.messages = response.data;
                         this.selectedContact = contact;

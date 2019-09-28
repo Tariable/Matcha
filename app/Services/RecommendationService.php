@@ -50,7 +50,7 @@ class RecommendationService
         $pref = $profile->preference;
         $banned_id = $this->banModel->getBannedId(Auth::id());
         $liked_id = $this->likeModel->getLikedId(Auth::id());
-        $chat_id = $this->chatModel->getChatId(Auth::id());
+        $chat_id = $this->chatModel->getChatedId(Auth::id());
 
         $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
 

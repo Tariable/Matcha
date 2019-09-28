@@ -2,11 +2,15 @@
 
 namespace App;
 
+use App\Traits\IdFunctions;
 use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
-    protected $guarded = [];
+    use IdFunctions;
+
+    protected   $guarded = [];
+    public      $chatIdArray = [];
 
     public function profiles(){
         return $this->belongsToMany(Profile::class, 'chat_profile');
@@ -20,23 +24,13 @@ class Chat extends Model
         return $this->hasMany(Message::class, 'chat_id');
     }
 
-    public function getProfileChats($myId){
-        $chats = $this->where('profile_id', $myId)->orWhere('partner_id', $myId)->get();
-        foreach ($chats as $chat){
-            $chat->messages;
-            $chat->profile;
-        }
-        return $chats;
-    }
-
-    public function getChatId($myId)
+    public function getChatedId($myId)
     {
-        $profile = Profile::whereId('2001')->first();
+        $profile = Profile::whereId($myId)->first();
         foreach ($profile->chats as $chat){
-            array_push($array, $chat->pivot->profile_id);
+            array_push($this->chatIdArray, $chat->profiles()->where('chat_profile.profile_id', '!=', auth()->id())
+                ->pluck('profile_id')->first());
         }
-        dd($array);
-//        dd($chats->profiles()->pluck('profiles.id'));
-        return $chats;
+        return $this->chatIdArray;
     }
 }

@@ -26,6 +26,7 @@
                 if (!this.contact){
                     return;
                 }
+                console.log(this.contact);
                 axios.post('/messages', {
                     to: this.contact.id,
                     text: text

@@ -28,7 +28,8 @@
     </div>
 
   <div class="m-2">
-    <h4><a href="/profiles/edit">Edit profile</a></h4>
+      <h4><a href="/messages">Messages</a></h4>
+      <h4><a href="/profiles/edit">Edit profile</a></h4>
     <h4><a href="/preferences/edit">Edit preferences</a></h4>
   </div>
   <div id="expandDiv">

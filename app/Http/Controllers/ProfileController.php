@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    protected $profilesModel;
+    protected   $profilesModel;
+    public      $chats = [];
 
     public function __construct(Profile $model){
         $this->profilesModel = $model;
@@ -20,17 +21,17 @@ class ProfileController extends Controller
     }
 
     public function store(StoreProfile $request){
-        $this->profilesModel->saveWithId($request->input(), Auth::id());
+        $this->profilesModel->saveWithId($request->input(), auth()->id());
         return redirect('/preferences/create');
     }
 
     public function edit(){
-        $profile = $this->profilesModel->getById(Auth::id());
+        $profile = $this->profilesModel->getById(auth()->id());
         return view('profiles.edit', compact('profile'));
     }
 
     public function update(UpdateProfile $request){
-        $this->profilesModel->updateWithId($request->input(), Auth::id());
+        $this->profilesModel->updateWithId($request->input(), auth()->id());
     }
 
     public function get(){
@@ -38,14 +39,13 @@ class ProfileController extends Controller
         return response()->json($profiles);
     }
 
-    public function partners(){
-        $partners = [];
-        $chats = ($this->profilesModel->getById(auth()->id()))->chats;
-        foreach ($chats as $chat){
-            foreach ($chat->profiles as $profile) {
-                array_push($partners, $profile);
-            }
+    public function chatNames(){
+        $myProfile = $this->profilesModel->getById(auth()->id());
+        foreach ($myProfile->chats as $chat){
+            $profile = $chat->profiles()->where('chat_profile.profile_id', '!=', auth()->id())->latest()->get();
+            $lastMessage = $chat->messages()->latest()->get();
+            array_push($this->chats, $profile->merge($lastMessage));
         }
-        return response()->json($partners);
+        return response()->json($this->chats);
     }
 }

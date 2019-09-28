@@ -18,6 +18,11 @@ class ChatController extends Controller
         $this->chatModel->saveChat();
     }
 
+    public function getMessages($chatId){
+        $chat = $this->chatModel->getById($chatId);
+        return response()->json($chat->messages);
+    }
+
     public function getChats()
     {
         return response()->json($this->chatModel->getProfileChats(auth()->id()));

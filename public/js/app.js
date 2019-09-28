@@ -1719,7 +1719,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selectedContact: null,
       messages: [],
-      contacts: []
+      contacts: [],
+      myId: document.querySelector("meta[name='auth_id']").getAttribute('content')
     };
   },
   mounted: function mounted() {
@@ -1728,7 +1729,7 @@ __webpack_require__.r(__webpack_exports__);
     Echo["private"]("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
       _this.handleIncoming(e.message);
     });
-    axios.get('/chats').then(function (response) {
+    axios.get('/profiles/contacts').then(function (response) {
       _this.contacts = response.data;
       console.log(_this.contacts);
     });
@@ -1737,7 +1738,7 @@ __webpack_require__.r(__webpack_exports__);
     startConversationWith: function startConversationWith(contact) {
       var _this2 = this;
 
-      axios.get("/messages/".concat(contact.id)).then(function (response) {
+      axios.get("/chats/".concat(contact.chat_id)).then(function (response) {
         _this2.messages = response.data;
         _this2.selectedContact = contact;
       });
@@ -1786,12 +1787,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
       type: Array,
       "default": []
-    }
+    },
+    myId: String
   },
   data: function data() {
     return {
@@ -1801,7 +1806,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     selectContact: function selectContact(index, contact) {
       this.selected = index;
-      this.$emit('selected', contact);
+      this.$emit('selected', contact[1]);
     }
   }
 });
@@ -1848,6 +1853,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      console.log(this.contact);
       axios.post('/messages', {
         to: this.contact.id,
         text: text
@@ -48370,7 +48376,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("ContactsList", {
-        attrs: { contacts: _vm.contacts },
+        attrs: { myId: _vm.myId, contacts: _vm.contacts },
         on: { selected: _vm.startConversationWith }
       })
     ],
@@ -48416,18 +48422,16 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "contact" }, [
-              _c("p", { staticClass: "name" }, [
-                _vm._v(_vm._s(contact.profile.name))
-              ]),
+              _c("p", { staticClass: "name" }, [_vm._v(_vm._s(contact[0]))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(contact[1].from))]),
               _vm._v(" "),
               _c("p", { staticClass: "last_message_text" }, [
-                _vm._v(
-                  _vm._s(contact.messages[contact.messages.length - 1].text)
-                )
+                _vm._v(_vm._s(contact[1].text))
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "last_message_created_at" }, [
-                _vm._v(_vm._s(contact.created_at))
+                _vm._v(_vm._s(contact[1].created_at))
               ]),
               _vm._v(" "),
               contact.unread

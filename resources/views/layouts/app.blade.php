@@ -6,6 +6,8 @@
 
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="auth_id" content="{{ auth()->id() }}">
+
 
   <title>{{ config('app.name') }}</title>
 

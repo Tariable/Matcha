@@ -27,8 +27,4 @@ class MessageController extends Controller
         broadcast(new NewMessage($message));
         return response()->json($message);
     }
-
-    public function getChats(){
-
-    }
 }
