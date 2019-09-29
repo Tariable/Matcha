@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
-use App\Http\Requests\StoreProfile;
+use App\Http\Requests\ValidateProfile;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +19,7 @@ class ProfileController extends Controller
         return view('profiles.create');
     }
 
-    public function store(StoreProfile $request){
+    public function store(ValidateProfile $request){
         $this->profilesModel->saveWithId($request->input(), Auth::id());
         return redirect('/preferences/create');
     }
@@ -29,7 +29,7 @@ class ProfileController extends Controller
         return view('profiles.edit', compact('profile'));
     }
 
-    public function update(UpdateProfile $request){
+    public function update(ValidateProfile $request){
         $this->profilesModel->updateWithId($request->input(), Auth::id());
     }
 
