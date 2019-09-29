@@ -30,7 +30,8 @@ class ProfileEditTest extends TestCase
     public function a_user_can_edit_name()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $this->actingAs($user)->post('/profiles/update', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
@@ -47,7 +48,8 @@ class ProfileEditTest extends TestCase
     public function a_user_redirects_to_recs()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $response = $this->actingAs($user)->post('/profiles/update', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
@@ -63,7 +65,8 @@ class ProfileEditTest extends TestCase
     public function a_user_can_edit_date_of_birth()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $this->actingAs($user)->post('/profiles/update', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
@@ -81,7 +84,8 @@ class ProfileEditTest extends TestCase
     public function a_user_can_edit_gender()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $this->actingAs($user)->post('/profiles/update', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
@@ -99,7 +103,8 @@ class ProfileEditTest extends TestCase
     public function a_user_cant_edit_with_wrong_name()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $response = $this->actingAs($user)->post('/profiles/update', [
             'name' => 'max1',
             'date_of_birth' => '2000-09-19',
@@ -115,7 +120,8 @@ class ProfileEditTest extends TestCase
     public function a_user_cant_edit_with_wrong_date_of_birth()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $response = $this->actingAs($user)->post('/profiles/update', [
             'name' => 'max',
             'date_of_birth' => '1000-09-19',
@@ -131,7 +137,8 @@ class ProfileEditTest extends TestCase
     public function a_user_cant_edit_with_wrong_gender()
     {
         $user = factory(User::class)->create();
-        factory(Profile::class)->create();
+        factory(Profile::class)->create(['name' => 'name',
+            'gender' => 'male']);
         $response = $this->actingAs($user)->post('/profiles/update', [
             'name' => 'max1',
             'date_of_birth' => '2000-09-19',

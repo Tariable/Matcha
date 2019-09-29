@@ -31,16 +31,6 @@ $factory->define(Profile::class, function (Faker $faker) {
     ];
 
     return [
-
-
-//        'gender' => 'female', //   FIRST TIME
-//        'name' => $faker->firstNameFemale, //   FIRST TIME
-
-
-
-        'gender' => 'male', //       SECOND TIME
-        'name' => $faker->firstNameMale, //       SECOND TIME
-
         'date_of_birth' => $faker->dateTimeBetween($startDate = '-50 years', $endDate = '-18 years'),
         'description' => $desc[$faker->numberBetween(0, 19)],
         'latitude' => $faker->latitude(55.89, 55.6),
