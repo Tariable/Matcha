@@ -8,6 +8,7 @@
     <div class="row mb-5">
     </div>
     <div class="card" id="card">
+      <div class="lds-heart"><div></div></div>
       <div class="card-body" id="cardBody" hidden>
           <div id="carousel" class="carousel">
           </div>
@@ -44,31 +45,46 @@
         window.onload = async function () {
             recommendations = await getRecommendations();
             iterator = 0;
-            pref = await getMyPref();
+            // pref = await getMyPref();
+
+          /* MINE */
+          // [recommendations, pref] = await Promise.all([getRecommendations(), getMyPref()]);
+
             if(recommendations[iterator]){
-                profile = await getProfile(recommendations[iterator]);
-                photos = await getPhotos(recommendations[iterator]);
+                // profile = await getProfile(recommendations[iterator]);
+                // photos = await getPhotos(recommendations[iterator]);
+
+
+              /* MINE */
+                [profile, photos] =
+                    await Promise.all([
+                        getProfile(recommendations[iterator]),
+                        getPhotos(recommendations[iterator])
+                    ]);
+
                 displayProfile(profile, photos);
+                pref = await getMyPref();
             } else {
                 createSuggestion('Edit preferences to get more', 'redirectToEditPref');
             }
         };
 
         async function getMyPref(){
+          try {
             let urlGetMyPref = '/preferences';
-
             let getPrefResponse = await fetch(urlGetMyPref);
-
             let response = await getPrefResponse.json();
 
             return response.pref;
+          }
+          catch(e) {
+
+          }
         }
 
         async function getRecommendations() {
             let urlGetRecommendations = '/recs/all';
-
             let getRecommendationsResponse = await fetch(urlGetRecommendations);
-
             let response = await getRecommendationsResponse.json();
 
             return response.recommendationsId;
@@ -76,9 +92,7 @@
 
         async function getProfile(id) {
             let urlGetProfile = '/recs/' + id;
-
             let getProfileResponse = await fetch(urlGetProfile);
-
             let response = await getProfileResponse.json();
 
             return response.profileData;
@@ -88,17 +102,15 @@
 
         async function getPhotos(id) {
             let urlShowAllPhotos = '/photos/' + id;
-
             let showAllPhotosResponse = await fetch(urlShowAllPhotos);
-
             let photos = await showAllPhotosResponse.json();
 
             return photos;
         }
 
         function displayProfile(profile, photos) {
-            showPhotos(photos);
-            showProfile(profile);
+          showPhotos(photos);
+          showProfile(profile);
             carousel(document);
         }
 
@@ -119,11 +131,13 @@
     }
 
         function showProfile(profile) {
+            document.querySelector('.lds-heart').style.display = 'none';
+            document.querySelector('.buttons').style.visibility = 'visible'
             document.getElementById('cardId').innerHTML = profile['id'];
             document.getElementById('cardName').innerHTML = `${profile['name']}, ${profile['age']}`;
             document.getElementById('cardDistance').innerHTML = profile['distance'] + ' km from you';
             document.getElementById('cardDescription').innerHTML = profile['desc'];
-            document.getElementById('cardBody').removeAttribute('hidden');
+            document.getElementById('cardBody').style.visibility = 'visible';
         }
 
         // AJAX query to like account
