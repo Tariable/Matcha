@@ -1731,14 +1731,13 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get('/profiles/contacts').then(function (response) {
       _this.contacts = response.data;
-      console.log(_this.contacts);
     });
   },
   methods: {
     startConversationWith: function startConversationWith(contact) {
       var _this2 = this;
 
-      axios.get("/chats/".concat(contact.chat_id)).then(function (response) {
+      axios.get("/chats/".concat(contact.pivot.chat_id)).then(function (response) {
         _this2.messages = response.data;
         _this2.selectedContact = contact;
       });
@@ -1751,8 +1750,6 @@ __webpack_require__.r(__webpack_exports__);
         this.saveNewMessage(message);
         return;
       }
-
-      alert(message.text);
     }
   },
   components: {
@@ -1789,14 +1786,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
       type: Array,
       "default": []
     },
-    myId: String
+    myId: {
+      type: String
+    }
   },
   data: function data() {
     return {
@@ -1806,7 +1804,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     selectContact: function selectContact(index, contact) {
       this.selected = index;
-      this.$emit('selected', contact[1]);
+      this.$emit('selected', contact[0]);
     }
   }
 });
@@ -1836,6 +1834,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    myId: {
+      type: String
+    },
     contact: {
       type: Object,
       "default": null
@@ -1855,7 +1856,9 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log(this.contact);
       axios.post('/messages', {
-        to: this.contact.id,
+        to: this.contact.pivot.profile_id,
+        from: this.myId,
+        chat_id: this.contact.pivot.chat_id,
         text: text
       }).then(function (response) {
         _this.$emit('newMessage', response.data);
@@ -1916,6 +1919,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -48371,7 +48377,11 @@ var render = function() {
     { attrs: { id: "chat-app" } },
     [
       _c("Conversation", {
-        attrs: { contact: _vm.selectedContact, messages: _vm.messages },
+        attrs: {
+          myId: _vm.myId,
+          contact: _vm.selectedContact,
+          messages: _vm.messages
+        },
         on: { newMessage: _vm.saveNewMessage }
       }),
       _vm._v(" "),
@@ -48422,9 +48432,13 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "contact" }, [
-              _c("p", { staticClass: "name" }, [_vm._v(_vm._s(contact[0]))]),
+              _c("p", { staticClass: "name" }, [
+                _vm._v(_vm._s(contact[0].name))
+              ]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(contact[1].from))]),
+              _vm.myId !== contact[1].from
+                ? _c("p", { staticClass: "last_message_from" }, [_vm._v("->")])
+                : _c("p", { staticClass: "last_message_from" }, [_vm._v("<-")]),
               _vm._v(" "),
               _c("p", { staticClass: "last_message_text" }, [
                 _vm._v(_vm._s(contact[1].text))
@@ -48580,6 +48594,14 @@ var render = function() {
                   _vm._v(
                     "\n                " +
                       _vm._s(message.text) +
+                      "\n            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "data" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(message.created_at) +
                       "\n            "
                   )
                 ])

@@ -12,6 +12,9 @@
 
     export default {
         props: {
+            myId: {
+                type: String
+            },
             contact: {
                 type: Object,
                 default: null
@@ -28,7 +31,9 @@
                 }
                 console.log(this.contact);
                 axios.post('/messages', {
-                    to: this.contact.id,
+                    to: this.contact.pivot.profile_id,
+                    from: this.myId,
+                    chat_id: this.contact.pivot.chat_id,
                     text: text
                 }).then((response) => {
                     this.$emit('newMessage', response.data);

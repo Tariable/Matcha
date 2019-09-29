@@ -42,9 +42,10 @@ class ProfileController extends Controller
     public function chatNames(){
         $myProfile = $this->profilesModel->getById(auth()->id());
         foreach ($myProfile->chats as $chat){
-            $profile = $chat->profiles()->where('chat_profile.profile_id', '!=', auth()->id())->latest()->get();
-            $lastMessage = $chat->messages()->latest()->get();
-            array_push($this->chats, $profile->merge($lastMessage));
+            $profile = $chat->profiles->where('subscription.profile_id', '!=', auth()->id())->first();
+            $lastMessage = $chat->messages->last();
+            $contact = collect([$profile, $lastMessage]);
+            array_push($this->chats, $contact);
         }
         return response()->json($this->chats);
     }

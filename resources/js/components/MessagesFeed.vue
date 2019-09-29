@@ -5,6 +5,9 @@
                 <div class="text">
                     {{ message.text }}
                 </div>
+                <div class="data">
+                    {{ message.created_at }}
+                </div>
             </li>
         </ul>
     </div>

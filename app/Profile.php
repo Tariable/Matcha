@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Pivots\Subscription;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -38,9 +39,26 @@ class Profile extends Model
         return $this->hasMany(Ban::class, 'profile_id');
     }
 
-    public function chats(){
-        return $this->belongsToMany(Chat::class, 'chat_profile');
+    public function chats()
+    {
+        return $this->belongsToMany(Chat::class, 'subscription')->using(Subscription::class);
     }
+
+    public function messages()
+    {
+        return $this->hasManyThrough(
+            Message::class,          // The model to access to
+            Subscription::class, // The intermediate table that connects the User with the Podcast.
+            'profile_id',                 // The column of the intermediate table that connects to this model by its ID.
+            'chat_id',              // The column of the intermediate table that connects the Podcast by its ID.
+            'id',                      // The column that connects this model with the intermediate model table.
+            'chat_id'               // The column of the Audio Files table that ties it to the Podcast.
+        );
+    }
+
+//    public function chats(){
+//        return $this->belongsToMany(Chat::class, 'chat_profile');
+//    }
 
     public function getAll(){
         return $this->take(20)->get();
