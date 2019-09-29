@@ -23,8 +23,7 @@ class ChatController extends Controller
         return response()->json($chat->messages);
     }
 
-    public function getChats()
-    {
+    public function getChats(){
         return response()->json($this->chatModel->getProfileChats(auth()->id()));
     }
 }

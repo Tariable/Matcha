@@ -29,11 +29,10 @@
                 if (!this.contact){
                     return;
                 }
-                console.log(this.contact);
                 axios.post('/messages', {
+                    chat_id: this.contact.pivot.chat_id,
                     to: this.contact.pivot.profile_id,
                     from: this.myId,
-                    chat_id: this.contact.pivot.chat_id,
                     text: text
                 }).then((response) => {
                     this.$emit('newMessage', response.data);

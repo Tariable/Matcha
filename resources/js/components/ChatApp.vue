@@ -37,6 +37,8 @@
         },
         methods: {
             startConversationWith(contact) {
+                this.updateUnreadCount(contact, true);
+
                 axios.get(`/chats/${contact.pivot.chat_id}`)
                     .then((response) => {
                         this.messages = response.data;
@@ -51,6 +53,20 @@
                     this.saveNewMessage(message);
                     return;
                 }
+                this.updateUnreadCount(contact, false);
+            },
+            updateUnreadCount(contact, reset) {
+                this.contacts = this.contacts.map((single) => {
+                    if (single.id !== contact.id){
+                        return single;
+                    } else {
+                        if (reset)
+                            single.unread = 0;
+                        else
+                            single.unread += 1;
+                        return single;
+                    }
+                })
             }
         },
         components: {Conversation, ContactsList}

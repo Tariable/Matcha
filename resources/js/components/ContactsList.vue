@@ -1,13 +1,13 @@
 <template>
     <div class="contacts-list">
         <ul>
-            <li v-for="(contact, index) in contacts" :key="contact.id" @click="selectContact(index, contact)" :class="{'selected': index === selected}" >
+            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'selected': contact === selected}" >
                 <div class="contact">
-                    <p class="name">{{ contact[0].name }}</p>
-                    <p class="last_message_from" v-if="myId !== contact[1].from">-></p>
+                    <p class="name">{{ contact.name }}</p>
+                    <p class="last_message_from" v-if="myId !== contact.lastMessage.from">-></p>
                     <p class="last_message_from" v-else=""><-</p>
-                    <p class="last_message_text">{{ contact[1].text }}</p>
-                    <p class="last_message_created_at">{{ contact[1].created_at }}</p>
+                    <p class="last_message_text">{{ contact.lastMessage.text }}</p>
+                    <p class="last_message_created_at">{{ contact.lastMessage.created_at }}</p>
                     <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>
@@ -28,13 +28,20 @@
         },
         data() {
             return {
-                selected: 0
+                selected: this.contacts.length ? this.contacts[0] : null
             };
         },
         methods: {
-            selectContact(index, contact) {
-                this.selected = index;
-                this.$emit('selected', contact[0])
+            selectContact(contact) {
+                this.selected = contact;
+                this.$emit('selected', contact)
+            }
+        },
+        computed: {
+            sortedContacts(){
+                return _.sortBy(this.contacts, [(contact) => {
+                    return contact.lastMessage.created_at;
+                }]).reverse();
             }
         }
     }
@@ -62,7 +69,7 @@
                     background: #dfdfdf;
                 }
                 span.unread {
-                    background: #82e0a8;
+                    background: #81c4f9;
                     color: #fff;
                     position: absolute;
                     right: 11px;
