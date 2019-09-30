@@ -42,7 +42,7 @@ class ProfileController extends Controller
     public function chatNames(){
         $myProfile = $this->profilesModel->getById(auth()->id());
         foreach ($myProfile->chats as $chat){
-            $profile = $chat->profiles->where('subscription.profile_id', '!=', auth()->id())->first();
+            $profile = $chat->profiles->where('id', '!=', auth()->id())->first();
             $unreadMessageCounter = $chat->messages->where('read','==','0')->count();
             $profile->unread = $unreadMessageCounter;
             $profile->lastMessage = $chat->messages->last();
