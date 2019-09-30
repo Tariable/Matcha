@@ -12,13 +12,18 @@ class Message extends Model
         $this->belongsTo(Chat::class, 'id');
     }
 
-    public function getMessagesByChatId($chatId){
-        
+    public function profile(){
+        $this->hasOne(Profile::class, 'id', 'from');
     }
 
     public function saveMessage($data, $fromId){
         $data['from'] = $fromId;
         return $this->create($data);
+    }
+
+    public function updateChat(){
+        $chat = $this->chats();
+        return $chat;
     }
 
     public function getProfileMessages($myId, $partnerId){
@@ -31,9 +36,5 @@ class Message extends Model
         })->get();
 
         return $messages;
-    }
-
-    public function getAllChats(){
-        return $this->take(10)->get();
     }
 }

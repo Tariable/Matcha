@@ -13,10 +13,18 @@ class Chat extends Model
     protected   $guarded = [];
     public      $chatIdArray = [];
 
-    public function profiles()
-    {
+    public function profiles(){
         return $this->belongsToMany(Profile::class, 'subscription')->using(Subscription::class);
     }
+
+    public function partner(){
+        return $this->belongsToMany(Profile::class, 'subscription')->where('id', '!=',  auth()->id());
+    }
+
+    public function unreadMessages(){
+        return $this->messages()->where(['read' => '0', 'to' => auth()->id()]);
+    }
+
 
 //    public function profiles(){
 //        return $this->belongsToMany(Profile::class, 'chat_profile');

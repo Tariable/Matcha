@@ -40,13 +40,14 @@ class ProfileController extends Controller
     }
 
     public function chatNames(){
-        $myProfile = $this->profilesModel->getById(auth()->id());
+        $myId = auth()->id();
+        $myProfile = $this->profilesModel->getById($myId);
         foreach ($myProfile->chats as $chat){
-            $profile = $chat->profiles->where('id', '!=', auth()->id())->first();
-            $unreadMessageCounter = $chat->messages->where('read','==','0')->count();
-            $profile->unread = $unreadMessageCounter;
-            $profile->lastMessage = $chat->messages->last();
-            array_push($this->chats, $profile);
+            $chat->partner;
+            $unreadMessages = $chat->unreadMessages;                            // new function
+            $chat->unread = $unreadMessages ? $unreadMessages->count() : 0;     //     -//-
+            $chat->messages->first();
+            array_push($this->chats, $chat);
         }
         return response()->json($this->chats);
     }

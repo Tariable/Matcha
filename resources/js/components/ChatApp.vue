@@ -53,7 +53,7 @@
                     this.saveNewMessage(message);
                     return;
                 }
-                this.updateUnreadCount(contact, false);
+                // this.updateUnreadCount(contact, false);
             },
             updateUnreadCount(contact, reset) {
                 this.contacts = this.contacts.map((single) => {

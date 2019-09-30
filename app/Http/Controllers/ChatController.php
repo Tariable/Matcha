@@ -19,7 +19,9 @@ class ChatController extends Controller
     }
 
     public function getMessages($chatId){
+        $myId = auth()->id();
         $chat = $this->chatModel->getById($chatId);
+        $chat->messages()->where('to', $myId)->update(['read' => 1]);
         return response()->json($chat->messages);
     }
 

@@ -1750,9 +1750,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selectedContact && message.from === this.selectedContact.id) {
         this.saveNewMessage(message);
         return;
-      }
+      } // this.updateUnreadCount(contact, false);
 
-      this.updateUnreadCount(contact, false);
     },
     updateUnreadCount: function updateUnreadCount(contact, reset) {
       this.contacts = this.contacts.map(function (single) {
@@ -48453,7 +48452,7 @@ var render = function() {
             _c("div", { staticClass: "contact" }, [
               _c("p", { staticClass: "name" }, [_vm._v(_vm._s(contact.name))]),
               _vm._v(" "),
-              _vm.myId !== contact.lastMessage.from
+              +_vm.myId !== contact.lastMessage.from
                 ? _c("p", { staticClass: "last_message_from" }, [_vm._v("->")])
                 : _c("p", { staticClass: "last_message_from" }, [_vm._v("<-")]),
               _vm._v(" "),

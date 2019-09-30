@@ -4,7 +4,7 @@
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'selected': contact === selected}" >
                 <div class="contact">
                     <p class="name">{{ contact.name }}</p>
-                    <p class="last_message_from" v-if="myId !== contact.lastMessage.from">-></p>
+                    <p class="last_message_from" v-if="+myId !== contact.lastMessage.from">-></p>
                     <p class="last_message_from" v-else=""><-</p>
                     <p class="last_message_text">{{ contact.lastMessage.text }}</p>
                     <p class="last_message_created_at">{{ contact.lastMessage.created_at }}</p>
