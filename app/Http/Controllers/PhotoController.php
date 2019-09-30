@@ -28,8 +28,6 @@ class PhotoController extends Controller
     {
         if ($this->photosModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
             $this->photosModel->savePhoto($request->file('photos'), Auth::id());
-        else
-            abort('422');
     }
 
     public function destroy($photoId)

@@ -24,9 +24,9 @@
                  placeholder="E-Mail Address"
                  autofocus>
         @error('email')
-        <span class="invalid-feedback" role="alert" >
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
         @enderror
       </div>
 
@@ -42,26 +42,22 @@
 
         @error('password')
 
-        <span class="invalid-feedback" role="alert" >
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
         @enderror
 
       </div>
 
-
+<p>{{ auth()->user() }}</p>
       <div class="form-group check">
-{{--        <div></div>--}}
-{{--          <div class="form-check">--}}
             <input class="form-check-input"
                    type="checkbox"
                    name="remember"
                    id="remember" {{ old('remember') ? 'checked' : '' }}>
-
             <label class="form-check-label" for="remember">
               {{ __('Remember Me') }}
             </label>
-{{--          </div>--}}
       </div>
 
       <div class="form-group col">
