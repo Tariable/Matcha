@@ -66,9 +66,6 @@ class Profile extends Model
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
     }
 
-    //--------------------------------------scope section--------------------------------------//
-
-
     public function scopeCloseTo(Builder $query, $longitude, $latitude, $range)
     {
         return $query->whereRaw("
