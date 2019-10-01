@@ -3,15 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    protected $chatModel;
+    protected   $chatModel;
+    protected   $profileModel;
 
-    public function __construct(Chat $model){
-        $this->chatModel = $model;
+    public      $chats = [];
+
+    public function __construct(Chat $modelChat, Profile $modelProfile){
+        $this->chatModel = $modelChat;
+        $this->profileModel = $modelProfile;
+    }
+
+    public function updateChat($chat_id){
+        $chat = $this->chatModel->getById($chat_id);
+        return $this->prepareData($chat);
     }
 
     public function storeChat(){
@@ -26,6 +36,18 @@ class ChatController extends Controller
     }
 
     public function getChats(){
-        return response()->json($this->chatModel->getProfileChats(auth()->id()));
+        $myProfile = Profile::whereId(auth()->id())->first();
+        foreach ($myProfile->chats as $chat){
+            array_push($this->chats, $this->prepareData($chat));
+        }
+        return response()->json($this->chats);
+    }
+
+    public function prepareData(Chat $chat){
+        $currentChat = $chat;
+        $currentChat->partner = $chat->partner()->first();
+        $currentChat->message = $chat->messagesReverse()->first();
+        $currentChat->unread = $chat->unreadMessages()->count();
+        return $currentChat;
     }
 }

@@ -21,6 +21,10 @@ class Message extends Model
         return $this->create($data);
     }
 
+    public function fromContact(){
+        return $this->hasOne(Profile::class, 'id', 'from');
+    }
+
     public function updateChat(){
         $chat = $this->chats();
         return $chat;

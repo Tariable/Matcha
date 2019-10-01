@@ -1,6 +1,6 @@
 <template>
     <div class="conversation">
-        <h1>{{ contact ? contact.name : 'Select a Contact'}}</h1>
+        <h1>{{ contact ? contact.partner.name : 'Select a Contact'}}</h1>
         <MessagesFeed :contact="contact" :messages="messages"/>
         <MessageComposer @send="sendMessage"/>
     </div>
@@ -30,8 +30,8 @@
                     return;
                 }
                 axios.post('/messages', {
-                    chat_id: this.contact.pivot.chat_id,
-                    to: this.contact.pivot.profile_id,
+                    chat_id: this.contact.id,
+                    to: this.contact.partner.id,
                     from: this.myId,
                     text: text
                 }).then((response) => {

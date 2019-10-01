@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Chat;
 use App\Http\Requests\UpdateProfile;
 use App\Http\Requests\StoreProfile;
+use App\Message;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
     protected   $profilesModel;
-    public      $chats = [];
 
     public function __construct(Profile $model){
         $this->profilesModel = $model;
@@ -37,18 +39,5 @@ class ProfileController extends Controller
     public function get(){
         $profiles = $this->profilesModel->getChatProfiles(auth()->id());
         return response()->json($profiles);
-    }
-
-    public function chatNames(){
-        $myId = auth()->id();
-        $myProfile = $this->profilesModel->getById($myId);
-        foreach ($myProfile->chats as $chat){
-            $chat->partner;
-            $unreadMessages = $chat->unreadMessages;                            // new function
-            $chat->unread = $unreadMessages ? $unreadMessages->count() : 0;     //     -//-
-            $chat->messages->first();
-            array_push($this->chats, $chat);
-        }
-        return response()->json($this->chats);
     }
 }

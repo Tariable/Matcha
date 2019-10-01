@@ -25,12 +25,12 @@
             };
         },
         mounted() {
-            Echo.private(`messages.${this.user.id}`)
-                .listen('NewMessage', (e) => {
-                    this.handleIncoming(e.message);
+            Echo.private(`chats.${this.user.id}`)
+                .listen('UpdateChat', (e) => {
+                    this.handleIncoming(e.chat);
                 });
 
-            axios.get('/profiles/contacts')
+            axios.get('/chats')
                 .then((response) => {
                     this.contacts = response.data;
                 });
@@ -38,7 +38,6 @@
         methods: {
             startConversationWith(contact) {
                 this.updateUnreadCount(contact, true);
-
                 axios.get(`/chats/${contact.pivot.chat_id}`)
                     .then((response) => {
                         this.messages = response.data;
@@ -47,23 +46,27 @@
             },
             saveNewMessage(message) {
                 this.messages.push(message);
+                this.selectedContact.message.text = message.text;
+                this.selectedContact.message.created_at = message.created_at;
+                this.selectedContact.message.from = message.from;
             },
-            handleIncoming(message){
-                if(this.selectedContact && message.from === this.selectedContact.id) {
-                    this.saveNewMessage(message);
+            handleIncoming(chat){
+                if(this.selectedContact && chat.message.from === this.selectedContact.partner.id) {
+                    this.saveNewMessage(chat.message);
                     return;
                 }
-                // this.updateUnreadCount(contact, false);
+                this.updateUnreadCount(chat, false);
             },
-            updateUnreadCount(contact, reset) {
+            updateUnreadCount(chat, reset) {
                 this.contacts = this.contacts.map((single) => {
-                    if (single.id !== contact.id){
+                    if (single.id !== chat.id){
                         return single;
                     } else {
                         if (reset)
                             single.unread = 0;
                         else
                             single.unread += 1;
+                            single.message = chat.message;
                         return single;
                     }
                 })

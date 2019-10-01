@@ -1,7 +1,7 @@
 <template>
     <div class="feed" ref="feed">
         <ul v-if="contact">
-            <li v-for="message in messages" :class="`message${message.to === contact.id ? ' sent' : ' received'}`" :key="message.id">
+            <li v-for="message in messages" :class="`message${message.from === contact.partner.id ? ' received' : ' sent'}`" :key="message.id">
                 <div class="text">
                     {{ message.text }}
                 </div>
@@ -61,13 +61,13 @@
                         padding: 12px;
                         display: inline-block;
                     }
-                    &.received {
+                    &.sent {
                         text-align: right;
                         .text {
                             background: #b2b2b2;
                         }
                     }
-                    &.sent {
+                    &.received {
                         text-align: left;
                         .text {
                             background: #81c4f9;

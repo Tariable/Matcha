@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewMessage;
+use App\Chat;
+use App\Events\UpdateChat;
 use App\Http\Requests\StoreMessage;
 use App\Message;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -24,7 +26,8 @@ class MessageController extends Controller
 
     public function store(StoreMessage $request){
         $message = $this->messageModel->saveMessage($request->input(), auth()->id());
-        broadcast(new NewMessage($message));
+        $chat = Chat::where('id', $message->chat_id)->first();
+        broadcast(new UpdateChat($chat));
         return response()->json($message);
     }
 }

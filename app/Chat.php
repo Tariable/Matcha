@@ -25,17 +25,16 @@ class Chat extends Model
         return $this->messages()->where(['read' => '0', 'to' => auth()->id()]);
     }
 
-
-//    public function profiles(){
-//        return $this->belongsToMany(Profile::class, 'chat_profile');
-//    }
-
     public function chats(){
         return $this->belongsToMany(Chat::class, 'chat_profile');
     }
 
     public function messages(){
         return $this->hasMany(Message::class, 'chat_id');
+    }
+
+    public function messagesReverse(){
+        return $this->hasMany(Message::class, 'chat_id')->orderByDesc('id');
     }
 
     public function getChatedId($myId)

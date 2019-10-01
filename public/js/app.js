@@ -1726,10 +1726,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    Echo["private"]("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
-      _this.handleIncoming(e.message);
+    Echo["private"]("chats.".concat(this.user.id)).listen('UpdateChat', function (e) {
+      _this.handleIncoming(e.chat);
     });
-    axios.get('/profiles/contacts').then(function (response) {
+    axios.get('/chats').then(function (response) {
       _this.contacts = response.data;
     });
   },
@@ -1745,20 +1745,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveNewMessage: function saveNewMessage(message) {
       this.messages.push(message);
+      this.selectedContact.message.text = message.text;
+      this.selectedContact.message.created_at = message.created_at;
+      this.selectedContact.message.from = message.from;
     },
-    handleIncoming: function handleIncoming(message) {
-      if (this.selectedContact && message.from === this.selectedContact.id) {
-        this.saveNewMessage(message);
+    handleIncoming: function handleIncoming(chat) {
+      if (this.selectedContact && chat.message.from === this.selectedContact.partner.id) {
+        this.saveNewMessage(chat.message);
         return;
-      } // this.updateUnreadCount(contact, false);
+      }
 
+      this.updateUnreadCount(chat, false);
     },
-    updateUnreadCount: function updateUnreadCount(contact, reset) {
+    updateUnreadCount: function updateUnreadCount(chat, reset) {
       this.contacts = this.contacts.map(function (single) {
-        if (single.id !== contact.id) {
+        if (single.id !== chat.id) {
           return single;
         } else {
           if (reset) single.unread = 0;else single.unread += 1;
+          single.message = chat.message;
           return single;
         }
       });
@@ -1822,7 +1827,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     sortedContacts: function sortedContacts() {
       return _.sortBy(this.contacts, [function (contact) {
-        return contact.lastMessage.created_at;
+        return contact.message.created_at;
       }]).reverse();
     }
   }
@@ -1874,8 +1879,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.post('/messages', {
-        chat_id: this.contact.pivot.chat_id,
-        to: this.contact.pivot.profile_id,
+        chat_id: this.contact.id,
+        to: this.contact.partner.id,
         from: this.myId,
         text: text
       }).then(function (response) {
@@ -8482,7 +8487,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".feed[data-v-4b6ab3f5] {\n  background: #f0f0f0;\n  height: 100%;\n  max-height: 470px;\n  overflow: scroll;\n}\n.feed ul[data-v-4b6ab3f5] {\n  list-style-type: none;\n  padding: 5px;\n}\n.feed ul li.message[data-v-4b6ab3f5] {\n  margin: 10px 0;\n  width: 100%;\n}\n.feed ul li.message .text[data-v-4b6ab3f5] {\n  max-width: 200px;\n  border-radius: 5px;\n  padding: 12px;\n  display: inline-block;\n}\n.feed ul li.message.received[data-v-4b6ab3f5] {\n  text-align: right;\n}\n.feed ul li.message.received .text[data-v-4b6ab3f5] {\n  background: #b2b2b2;\n}\n.feed ul li.message.sent[data-v-4b6ab3f5] {\n  text-align: left;\n}\n.feed ul li.message.sent .text[data-v-4b6ab3f5] {\n  background: #81c4f9;\n}", ""]);
+exports.push([module.i, ".feed[data-v-4b6ab3f5] {\n  background: #f0f0f0;\n  height: 100%;\n  max-height: 470px;\n  overflow: scroll;\n}\n.feed ul[data-v-4b6ab3f5] {\n  list-style-type: none;\n  padding: 5px;\n}\n.feed ul li.message[data-v-4b6ab3f5] {\n  margin: 10px 0;\n  width: 100%;\n}\n.feed ul li.message .text[data-v-4b6ab3f5] {\n  max-width: 200px;\n  border-radius: 5px;\n  padding: 12px;\n  display: inline-block;\n}\n.feed ul li.message.sent[data-v-4b6ab3f5] {\n  text-align: right;\n}\n.feed ul li.message.sent .text[data-v-4b6ab3f5] {\n  background: #b2b2b2;\n}\n.feed ul li.message.received[data-v-4b6ab3f5] {\n  text-align: left;\n}\n.feed ul li.message.received .text[data-v-4b6ab3f5] {\n  background: #81c4f9;\n}", ""]);
 
 // exports
 
@@ -48450,18 +48455,20 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "contact" }, [
-              _c("p", { staticClass: "name" }, [_vm._v(_vm._s(contact.name))]),
+              _c("p", { staticClass: "name" }, [
+                _vm._v(_vm._s(contact.partner.name))
+              ]),
               _vm._v(" "),
-              +_vm.myId !== contact.lastMessage.from
+              +_vm.myId !== contact.message.from
                 ? _c("p", { staticClass: "last_message_from" }, [_vm._v("->")])
                 : _c("p", { staticClass: "last_message_from" }, [_vm._v("<-")]),
               _vm._v(" "),
               _c("p", { staticClass: "last_message_text" }, [
-                _vm._v(_vm._s(contact.lastMessage.text))
+                _vm._v(_vm._s(contact.message.text))
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "last_message_created_at" }, [
-                _vm._v(_vm._s(contact.lastMessage.created_at))
+                _vm._v(_vm._s(contact.message.created_at))
               ]),
               _vm._v(" "),
               contact.unread
@@ -48504,7 +48511,9 @@ var render = function() {
     { staticClass: "conversation" },
     [
       _c("h1", [
-        _vm._v(_vm._s(_vm.contact ? _vm.contact.name : "Select a Contact"))
+        _vm._v(
+          _vm._s(_vm.contact ? _vm.contact.partner.name : "Select a Contact")
+        )
       ]),
       _vm._v(" "),
       _c("MessagesFeed", {
@@ -48603,7 +48612,9 @@ var render = function() {
                 key: message.id,
                 class:
                   "message" +
-                  (message.to === _vm.contact.id ? " sent" : " received")
+                  (message.from === _vm.contact.partner.id
+                    ? " received"
+                    : " sent")
               },
               [
                 _c("div", { staticClass: "text" }, [

@@ -25,7 +25,6 @@ Route::group(['middleware' => ['verified']], function () {
     Route::delete('/photos/{photoId}', 'PhotoController@destroy');
 
     Route::get('/profiles/all', 'ProfileController@get');
-    Route::get('/profiles/contacts', 'ProfileController@chatNames');
     Route::get('/profiles/create', 'ProfileController@create')->middleware('firstTime');
     Route::post('/profiles', 'ProfileController@store');
     Route::get('/profiles/edit', 'ProfileController@edit')->middleware('allowEdit');
@@ -51,5 +50,4 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/messages', 'MessageController@index');
     Route::post('/messages', 'MessageController@store');
     Route::get('/messages/getAllChats', 'MessageController@getChats');
-    Route::get('/messages/{id}', 'MessageController@show');
 });

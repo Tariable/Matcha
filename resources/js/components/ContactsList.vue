@@ -3,11 +3,11 @@
         <ul>
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'selected': contact === selected}" >
                 <div class="contact">
-                    <p class="name">{{ contact.name }}</p>
-                    <p class="last_message_from" v-if="+myId !== contact.lastMessage.from">-></p>
+                    <p class="name">{{ contact.partner.name }}</p>
+                    <p class="last_message_from" v-if="+myId !== contact.message.from">-></p>
                     <p class="last_message_from" v-else=""><-</p>
-                    <p class="last_message_text">{{ contact.lastMessage.text }}</p>
-                    <p class="last_message_created_at">{{ contact.lastMessage.created_at }}</p>
+                    <p class="last_message_text">{{ contact.message.text }}</p>
+                    <p class="last_message_created_at">{{ contact.message.created_at }}</p>
                     <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>
@@ -40,7 +40,7 @@
         computed: {
             sortedContacts(){
                 return _.sortBy(this.contacts, [(contact) => {
-                    return contact.lastMessage.created_at;
+                    return contact.message.created_at;
                 }]).reverse();
             }
         }
