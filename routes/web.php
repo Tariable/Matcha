@@ -51,3 +51,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/messages', 'MessageController@store');
     Route::get('/messages/getAllChats', 'MessageController@getChats');
 });
+
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+

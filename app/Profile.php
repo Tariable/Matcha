@@ -4,13 +4,14 @@ namespace App;
 
 use App\Pivots\Subscription;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\IdFunctions;
+use App\Traits\ProfileScopes;
 
 class Profile extends Model
 {
     use IdFunctions;
+    use ProfileScopes;
 
     protected $guarded = [];
 
@@ -85,36 +86,6 @@ class Profile extends Model
     public function getAge($profileId){
         $date = $this->whereId($profileId)->pluck('date_of_birth')->first();
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now(), false);
-    }
-
-    //--------------------------------------scope section--------------------------------------//
-
-
-    public function scopeCloseTo(Builder $query, $longitude, $latitude, $range)
-    {
-        return $query->whereRaw("
-       ST_Distance_Sphere(
-            point(longitude, latitude),
-            point(?, ?)
-        ) / 1000 < ?
-    ", [
-            $longitude,
-            $latitude,
-            $range,
-        ]);
-    }
-
-    public function scopeInRange(Builder $query, $longitude, $latitude)
-    {
-        return $query->whereRaw("
-       ST_Distance_Sphere(
-            point(longitude, latitude),
-            point(?, ?)
-        ) / 1000 < distance
-    ", [
-            $longitude,
-            $latitude,
-        ]);
     }
 
 }

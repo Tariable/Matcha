@@ -29,8 +29,6 @@ class RecommendationService
     }
 
     public function getProfileData($myId, $partnerId){
-        $isLiked = $this->likeModel->where('profile_id', '=', $partnerId)->
-        where('partner_id', '=', $myId)->exists();
         $myProfile = $this->profileModel->getById($myId);
         $partnerProfile = $this->profileModel->getById($partnerId);
         $data['id'] = $myProfile->id;
@@ -39,7 +37,6 @@ class RecommendationService
         $data['desc'] = $myProfile->description;
         $data['distance'] = $this->getDistance($partnerProfile->latitude, $partnerProfile->longitude,
             $myProfile->latitude, $myProfile->longitude);
-        $data['like'] = $isLiked;
         return $data;
     }
 
@@ -71,8 +68,9 @@ class RecommendationService
         inRange($profile->longitude, $profile->latitude)->
         closeTo($profile->longitude, $profile->latitude, $pref->distance)->
         get()->pluck('id');
-
-        $recommendations = $this->filterByDistance($recommendations);
+        if ($recommendations->count() !== 0) {
+            $recommendations = $this->filterByDistance($recommendations);
+        }
         $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         return $recommendations;
     }

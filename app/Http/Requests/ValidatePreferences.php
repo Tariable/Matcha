@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdatePreferences extends FormRequest
+class ValidatePreferences extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,11 @@ class UpdatePreferences extends FormRequest
     public function rules()
     {
         return [
-            'lowerAge' => 'required|numeric|max:97|min:18',
+            'lowerAge' => 'required|numeric|min:18|max:97',
             'upperAge' => 'required|numeric|min:21|max:100',
             'distance' => 'required|numeric|min:5|max:100',
             'sex' => ['required',
-                Rule::in(['female', 'male', '%ale'])],
+                Rule::in(['female', 'male', '%ale']),]
         ];
     }
 

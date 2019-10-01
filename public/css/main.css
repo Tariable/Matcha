@@ -454,8 +454,74 @@ input#photoInput {
 
 .card-body {
     display: flex;
+    visibility: hidden;
     flex-flow: column;
     align-items: center;
+}
+
+.card {
+    text-align: center;
+    /*display: flex;*/
+    /*flex-flow: column;*/
+    /*justify-content: center;*/
+}
+
+ /* LOADER */
+.lds-heart {
+    display: inline-block;
+    position: relative;
+    top: 25vh;
+    width: 96px;
+    height: 96px;
+    transform: rotate(45deg);
+    /*transform-origin: 32px 32px;*/
+    /*text-align: center;*/
+}
+.lds-heart div {
+    top: 23px;
+    left: 19px;
+    position: absolute;
+    width: 39px;
+    height: 39px;
+    background: var(--main);
+    animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.lds-heart div:after,
+.lds-heart div:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 39px;
+    height: 39px;
+    background: var(--main);
+}
+.lds-heart div:before {
+    left: -20px;
+    border-radius: 50% 0 0 50%;
+}
+.lds-heart div:after {
+    top: -20px;
+    border-radius: 50% 50% 0 0;
+}
+@keyframes lds-heart {
+    0% {
+        transform: scale(0.95);
+    }
+    10% {
+        transform: scale(1.1);
+    }
+    39% {
+        transform: scale(0.85);
+    }
+    55% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(0.9);
+    }
 }
 
  /* CAROUSEL */
@@ -484,6 +550,10 @@ input#photoInput {
 
 
 /*    CARD INFO    */
+
+.card .buttons {
+    visibility: hidden;
+}
 
 .card-body {
     position: relative;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePreferences;
+use App\Http\Requests\ValidatePreferences;
 use App\Http\Requests\UpdatePreferences;
 use Illuminate\Support\Facades\Auth;
 use App\Preference;
@@ -28,7 +28,7 @@ class PreferenceController extends Controller
     }
 
 
-    public function store(StorePreferences $request)
+    public function store(ValidatePreferences $request)
     {
         $this->preferencesModel->saveWithId($request->input(), Auth::id());
         return redirect("/recs");
@@ -42,7 +42,7 @@ class PreferenceController extends Controller
     }
 
 
-    public function update(UpdatePreferences $request)
+    public function update(ValidatePreferences $request)
     {
         $this->preferencesModel->updateWithId($request->input(), Auth::id());
     }

@@ -58,6 +58,18 @@
           <button type="submit" class="btn btn-primary">
             {{ __('Register') }}
           </button>
+          <p>Or</p>
+          <a href="login/github" class="btn btn-primary">
+            Login with GitHub
+          </a>
+          <div class="g-recaptcha" data-sitekey={{env('CAPTCHA_KEY')}}></div>
+          @if ($errors->has('g-recaptcha-response'))
+            <span>
+                    <strong>
+                        {{$errors->first('g-recaptcha-response')}}
+                    </strong>
+                </span>
+          @endif
         </div>
       </div>
     </form>

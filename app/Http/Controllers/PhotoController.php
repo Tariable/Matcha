@@ -3,42 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePhoto;
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Photo;
-use Intervention\Image\Facades\Image;
+use App\Services\PhotoService;
 
 class PhotoController extends Controller
 {
-    protected $photosModel;
+    protected $photoModel;
     protected $photoLimit;
+    protected $photoService;
 
-    public function __construct(Photo $model){
-        $this->photosModel = $model;
+    public function __construct(Photo $model, PhotoService $photoService)
+    {
+        $this->photoModel = $model;
         $this->photoLimit = 5;
+        $this->photoService = $photoService;
     }
 
     public function show($userId)
     {
-        return response()->json($this->photosModel->getProfilePhotos($userId));
+        return response()->json($this->photoModel->getProfilePhotos($userId));
     }
 
     public function store(StorePhoto $request)
     {
-        if ($this->photosModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
-            $this->photosModel->savePhoto($request->file('photos'), Auth::id());
-        else
-            abort('422');
+        if ($this->photoModel->getPhotoNumberOfProfile(Auth::id()) < $this->photoLimit)
+            $this->photoService->savePhoto($request->file('photos'), Auth::id());
     }
 
     public function destroy($photoId)
     {
-        $this->photosModel->destroyPhoto($photoId);
+        $this->photoService->destroyPhoto($photoId);
     }
 
     public function getLastPhoto($userId)
     {
-        return response()->json($this->photosModel->getProfileLastPhoto($userId));
+        return response()->json($this->photoModel->getProfileLastPhoto($userId));
     }
 }

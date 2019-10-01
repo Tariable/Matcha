@@ -18,7 +18,7 @@ class ProfileCreationTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)->post('/profiles', [
+        $this->actingAs($user)->post('/profiles', [
             'name' => 'ProfileName',
             'date_of_birth' => '2000-09-19',
             'description' => 'Profile_description',

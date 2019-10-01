@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProfile extends FormRequest
+class ValidateProfile extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class StoreProfile extends FormRequest
         return [
             'name' => 'required|alpha|min:2|max:20',
             'date_of_birth' => 'required|date_format:"Y-m-d"|after:-100 years|before:-18 years',
-            'description' => 'required',
+            'description' => 'max:150|required',
             'gender' => 'required|in:male,female',
             'latitude' => 'numeric|max:180|min:-180',
             'longitude' => 'numeric|max:90|min:-90',
