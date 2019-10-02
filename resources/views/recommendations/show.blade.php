@@ -226,6 +226,7 @@
                 formData.append('lowerAge', pref.lowerAge);
                 formData.append('upperAge', pref.upperAge);
                 formData.append('distance', pref.distance);
+                formData.append('sex', pref.sex);
 
                 let options = {
                     method: 'POST',

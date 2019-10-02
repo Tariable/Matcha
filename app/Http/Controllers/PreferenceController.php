@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidatePreferences;
 use App\Http\Requests\UpdatePreferences;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Preference;
 
