@@ -18,18 +18,19 @@ class ProfileController extends Controller
         return view('profiles.create');
     }
 
+
     public function store(ValidateProfile $request){
         $this->profilesModel->saveWithId($request->input(), Auth::id());
         return redirect('/preferences/create');
     }
 
+    public function update(ValidateProfile $request){
+        $this->profilesModel->updateWithId($request->input(), Auth::id());
+    }
+
     public function edit(){
         $profile = $this->profilesModel->getById(Auth::id());
         return view('profiles.edit', compact('profile'));
-    }
-
-    public function update(ValidateProfile $request){
-        $this->profilesModel->updateWithId($request->input(), Auth::id());
     }
 
     public function get(){

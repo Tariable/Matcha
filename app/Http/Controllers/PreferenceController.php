@@ -13,7 +13,8 @@ class PreferenceController extends Controller
 {
     protected $preferencesModel;
 
-    public function __construct(Preference $model){
+    public function __construct(Preference $model)
+    {
         $this->preferencesModel = $model;
     }
 
@@ -22,12 +23,10 @@ class PreferenceController extends Controller
         return response()->json(array('pref' => $this->preferencesModel->getById(Auth::id())));
     }
 
-
     public function create()
     {
         return view('preferences.create');
     }
-
 
     public function store(ValidatePreferences $request)
     {
@@ -35,13 +34,11 @@ class PreferenceController extends Controller
         return redirect("/recs");
     }
 
-
     public function edit()
     {
         $preference = $this->preferencesModel->getById(Auth::id());
         return view('preferences.edit', compact('preference'));
     }
-
 
     public function update(ValidatePreferences $request)
     {
