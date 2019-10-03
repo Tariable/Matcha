@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Verification')
+
 @section('content')
 <div class="container-form verify">
                 <h1>{{ __('Verify Your Email Address') }}</h1>

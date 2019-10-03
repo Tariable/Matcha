@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Edit profile')
+
 @section('content')
   <div class="container-create">
     <div class="photoContainer">

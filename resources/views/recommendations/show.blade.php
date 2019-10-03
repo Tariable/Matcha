@@ -36,6 +36,6 @@
   <div id="expandDiv">
 
   </div>
-  <script src="{{ URL::asset('js/recommendations.js') }}"></script>
+  <script src="{{ URL::asset('js/Recommendations/recommendations.js') }}"></script>
 
 @endsection
