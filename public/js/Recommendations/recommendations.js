@@ -121,6 +121,7 @@ async function like() {
     let response = await LikeResponse.json();
 
     if (LikeResponse.ok) {
+
         iterator++;
         if (recommendations[iterator]){
             profile = await getProfile(recommendations[iterator]);

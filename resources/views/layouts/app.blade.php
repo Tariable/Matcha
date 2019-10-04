@@ -38,56 +38,52 @@
 <body>
 
 <nav class="navbar">
-    <div id="app">
-        <div class="container">
-            <div class="logo">
-                <a class="navbar-brand .nav-link" href="{{ url('/recs') }}"><i class="fas fa-heart"></i>
-                    {{ config('app.name') }}
-                </a>
-            </div>
-            <ul class="navbar-nav">
-                <!-- Authentication Links -->
-                @guest
+    <div class="container">
+        <div class="logo">
+            <a class="navbar-brand .nav-link" href="{{ url('/recs') }}"><i class="fas fa-heart"></i>
+                {{ config('app.name') }}
+            </a>
+        </div>
+        <ul class="navbar-nav">
+            <!-- Authentication Links -->
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @if (Route::has('register'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                     </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @else
+                @endif
+            @else
+                <div id="app">
                     <li class="nav-item">
                         <notification :user="{{ auth()->user() }}"></notification>
                     </li>
-                    <li class="nav-item drop-container">
-                        <i class="fa fa-gear"></i><span class="arrow"> ▼</span>
-                        <ul class="dropdown">
-                            <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
-                            <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
-                            <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a>
-                            </li>
-                            <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
-                                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endguest
-            </ul>
-        </div>
+                </div>
+                <li class="nav-item drop-container">
+                    <i class="fa fa-gear"></i><span class="arrow"> ▼</span>
+                    <ul class="dropdown">
+                        <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
+                        <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
+                        <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a>
+                        </li>
+                        <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
+                                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @endguest
+        </ul>
     </div>
 </nav>
 <p id="myId" hidden>{{ Auth::id() }}</p>
-<main class="py-4">
-    @yield('content')
-</main>
-</nav>
 
 <main class="py-4">
     @yield('content')
