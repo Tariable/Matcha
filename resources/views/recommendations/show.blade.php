@@ -21,21 +21,14 @@
           </div>
         </div>
       <div class="buttons">
-        <button class="btn btn-danger" id="ban" onclick="ban()">Dislike</button>
-          <button class="btn btn-success" id="like" onclick="like()">Like</button>
+        <button class="btn" id="ban" onclick="ban()">Dislike</button>
+          <button class="btn" id="like" onclick="like()">Like</button>
       </div>
       <p id="cardDescription"></p>
       </div>
     </div>
 
-  <div class="m-2">
-      <h4><a href="/messages">Messages</a></h4>
-      <h4><a href="/profiles/edit">Edit profile</a></h4>
-    <h4><a href="/preferences/edit">Edit preferences</a></h4>
-  </div>
-  <div id="expandDiv">
-
-  </div>
+  <div id="expandDiv" style="text-align: center"></div>
   <script src="{{ URL::asset('js/Recommendations/recommendations.js') }}"></script>
 
 @endsection

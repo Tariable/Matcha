@@ -1,5 +1,6 @@
 :root {
-    --main: #ff4b4b;
+    /*--main: #e54b4b;*/
+    --main: #ff2f56;
     --n: 1;
 }
 
@@ -43,7 +44,7 @@ html, body {
 }
 
 .nav-link, .navbar-brand {
-    color: rgba(241, 228, 232, 1);
+    color: rgb(255, 242, 246);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: .1rem;
@@ -63,7 +64,7 @@ html, body {
 textarea {
     resize: none;
     outline: none;
-    caret-color: rgba(229, 75, 75, 1);
+    caret-color: var(--main);
     border-radius: 5px;
     border-color: #d7d9dc;
     transition: 0.15s ease-in;
@@ -111,7 +112,7 @@ textarea:focus {
      border-radius: 5px;
      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-     background-color: rgba(229, 75, 75, 1);
+     background-color: var(--main);
      transition: ease-in-out 0.4s;
      color: rgba(241, 228, 232, 1);
      font-size: 13px;
@@ -119,6 +120,16 @@ textarea:focus {
      letter-spacing: .1rem;
      text-decoration: none;
      text-transform: uppercase;
+ }
+
+ .btn-success {
+     border-radius: 50%;
+     background: rgb(111,240,227);
+     background: linear-gradient(90deg, rgba(111,240,227,1) 0%, rgba(8,227,142,1) 100%);
+     box-shadow: 4px 9px 0 rgba(213,218,224,.3);
+     height: 70px;
+     width: 70px;
+     border: none;
  }
 
  .btn:hover {
@@ -135,7 +146,6 @@ textarea:focus {
 }
 .btn-link:hover {
     border-color: var(--main);
-
 }
 
 .form-group .alert {
@@ -202,7 +212,7 @@ input[type="checkbox"]:checked::before {
     top: -1px;
     content: '\02143';
     transform: rotate(40deg);
-    color: rgba(229, 75, 75, 1);
+    color: var(--main);
 }
 
 .form-radio:checked::before
@@ -213,7 +223,7 @@ input[type="checkbox"]:checked::before {
     top: 4px;
     content: '\02143';
     transform: rotate(40deg);
-    color: rgba(229, 75, 75, 1);
+    color: var(--main);
 }
 .form-radio:hover
 {
@@ -227,10 +237,14 @@ input[type="checkbox"]:checked::before {
         /*Header*/
 .navbar {
     width: 100%;
-    background: rgba(229, 75, 75, 1);
+    /*background: var(--main);*/
+    background: rgb(255,47,86);
+    background: linear-gradient(90deg, rgba(255,47,86,1) 0%, #d906af 100%);
     box-shadow:inset 0 0px 5px rgba(0,0,0,0.1);
 }
-
+.navbar-nav {
+    display: flex;
+}
 .navbar .container {
     display: flex;
     max-width: 1100px;
@@ -244,6 +258,19 @@ input[type="checkbox"]:checked::before {
 .navbar-brand {
     padding-left: .25rem;
     font-size: 1.5rem;
+}
+
+.nav-item {
+    color: rgb(242, 227, 232);
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    color: #ffff;
+}
+
+.arrow {
+    font-size: 8px;
 }
 
 .navbar .navbar-toggler {
@@ -264,10 +291,34 @@ input[type="checkbox"]:checked::before {
 
 .navbar ul {
     list-style: none;
-    display: flex;
-    align-items: center;
+}
+
+ /*Dropdown*/
+.drop-container {
+    position: relative;
+}
+
+.dropdown {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
     justify-content: space-between;
     padding-left: 0;
+    width: 170px;
+    flex-flow: column;
+    position: absolute;
+    background-color: #d906af;
+    z-index: 1;
+    left: -104px;
+    top: 40px;
+    transition: 0.1s linear;
+}
+
+ul.dropdown li {
+    padding: 0.5rem;
+}
+ul.dropdown li:not(:last-of-type) {
+    border-bottom: 2px solid #FFFFFF;
 }
 
  /*Main Section*/
@@ -283,7 +334,7 @@ input[type="checkbox"]:checked::before {
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
-    height: 35vh;
+    /*height: 35vh;*/
 }
 
 .form-check {
@@ -382,7 +433,7 @@ input#photoInput {
     font-size: 1rem;
     color: #efe4e8;
     position: relative;
-    background-color: rgba(229, 75, 75, 1);
+    background-color: var(--main);
     display: inline-block;
     cursor: pointer;
     padding: 0.625rem 1.25rem;
@@ -599,7 +650,42 @@ input#photoInput {
     flex:1 1 100%;
 }
 
+   /*GITHUB BUTTON*/
+
+.login-buttons {
+    display: flex;
+}
+.login-buttons a:last-of-type {
+    height: 32px;
+    width: 32px;
+    color: rgba(229, 75, 75, 1);
+    padding-left: 0.5rem;
+ }
+
+    /*CHAT*/
+.contact .name {
+    font-size: 1rem;
+}
+
+.contacts-list {
+    padding: 0.3rem;
+}
+
 @media only screen and (min-width: 700px) {
+    /* Chat */
+    #chat-app {
+        display: flex;
+        flex-flow: row;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .contacts-list {
+        order: -1;
+    }
+    .composer textarea {
+        width: 96.7% !important;
+    }
+    /**/
     .form {
         width: 600px;
     }
@@ -647,7 +733,6 @@ input#photoInput {
         margin: 50px 1rem 1rem 1rem;
         border: 1px solid #aaacaf;
         border-radius: 5px;
-        max-width: 35vw;
 
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         padding: 0.2rem 2rem;
@@ -657,11 +742,14 @@ input#photoInput {
         color: #000;
     }
 
+    .profileContainer {
+        min-height: 664px;
+    }
     .container-pref {
         margin: 2rem auto;
         border: 1px solid #aaacaf;
         border-radius: 5px;
-        max-width: 35vw;
+        max-width: 400px;
         padding: 2rem;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }

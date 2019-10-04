@@ -51,9 +51,7 @@
           <input type="number" id="latitude" name="latitude" hidden>
         </div>
 
-        <div class="form-group" id="profileErrors">
-
-        </div>
+        <div class="form-group" id="profileErrors" style="margin: 0"></div>
 
         <div class="form-group col">
           <div>

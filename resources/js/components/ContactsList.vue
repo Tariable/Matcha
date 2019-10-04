@@ -1,5 +1,5 @@
 <template>
-    <div class="contacts-list">
+    <div class="contacts-list ">
         <ul>
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'selected': contact === selected}" >
                 <div class="contact">
@@ -7,7 +7,7 @@
                     <p class="last_message_from" v-if="+myId !== contact.message.from">-></p>
                     <p class="last_message_from" v-else=""><-</p>
                     <p class="last_message_text">{{ contact.message.text }}</p>
-                    <p class="last_message_created_at">{{ contact.message.created_at }}</p>
+                    <p class="last_message_created_at">{{ contact.message.created_at.split(' ')[1] }}</p>
                     <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
                 </div>
             </li>
@@ -61,15 +61,20 @@
             li {
                 display: flex;
                 padding: 2px;
-                border-bottom: 1px solid #aaaaaa;
+                /*border-bottom: 1px solid #aaaaaa;*/
+                border: 1px solid #fefefe;
+                border-radius: 5px;
                 height: 80px;
                 position: relative;
                 cursor: pointer;
                 &.selected {
-                    background: #dfdfdf;
+                    background: #f5f5f5;
+                    border: 1px solid var(--main);
+                    border-radius: 5px;
+
                 }
                 span.unread {
-                    background: #81c4f9;
+                    background: rgba(255, 0, 80, 0.71);
                     color: #fff;
                     position: absolute;
                     right: 11px;
