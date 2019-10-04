@@ -26,6 +26,10 @@
 {{--  <link href="{{ asset('css/ap3p.css') }}" rel="stylesheet">--}}
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
+{{--  Favicon--}}
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 </head>
 <body>
 
@@ -52,7 +56,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                   document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
                 </a>
 
