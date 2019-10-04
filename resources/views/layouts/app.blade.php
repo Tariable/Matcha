@@ -62,7 +62,7 @@
                     </li>
                 </div>
                 <li class="nav-item drop-container">
-                    <i class="fa fa-gear"></i><span class="arrow"> ▼</span>
+                    <i class="fa fa-gear"></i><span class="arrow"></span>
                     <ul class="dropdown">
                         <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
                         <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
@@ -90,25 +90,6 @@
 </main>
 
 </body>
-<script>
-    if (document.querySelector('.drop-container')) {
-        const dropdownButton = document.querySelector('.drop-container');
-        const dropdownList = document.querySelector('.dropdown');
-
-        function toggleDropdown() {
-            let style = dropdownList.style;
-            if (style.visibility === 'visible') {
-                style.setProperty('visibility', 'hidden');
-                style.setProperty('opacity', '0');
-                return;
-            }
-            style.setProperty('visibility', 'visible');
-            style.setProperty('opacity', '1');
-        }
-
-        dropdownButton.addEventListener('click', toggleDropdown);
-    }
-
-</script>
+<script src="{{ asset('js/DropDownMenu/show.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 </html>

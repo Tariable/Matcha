@@ -22,6 +22,9 @@
                     <p id="cardId" hidden></p>
                 </div>
             </div>
+            <div id="match">
+                <h2 id="likeResponse"></h2>
+            </div>
             <div class="buttons">
                 <button class="btn" id="ban" onclick="ban()">Dislike</button>
                 <button class="btn" id="like" onclick="like()">Like</button>
@@ -31,6 +34,6 @@
     </div>
 
     <div id="expandDiv" style="text-align: center"></div>
-    <script src="{{ URL::asset('js/Recommendations/recommendations.js') }}"></script>
 
+    <script src="{{ asset('js/Recommendations/recommendations.js') }}"></script>
 @endsection

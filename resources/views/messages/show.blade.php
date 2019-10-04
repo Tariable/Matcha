@@ -33,49 +33,59 @@
 </head>
 <body>
 
-<div id="app">
-    <nav class="navbar">
-
-        <div class="container">
-            <div class="logo">
-                <a class="navbar-brand .nav-link" href="{{ url('/recs') }}"><i class="fas fa-heart"></i>
-                    {{ config('app.name') }}
-                </a>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                   document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                @endguest
-            </ul>
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a class="navbar-brand .nav-link" href="{{ url('/recs') }}"><i class="fas fa-heart"></i>
+                {{ config('app.name') }}
+            </a>
         </div>
+        <ul class="navbar-nav ml-auto">
+            <!-- Authentication Links -->
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                @endif
+            @else
+                <li class="nav-item drop-container">
+                    <i class="fa fa-gear"></i><span class="arrow"></span>
+                    <ul class="dropdown">
+                        <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
+                        <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
+                        <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a>
+                        </li>
+                        <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
+                                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @endguest
+        </ul>
+    </div>
+</nav>
 
-    </nav>
-
-    <main class="py-4">
+<main class="py-4">
+    <div id="app">
         <chat-app :user="{{ auth()->user() }}"></chat-app>
-    </main>
-</div>
+    </div>
+</main>
+
+
 </body>
+
+<script src="{{ asset('js/DropDownMenu/show.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+
 </html>
 

@@ -48780,6 +48780,7 @@ var render = function() {
     _vm.notification
       ? _c("div", { staticClass: "notification" }, [
           _c("a", {
+            staticClass: "nav-link",
             attrs: { href: "/messages" },
             domProps: { textContent: _vm._s(_vm.notification) }
           })

@@ -1,7 +1,7 @@
 <template>
     <div id="Match">
         <div class="notification" v-if="notification">
-            <a href="/messages" v-text="notification"></a>
+            <a class="nav-link" href="/messages" v-text="notification"></a>
         </div>
     </div>
 </template>

@@ -12,7 +12,7 @@ window.onload = async function () {
     /* MINE */
     // [recommendations, pref] = await Promise.all([getRecommendations(), getMyPref()]);
 
-    if(recommendations[iterator]){
+    if (recommendations[iterator]) {
         // profile = await getProfile(recommendations[iterator]);
         // photos = await getPhotos(recommendations[iterator]);
 
@@ -31,15 +31,14 @@ window.onload = async function () {
     }
 };
 
-async function getMyPref(){
+async function getMyPref() {
     try {
         let urlGetMyPref = '/preferences';
         let getPrefResponse = await fetch(urlGetMyPref);
         let response = await getPrefResponse.json();
 
         return response.pref;
-    }
-    catch(e) {
+    } catch (e) {
 
     }
 }
@@ -78,7 +77,7 @@ function displayProfile(profile, photos) {
 
 function showPhotos(photos) {
     let gallery = document.getElementById('carousel');
-    while (gallery.firstChild){
+    while (gallery.firstChild) {
         gallery.firstChild.remove();
     }
 
@@ -105,6 +104,7 @@ function showProfile(profile) {
 // AJAX query to like account
 
 async function like() {
+    let match = document.getElementById('likeResponse');
     let id = document.getElementById('cardId').innerHTML;
     let urlLike = '/like/' + id;
 
@@ -121,12 +121,15 @@ async function like() {
     let response = await LikeResponse.json();
 
     if (LikeResponse.ok) {
-
+        if (response === 'It\'s a match') {
+            match.innerText = response;
+        }
         iterator++;
-        if (recommendations[iterator]){
+        if (recommendations[iterator]) {
             profile = await getProfile(recommendations[iterator]);
             photos = await getPhotos(recommendations[iterator]);
             displayProfile(profile, photos);
+            match.innerText = '';
         } else {
             createSuggestion('You can expand selection criteria', 'expandPref');
         }
@@ -150,7 +153,7 @@ async function ban() {
 
     if (BanResponse.ok) {
         iterator++;
-        if (recommendations[iterator]){
+        if (recommendations[iterator]) {
             profile = await getProfile(recommendations[iterator]);
             photos = await getPhotos(recommendations[iterator]);
             displayProfile(profile, photos);
@@ -165,7 +168,7 @@ function createSuggestion(text, onclick) {
     let expandButton = document.createElement('button');
     expandButton.setAttribute('class', 'btn btn-danger');
     expandButton.setAttribute('id', 'expandButton');
-    expandButton.setAttribute('onclick', onclick+'()');
+    expandButton.setAttribute('onclick', onclick + '()');
     expandButton.innerHTML = text;
     document.getElementById('expandDiv').append(expandButton);
 }
@@ -174,7 +177,7 @@ async function expandPref() {
     if (pref.distance <= 90 || pref.upperAge <= 98 || pref.lowerAge >= 20) {
         if (pref.distance + 10 <= 100)
             pref.distance += 10;
-        if(pref.lowerAge - 2 >= 18)
+        if (pref.lowerAge - 2 >= 18)
             pref.lowerAge -= 2;
         if (pref.upperAge + 2 <= 100)
             pref.upperAge += 2;
@@ -197,9 +200,9 @@ async function expandPref() {
             body: formData
         };
 
-        let preferencesUpdateResponse = await fetch (urlUpdatePref, options);
+        let preferencesUpdateResponse = await fetch(urlUpdatePref, options);
 
-        if (preferencesUpdateResponse.ok){
+        if (preferencesUpdateResponse.ok) {
             location.href = '/recs';
         }
 
@@ -211,7 +214,14 @@ async function expandPref() {
     }
 }
 
-function redirectToEditPref(){
+function sleep(miliseconds) {
+    var currentTime = new Date().getTime();
+
+    while (currentTime + miliseconds >= new Date().getTime()) {
+    }
+}
+
+function redirectToEditPref() {
     location.href = '/preferences/edit';
 }
 
