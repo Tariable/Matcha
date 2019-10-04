@@ -64,15 +64,22 @@
                     &.sent {
                         text-align: right;
                         .text {
-                            background: #b2b2b2;
+                            color: #fff;
+
+                            background: rgba(255, 0, 80, 0.71);
+                            /*border: 1px solid var(--main);*/
                         }
                     }
                     &.received {
                         text-align: left;
+                        /*color: #fff;*/
                         .text {
-                            background: #81c4f9;
+                            background: #fff;
                         }
                     }
+                    .data {
+                        font-size: 0.7rem;
+                }
                 }
             }
         }

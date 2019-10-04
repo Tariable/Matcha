@@ -52,10 +52,10 @@
             <li class="nav-item drop-container">
               <i class="fa fa-gear"></i><span class="arrow"> ▼</span>
               <ul class="dropdown">
-                <li><a href="/messages"class="nav-link">Messages</a></li>
-                <li><a href="/profiles/edit"class="nav-link">Edit profile</a></li>
-                <li><a href="/preferences/edit"class="nav-link">Edit preferences</a></li>
-                <li><a class="nav-link" href="{{ route('logout') }}"
+                <li class="dropdown-item"><a href="/messages"class="nav-link">Messages</a></li>
+                <li class="dropdown-item"><a href="/profiles/edit"class="nav-link">Edit profile</a></li>
+                <li class="dropdown-item"><a href="/preferences/edit"class="nav-link">Edit preferences</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
@@ -72,7 +72,23 @@
   <main class="py-4">
       @yield('content')
   </main>
-{{--</div>--}}
 </body>
+<script>
+  const dropdownButton = document.querySelector('.drop-container');
+  const dropdownList = document.querySelector('.dropdown');
+
+  function toggleDropdown() {
+    let style = dropdownList.style;
+    if (style.visibility === 'visible') {
+      style.setProperty('visibility', 'hidden');
+      style.setProperty('opacity', '0');
+      return ;
+    }
+    style.setProperty('visibility', 'visible');
+    style.setProperty('opacity', '1');
+  }
+
+  dropdownButton.addEventListener('click', toggleDropdown);
+</script>
 <script src="{{ asset('js/app.js') }}"></script>
 </html>
