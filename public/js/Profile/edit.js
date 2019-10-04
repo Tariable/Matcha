@@ -1,19 +1,20 @@
+let hiddenSpan = document.querySelector('.hidden')
 window.onload = function () {
     showAllPhotos();
+    hiddenSpan.style.display = 'block';
     getCurrentLocation();
 };
 
 // AJAX query to store profiles info
 
-let store = document.getElementById('profileStore')
-store.onclick = async function(evt) {
+let update = document.getElementById('profileUpdate');
+update.onclick = async function(evt) {
     evt.preventDefault();
-    if (!getQuantityOfPhotos()) {
-        removePhotoErrors();
-        displayError('You must add at least one photo', 'photoErrors');
+    if (!getQuantityOfPhotos() && !document.getElementById('errors')){
+        displayError('You must add at least one photos', 'photoErrors');
     } else {
         removeAllChildrenElemFrom('profileErrors');
-        let urlStoreProfile = '/profiles';
+        let urlUpdateProfile = '/profiles/update';
 
         let headers = new Headers();
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -25,14 +26,14 @@ store.onclick = async function(evt) {
         let date_of_birth = document.getElementById('date_of_birth').value;
         let description = document.getElementById('description').value;
         let gender = document.querySelector('input[name="gender"]:checked').value;
-        let longitude = document.getElementById('longitude').value;
-        let latitude = document.getElementById('latitude').value;
+        let current_longitude = document.getElementById('current_longitude').value;
+        let current_latitude = document.getElementById('current_latitude').value;
         formData.append('name', name);
         formData.append('date_of_birth', date_of_birth);
         formData.append('description', description);
         formData.append('gender', gender);
-        formData.append('longitude', longitude);
-        formData.append('latitude', latitude);
+        formData.append('longitude', current_longitude);
+        formData.append('latitude', current_latitude);
 
         let options = {
             method: 'POST',
@@ -40,10 +41,10 @@ store.onclick = async function(evt) {
             body: formData
         };
 
-        let profileStoreResponse = await fetch(urlStoreProfile, options);
+        let profileStoreResponse = await fetch(urlUpdateProfile, options);
 
         if(profileStoreResponse.ok){
-            location.href = '/preferences/create';
+            location.href = '/recs';
         } else {
             let profileJsonErrors = await profileStoreResponse.json();
             for(let key in profileJsonErrors.errors){
@@ -58,6 +59,7 @@ store.onclick = async function(evt) {
 
 async function showAllPhotos() {
     let id = document.getElementById("myId").innerHTML;
+
     let urlShowAllPhotos = "/photos/" + id;
 
     let showAllPhotosResponse = await fetch(urlShowAllPhotos);
@@ -74,8 +76,8 @@ async function showAllPhotos() {
 
 function getCurrentLocation() {
     var geoLocation = function (position) {
-        document.getElementById('longitude').value = position.coords.longitude;
-        document.getElementById('latitude').value = position.coords.latitude;
+        document.getElementById('current_longitude').value = position.coords.longitude;
+        document.getElementById('current_latitude').value = position.coords.latitude;
     };
 
     var ipLocation = async function () {
@@ -86,20 +88,13 @@ function getCurrentLocation() {
         if (getLocationResponse.ok) {
             let location = await getLocationResponse.text();
             location = location.split(',');
-            document.getElementById('latitude').value = location[0];
-            document.getElementById('longitude').value = location[1];
+            document.getElementById('current_latitude').value = location[0];
+            document.getElementById('current_longitude').value = location[1];
         } else {
             console.log("Bad location request");
         }
     };
     navigator.geolocation.getCurrentPosition(geoLocation, ipLocation);
-}
-
-function removePhotoErrors() {
-    const photoErrorsDiv = document.getElementById("photoErrors");
-    while (photoErrorsDiv.firstChild) {
-        photoErrorsDiv.removeChild(photoErrorsDiv.firstChild);
-    }
 }
 
 // AJAX query to store profile photos
@@ -131,11 +126,9 @@ async function sendImage() {
     } else {
         let photoJsonErrors = await imageStoreResponse.json();
         removeAllChildrenElemFrom("photoErrors");
-        if (photoJsonErrors.hasOwnProperty('errors')) {
-            photoJsonErrors.errors.photos.forEach(function (error) {
-                displayError(error, 'photoErrors');
-            })
-        }
+        photoJsonErrors.errors.photo.forEach(function (error) {
+            displayError(error, 'photoErrors');
+        })
     }
 }
 
@@ -146,11 +139,6 @@ gallery.onclick = function(event){
     let target = event.target;
     if (target.tagName === 'IMG'){
         destroyPhoto(target);
-    }
-    // console.log(getQuantityOfPhotos());
-    if (getQuantityOfPhotos() === 1) {
-        let hiddenSpan = document.querySelector('.hidden');
-        hiddenSpan.style.display = 'none';
     }
 }
 
@@ -167,7 +155,7 @@ async function destroyPhoto(target){
         headers : headers,
     }
 
-    let imageDestroyResponse = await fetch(urlDestroyPhoto, options);
+    let imageDestroyResponse = await fetch(urlDestroyPhoto, options)
 
     if (imageDestroyResponse.ok){
         target.remove();
@@ -180,6 +168,7 @@ async function destroyPhoto(target){
 async function displayLastPhoto() {
     let id = document.getElementById("myId").innerHTML;
     let urlShowLastPhoto = "/photos/last/" + id;
+
     let showLastPhotoResponse = await fetch(urlShowLastPhoto);
 
     let photo = await showLastPhotoResponse.json();
@@ -187,8 +176,6 @@ async function displayLastPhoto() {
     createPhotoElem(photo);
     checkPhotoLimit();
 }
-
-
 
 function displayError(textOfError, typeOfError){
     if (!document.getElementById('errors')){
@@ -205,12 +192,10 @@ function displayError(textOfError, typeOfError){
 
 function createPhotoElem(photo){
     let photoElem = document.createElement('img');
-    let hiddenSpan = document.querySelector('.hidden');
     photoElem.src = photo.path;
     photoElem.id = photo.id;
     photoElem.width = 150;
     document.getElementById('gallery').append(photoElem);
-    hiddenSpan.style.display = 'inline';
 }
 
 function removeAllChildrenElemFrom(Div) {
@@ -221,11 +206,10 @@ function removeAllChildrenElemFrom(Div) {
 }
 
 function checkPhotoLimit() {
-    let photoQuantityLimit = 5;
-    if (getQuantityOfPhotos() >= photoQuantityLimit) {
-        document.getElementById('photoFormContent').style.display = "none";
+    if (getQuantityOfPhotos() >= 5) {
+        document.getElementById('photoForm').hidden = true;
     } else {
-        document.getElementById('photoFormContent').style.display = "block";
+        document.getElementById('photoForm').hidden = false;
     }
 }
 
