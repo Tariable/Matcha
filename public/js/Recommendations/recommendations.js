@@ -118,6 +118,7 @@ async function like() {
     };
 
     let LikeResponse = await fetch(urlLike, options);
+    let response = await LikeResponse.json();
 
     if (LikeResponse.ok) {
         iterator++;

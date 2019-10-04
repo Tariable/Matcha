@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Chat;
+use App\Events\NewMatch;
 use App\Pivots\Subscription;
 use App\Profile;
 use App\Like;
@@ -29,12 +30,16 @@ class LikeService
                 $chat = Chat::create();
                 Subscription::create(['chat_id' => $chat->id, 'profile_id' => $partner_id]);
                 Subscription::create(['chat_id' => $chat->id, 'profile_id' => $profile_id]);
-                $chat->messages()->create(['from' => $profile_id, 'to' => $partner_id, 'text' => 'init message']);
+                $chat->messages()->create(['from' => 0, 'to' => $partner_id, 'text' => 'It\'s a match! Here you can continue ..']);
+                broadcast(new NewMatch($chat));
                 $this->likeModel->where('like_id', array_values($likeId))->delete();
+                $responseMessage = 'It\'s a match';
             } else {
                 $this->likeModel->create(['profile_id' => $profile_id, 'partner_id' => $partner_id]);
+                $responseMessage = 'First like';
             }
         }
+        return $responseMessage;
     }
 
     public function getLikeId($profile_id, $partner_id)

@@ -1,7 +1,7 @@
 <template>
     <div class="feed" ref="feed">
         <ul v-if="contact">
-            <li v-for="message in messages" :class="`message${message.from === contact.partner.id ? ' received' : ' sent'}`" :key="message.id">
+            <li v-for="message in messages" :class="`message${checkTypeOfMessage(message, contact)}`" :key="message.id">
                 <div class="text">
                     {{ message.text }}
                 </div>
@@ -29,6 +29,20 @@
                 setTimeout(() => {
                     this.$refs.feed.scrollTop = this.$refs.feed.scrollHeight - this.$refs.feed.clientHeight;
                 }, 50);
+            },
+            checkTypeOfMessage(message, contact) {
+                let type;
+                switch (message.from) {
+                    case 0:
+                        type = ' systemMessage';
+                        break;
+                    case contact.partner.id:
+                        type = ' received';
+                        break;
+                    default:
+                        type = ' sent';
+                }
+                return type;
             }
         },
         watch: {
@@ -79,6 +93,13 @@
                     }
                     .data {
                         font-size: 0.7rem;
+                    }
+                    &.systemMessage {
+                        text-align: center;
+                        .text {
+                            background: rgba(249, 89, 91, 0.35);
+                        }
+                    }
                 }
                 }
             }

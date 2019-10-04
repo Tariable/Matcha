@@ -3,13 +3,14 @@
 namespace App\Events;
 
 use App\Chat;
+use App\Profile;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateChat implements ShouldBroadcast
+class NewMatch implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,16 +32,14 @@ class UpdateChat implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn(){
-        return new PrivateChannel('chats.' . $this->partner);
+    public function broadcastOn()
+    {
+        return new PrivateChannel('matches.' . $this->partner);
     }
 
     public function broadcastWith(){
-        $currentChat = $this->chat;
-        $currentChat->partner = $this->chat->partner()->first();
-        $currentChat->message = $this->chat->messagesReverse()->first();
-        $currentChat->unread = $this->chat->unreadMessages()->count();
-        $currentChat->type = 'New message';
-        return ["chat" => $currentChat];
+        $newMatch = $this->chat;
+        $newMatch->type = 'New match';
+        return ["match" => $newMatch];
     }
 }

@@ -17,6 +17,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('chat-app', require('./components/ChatApp.vue').default);
+Vue.component('notification', require('./components/Notification.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
