@@ -24,7 +24,7 @@ class UserCreationTest extends TestCase
         ]);
 
         $this->assertCount(1, User::all());
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/login');
     }
 
     /** @test */

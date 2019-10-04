@@ -59,7 +59,10 @@
             </div>
         @endif
     </div>
-
-    <script src="{{ URL::asset('js/Preference/edit.js') }}"></script>
-
 @endsection
+
+@section('script')
+<script src="{{ URL::asset('js/Preference/edit.js') }}"></script>
+@endsection
+
+
