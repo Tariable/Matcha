@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidatePreferences;
 use App\Http\Requests\UpdatePreferences;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Preference;
 
@@ -12,7 +13,8 @@ class PreferenceController extends Controller
 {
     protected $preferencesModel;
 
-    public function __construct(Preference $model){
+    public function __construct(Preference $model)
+    {
         $this->preferencesModel = $model;
     }
 
@@ -21,12 +23,10 @@ class PreferenceController extends Controller
         return response()->json(array('pref' => $this->preferencesModel->getById(Auth::id())));
     }
 
-
     public function create()
     {
         return view('preferences.create');
     }
-
 
     public function store(ValidatePreferences $request)
     {
@@ -34,13 +34,11 @@ class PreferenceController extends Controller
         return redirect("/recs");
     }
 
-
     public function edit()
     {
         $preference = $this->preferencesModel->getById(Auth::id());
         return view('preferences.edit', compact('preference'));
     }
-
 
     public function update(ValidatePreferences $request)
     {

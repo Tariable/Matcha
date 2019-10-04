@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Create profile')
+
 @section('content')
   <div class="container-create">
     <div class="photoContainer">
@@ -60,7 +62,7 @@
       </form>
     </div>
   </div>
-
+{{--  <script src="{{ URL::asset('js/Profile/create.js') }}"></script>--}}
   <script>
     window.onload = function () {
       showAllPhotos();
@@ -72,8 +74,9 @@
     let store = document.getElementById('profileStore')
     store.onclick = async function(evt) {
       evt.preventDefault();
-      if (!getQuantityOfPhotos() && !document.getElementById('errors')){
-        displayError('You must add at least one photos', 'photoErrors');
+      if (!getQuantityOfPhotos()) {
+        removePhotoErrors();
+        displayError('You must add at least one photo', 'photoErrors');
       } else {
         removeAllChildrenElemFrom('profileErrors');
         let urlStoreProfile = '/profiles';
@@ -157,6 +160,13 @@
       navigator.geolocation.getCurrentPosition(geoLocation, ipLocation);
     }
 
+    function removePhotoErrors() {
+      const photoErrorsDiv = document.getElementById("photoErrors");
+      while (photoErrorsDiv.firstChild) {
+        photoErrorsDiv.removeChild(photoErrorsDiv.firstChild);
+      }
+    }
+
     // AJAX query to store profile photos
 
     async function sendImage() {
@@ -179,16 +189,18 @@
 
       let imageStoreResponse = await fetch(urlStore, options);
 
-        input.value = '';
+      input.value = '';
       if (imageStoreResponse.ok) {
         removeAllChildrenElemFrom("photoErrors");
         displayLastPhoto();
       } else {
         let photoJsonErrors = await imageStoreResponse.json();
         removeAllChildrenElemFrom("photoErrors");
-        photoJsonErrors.errors.photo.forEach(function (error) {
-          displayError(error, 'photoErrors');
-        })
+        if (photoJsonErrors.hasOwnProperty('errors')) {
+           photoJsonErrors.errors.photos.forEach(function (error) {
+            displayError(error, 'photoErrors');
+          })
+        }
       }
     }
 
