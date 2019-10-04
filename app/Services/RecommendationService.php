@@ -70,8 +70,8 @@ class RecommendationService
         get()->pluck('id');
         if ($recommendations->count() !== 0) {
             $recommendations = $this->filterByDistance($recommendations);
+            $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         }
-        $recommendations = $this->mixLikedUsers($recommendations, $usersWhoLiked);
         return $recommendations;
     }
 
