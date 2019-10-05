@@ -5,6 +5,8 @@
 @section('content')
     <div class="container-pref">
         <form action="/preferences/{{ Auth::id() }}" method="post">
+            <h1>Preferences</h1>
+
             <div class="col-3">
                 <p class="slider-info">Age preference
                     <span id="lowerAge" class="custom-span"></span>
@@ -29,7 +31,7 @@
             </div>
             <div class="col-3 center">
                 <p class="mb-10">Sex preferences</p>
-                <div class="form-group radio">
+                <div class="form-group radio justify-content-center">
                     <input type="radio" id="genderBi" class="form-radio" name="sex"
                            {{ $preference->sex === '%ale' ? 'checked' : '' }} value="%ale">
                     <label for="genderBi">Bisexual</label>

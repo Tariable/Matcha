@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="container-card">
+
         <div class="row mb-5">
         </div>
         <div class="card" id="card">
@@ -13,6 +14,9 @@
             </div>
             <div class="card-body" id="cardBody" hidden>
                 <div id="carousel" class="carousel">
+                </div>
+                <div class="match">
+                    <div class="match-message">It's a Match!</div>
                 </div>
                 <div id="mainInfo" class="card-info">
                     <div>

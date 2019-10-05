@@ -3,12 +3,17 @@
         <ul>
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'selected': contact === selected}" >
                 <div class="contact">
-                    <p class="name">{{ contact.partner.name }}</p>
-                    <p class="last_message_from" v-if="+myId !== contact.message.from">-></p>
-                    <p class="last_message_from" v-else=""><-</p>
-                    <p class="last_message_text">{{ contact.message.text }}</p>
-                    <p class="last_message_created_at">{{ contact.message.created_at.split(' ')[1] }}</p>
-                    <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
+                    <div class="message-box">
+                        <p class="name">{{ contact.partner.name }}</p>
+                        <p class="last_message_text">{{ contact.message.text }}</p>
+                    </div>
+
+                    <div class="info-box"><p class="last_message_from" style="text-align: right;" v-if="+myId !== contact.message.from">
+                        -></p>
+                        <p class="last_message_from" style="text-align: right;" v-else=""><-</p>
+                        <p class="last_message_created_at" style="text-align: right;">{{
+                            contact.message.created_at.split(' ')[1] }}</p>
+                        <span class="unread" v-if="contact.unread">{{ contact.unread }}</span></div>
                 </div>
             </li>
         </ul>
@@ -52,26 +57,21 @@
         flex: 2;
         max-height: 100%;
         height: 600px;
-        overflow: scroll;
-        border-left: 1px solid #a6a6a6;
+        overflow: auto;
 
         ul {
             list-style-type: none;
             padding-left: 0;
+            margin-top: 0;
             li {
                 display: flex;
-                padding: 2px;
-                /*border-bottom: 1px solid #aaaaaa;*/
-                border: 1px solid #fefefe;
-                border-radius: 5px;
+                padding: 0 10px;
+                border-bottom: 1px solid #aaaaaa;
                 height: 80px;
                 position: relative;
                 cursor: pointer;
                 &.selected {
-                    background: #f5f5f5;
-                    border: 1px solid var(--main);
-                    border-radius: 5px;
-
+                    background: #f5bdbd;
                 }
                 span.unread {
                     background: rgba(255, 0, 80, 0.71);
@@ -101,16 +101,23 @@
                 }
                 .contact {
                     flex: 3;
-                    font-size: 10px;
+                    font-size: 15px;
                     overflow: hidden;
                     display: flex;
-                    flex-direction: column;
-                    justify-content: center;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    align-items: center;
                     p {
                         margin: 0;
                         &.name {
                             font-weight: bold;
                         }
+                    }
+                    .message-box {
+                        flex: 3 0 60%;
+                    }
+                    .info-box {
+                        flex: 1 0 20%;
                     }
                 }
             }

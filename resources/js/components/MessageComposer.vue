@@ -25,6 +25,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .composer {
+        display: flex;
+        align-items: center;
+    }
     .composer textarea {
         width: 90%;
         margin: 10px;
