@@ -18,4 +18,9 @@ class Like extends Model
     {
         return $this->where('profile_id', $profileId)->get()->pluck('partner_id')->toArray();
     }
+
+    public function getWhoLikedMe($profileId)
+    {
+        return $this->where('partner_id', $profileId)->get()->pluck('profile_id')->toArray();
+    }
 }

@@ -39,6 +39,7 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::post('/ban/{id}', 'BanController@store');
     Route::post('/like/{id}', 'LikeController@store');
+    Route::get('/like/all', 'LikeController@getWhoLikedMe');
 
     Route::get('/recs/all', 'RecommendationController@getRecs');
     Route::get('/recs/{id}', 'RecommendationController@getProfile');

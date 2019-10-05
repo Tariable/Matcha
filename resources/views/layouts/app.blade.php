@@ -47,6 +47,7 @@
         <ul class="navbar-nav">
             <!-- Authentication Links -->
             @guest
+                <div id="app"></div>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
