@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Report extends Model
 {
@@ -11,6 +12,10 @@ class Report extends Model
     public function report($profile_id, $reported_id, $description)
     {
         Report::create(['profile_id' => $profile_id, 'reported_id' => $reported_id, 'description' => $description]);
+        $reports = $this->where('reported_id', $reported_id)->count();
+        if ($reports >= 3) {
+            User::where('id', $reported_id)->update(['banned' => 1]);
+        }
     }
 
     public function getReportedId($id)
