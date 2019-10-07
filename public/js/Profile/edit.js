@@ -22,12 +22,14 @@ update.onclick = async function(evt) {
         headers.append('Accept', 'application/json');
 
         let formData = new FormData();
+
         let name = document.getElementById('name').value;
         let date_of_birth = document.getElementById('date_of_birth').value;
         let description = document.getElementById('description').value;
         let gender = document.querySelector('input[name="gender"]:checked').value;
         let current_longitude = document.getElementById('current_longitude').value;
         let current_latitude = document.getElementById('current_latitude').value;
+
         formData.append('name', name);
         formData.append('date_of_birth', date_of_birth);
         formData.append('description', description);

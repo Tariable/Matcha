@@ -136,6 +136,42 @@ async function like() {
     }
 }
 
+async function report(reportReason) {
+    let urlReport = '/report';
+
+    let headers = new Headers();
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    headers.append('X-CSRF-TOKEN', token);
+    headers.append('Accept', 'application/json');
+
+    let formData = new FormData();
+    let reportedId = document.getElementById('cardId').innerHTML;
+
+    formData.append('reported_id', reportedId);
+    formData.append('description', reportReason);
+
+    let options = {
+        method: 'POST',
+        headers: headers,
+        body: formData
+    };
+
+    let reportResponse = await fetch(urlReport, options);
+    let response = await reportResponse.json();
+
+    if (reportResponse.ok) {
+        iterator++;
+        if (recommendations[iterator]) {
+            profile = await getProfile(recommendations[iterator]);
+            photos = await getPhotos(recommendations[iterator]);
+            displayProfile(profile, photos);
+        } else {
+            createSuggestion('You can expand selection criteria', 'expandPref');
+        }
+    }
+}
+
+
 async function ban() {
     let id = document.getElementById('cardId').innerHTML;
     let urlBan = '/ban/' + id;

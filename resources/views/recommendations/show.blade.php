@@ -28,6 +28,8 @@
             <div class="buttons">
                 <button class="btn" id="ban" onclick="ban()">Dislike</button>
                 <button class="btn" id="like" onclick="like()">Like</button>
+                <button class="btn" id="Obscene photos" onclick="report(id)">Obscene photos</button>
+                <button class="btn" id="Inappropriate description" onclick="report(id)">Inappropriate description</button>
             </div>
             <p id="cardDescription"></p>
         </div>

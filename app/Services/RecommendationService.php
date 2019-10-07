@@ -7,6 +7,7 @@ use App\Like;
 use App\Ban;
 use App\Profile;
 use App\Chat;
+use App\Report;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,12 +17,15 @@ class RecommendationService
     protected   $likeModel;
     protected   $banModel;
     protected   $chatModel;
+    protected   $reportModel;
 
-    public function __construct(Profile $profileModel, Like $likeModel, Ban $banModel, Chat $chatModel){
+    public function __construct(Profile $profileModel, Like $likeModel,
+                                Ban $banModel, Chat $chatModel, Report $reportModel){
         $this->profileModel = $profileModel;
         $this->likeModel = $likeModel;
         $this->banModel = $banModel;
         $this->chatModel = $chatModel;
+        $this->reportModel = $reportModel;
     }
 
     public function getPreferences($profileId){
@@ -48,6 +52,7 @@ class RecommendationService
         $banned_id = $this->banModel->getBannedId(Auth::id());
         $liked_id = $this->likeModel->getLikedId(Auth::id());
         $chat_id = $this->chatModel->getChatedId(Auth::id());
+        $reported_id = $this->reportModel->getReportedId(Auth::id());
 
         $usersWhoLiked = $this->likeModel->where('partner_id', '=', $myId)->pluck('profile_id')->toArray();
 
@@ -62,6 +67,7 @@ class RecommendationService
         where('upperAge', '>=', $age)->
         whereNotIn('profiles.id', $banned_id)->
         whereNotIn('profiles.id', $liked_id)->
+        whereNotIn('profiles.id', $reported_id)->
         whereNotIn('profiles.id', $chat_id)->
         whereNotIn('profiles.id', [$pref->id])->
         whereBetween('date_of_birth', $this->ageGap($pref))->

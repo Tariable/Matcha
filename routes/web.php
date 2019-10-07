@@ -48,6 +48,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/chats', 'ChatController@getChats');
     Route::get('/chats/{chatId}', 'ChatController@getMessages');
 
+    Route::post('/report', 'ReportController@store');
+
     Route::get('/messages', 'MessageController@index');
     Route::post('/messages', 'MessageController@store');
     Route::get('/messages/getAllChats', 'MessageController@getChats');
