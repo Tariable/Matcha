@@ -71,7 +71,8 @@ class LoginController extends Controller
                 'name' => $githubUser->getName(),
                 'provider_id' => $githubUser->getId(),
                 'email_verified_at' => Carbon::now(),
-                'provider' => 'github',
+		'provider' => 'github',
+		'banned' => 0,
             ]);
         }
 
