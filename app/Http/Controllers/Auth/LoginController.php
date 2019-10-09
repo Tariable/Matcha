@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -31,6 +32,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/profiles/create';
+
     private $userModel;
     /**
      * Create a new controller instance.
@@ -80,7 +82,9 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if ($this->isBanned($request->email)) {
-            return $this->sendFailedLoginResponse($request);
+            throw ValidationException::withMessages([
+                $this->username() => [trans('auth.banned')],
+            ]);
         }
         $this->validateLogin($request);
 
