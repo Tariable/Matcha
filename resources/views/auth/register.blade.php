@@ -38,13 +38,6 @@
                        autocomplete="new-password">
 
                 @error('password')
-                @if ($errors->has('g-recaptcha-response'))
-                    <span>
-                    <strong>
-                        {{$errors->first('g-recaptcha-response')}}
-                    </strong>
-                </span>
-                @endif
                 <span class="invalid-feedback" role="alert">
                                                   <strong>{{ $message }}</strong>
                                               </span>
@@ -141,10 +134,15 @@
               </g>
             </svg></a></div>
           <div class="g-recaptcha mt-10" data-sitekey={{env('CAPTCHA_KEY')}}></div>
-
+          @if ($errors->has('g-recaptcha-response'))
+              <span class="invalid-feedback" role="alert">
+                    <strong>
+                        {{$errors->first('g-recaptcha-response')}}
+                    </strong>
+                </span>
+          @endif
         </div>
       <div class="mb-10"></div>
-      </div>
     </form>
   </div>
 @endsection
