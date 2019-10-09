@@ -74,10 +74,10 @@
           background: #f5bdbd;
         }
         span.unread {
-          background: rgba(255, 0, 80, 0.71);
+          background: rgba(255, 0, 80, 1);
           color: #fff;
           position: absolute;
-          right: 11px;
+          right: 9px;
           top: 20px;
           display: flex;
           font-weight: 700;
@@ -86,8 +86,7 @@
           align-items: center;
           line-height: 20px;
           font-size: 12px;
-          padding: 0 4px;
-          border-radius: 3px;
+          border-radius: 50%;
         }
         .avatar {
           flex: 1;
