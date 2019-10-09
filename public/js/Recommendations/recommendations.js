@@ -7,17 +7,8 @@ let pref;
 window.onload = async function () {
     recommendations = await getRecommendations();
     iterator = 0;
-    // pref = await getMyPref();
-
-    /* MINE */
-    // [recommendations, pref] = await Promise.all([getRecommendations(), getMyPref()]);
 
     if (recommendations[iterator]) {
-        // profile = await getProfile(recommendations[iterator]);
-        // photos = await getPhotos(recommendations[iterator]);
-
-
-        /* MINE */
         [profile, photos] =
             await Promise.all([
                 getProfile(recommendations[iterator]),
@@ -39,7 +30,7 @@ async function getMyPref() {
 
         return response.pref;
     } catch (e) {
-
+        console.log(e);
     }
 }
 
@@ -105,6 +96,7 @@ function showProfile(profile) {
 
 async function like() {
     let match = document.getElementById('likeResponse');
+    const matchContainer = document.getElementById('match');
     let id = document.getElementById('cardId').innerHTML;
     let urlLike = '/like/' + id;
 
@@ -122,7 +114,8 @@ async function like() {
 
     if (LikeResponse.ok) {
         if (response === 'It\'s a match') {
-            match.innerText = response;
+            match.innerText = 'IT\'S A MATCH';
+            matchContainer.style.visibility = 'visible';
         }
         iterator++;
         if (recommendations[iterator]) {
@@ -130,6 +123,7 @@ async function like() {
             photos = await getPhotos(recommendations[iterator]);
             displayProfile(profile, photos);
             match.innerText = '';
+            matchContainer.style.visibility = 'hidden';
         } else {
             createSuggestion('You can expand selection criteria', 'expandPref');
         }

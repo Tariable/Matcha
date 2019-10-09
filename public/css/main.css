@@ -61,6 +61,10 @@ html, body {
 
        /*UTILITY*/
 
+.justify-center {
+    justify-items: center;
+}
+
 textarea {
     resize: none;
     outline: none;
@@ -178,7 +182,6 @@ input[type="radio"].form-radio
     top: -2px;
     height: 25px;
     width: 25px;
-    border: 0;
     border-radius: 50px;
     border: 1px solid #f1f1f1;
     cursor: pointer;
@@ -197,7 +200,6 @@ input[type="checkbox"] {
     top: -2px;
     height: 15px;
     width: 15px;
-    border: 0;
     border-radius: 50px;
     border: 1px solid #f1f1f1;
     cursor: pointer;
@@ -237,13 +239,13 @@ input[type="checkbox"]:checked::before {
         /*Header*/
 .navbar {
     width: 100%;
-    /*background: var(--main);*/
     background: rgb(255,47,86);
     background: linear-gradient(90deg, rgba(255,47,86,1) 0%, #d906af 100%);
     box-shadow:inset 0 0px 5px rgba(0,0,0,0.1);
 }
 .navbar-nav {
     display: flex;
+    padding-left: 0;
 }
 .navbar .container {
     display: flex;
@@ -299,6 +301,7 @@ input[type="checkbox"]:checked::before {
 }
 
 .dropdown {
+    cursor: auto;
     display: block;
     opacity: 0;
     visibility: hidden;
@@ -309,7 +312,7 @@ input[type="checkbox"]:checked::before {
     position: absolute;
     background-color: #d906af;
     z-index: 1;
-    left: -104px;
+    left: -114px;
     top: 40px;
     transition: 0.1s linear;
 }
@@ -334,7 +337,6 @@ ul.dropdown li:not(:last-of-type) {
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
-    /*height: 35vh;*/
 }
 
 .form-check {
@@ -446,7 +448,6 @@ input#photoInput {
 
 #gallery img {
     display: inline-block;
-    /*border: 1px solid #aaacaf;*/
     margin: 0 0.6rem 1.5rem 0;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
@@ -487,7 +488,7 @@ input#photoInput {
 
 .container-tag > * {
     flex: 1 1 10%;
-    margin: 1rem 0.5rem 0rem 0rem;
+    margin: 1rem 0.5rem 0 0;
 }
 
 .slider-info {
@@ -512,9 +513,6 @@ input#photoInput {
 
 .card {
     text-align: center;
-    /*display: flex;*/
-    /*flex-flow: column;*/
-    /*justify-content: center;*/
 }
 
  /* LOADER */
@@ -525,8 +523,6 @@ input#photoInput {
     width: 96px;
     height: 96px;
     transform: rotate(45deg);
-    /*transform-origin: 32px 32px;*/
-    /*text-align: center;*/
 }
 .lds-heart div {
     top: 23px;
@@ -590,7 +586,6 @@ input#photoInput {
     min-width: 100%;
     width: 100%;
     width: calc(100%/var(--n));
-    /*height: 100%;*/
     border-radius: 5px;
     pointer-events: none;
     transition: transform .5s ease-out;
@@ -634,8 +629,6 @@ input#photoInput {
 }
 
 .card > p {
-    /*padding: 1rem;*/
-    /*width: 90%;*/
     margin: 1rem 2rem 0.5rem 2rem;
 }
 
@@ -671,6 +664,25 @@ input#photoInput {
     padding: 0.3rem;
 }
 
+/*MATCH*/
+#match {
+    color: white;
+    visibility: hidden;
+    /*transition: .5s ease-in;*/
+    background-color: rgba(255, 0, 80, 0.5);
+    position: absolute;
+    top: 40%;
+    z-index: 10;
+    font-size: 50px;
+    width: 90%;
+    font-family: 'Black Ops One', cursive;
+}
+#likeResponse {
+    padding: 1rem 1rem 1rem 1rem;
+    text-transform: capitalize;
+}
+
+
 @media only screen and (min-width: 700px) {
     /* Chat */
     #chat-app {
@@ -678,13 +690,22 @@ input#photoInput {
         flex-flow: row;
         max-width: 1100px;
         margin: 0 auto;
+        border: 1px solid #aaacaf;
+        border-radius: 5px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
+
     .contacts-list {
         order: -1;
     }
+    .conversation {
+        border-left: 1px solid #aaacaf;
+    }
+
     .composer textarea {
         width: 96.7% !important;
     }
+
     /**/
     .form {
         width: 600px;
@@ -698,13 +719,14 @@ input#photoInput {
         margin: 0 auto 40px auto;
 
     }
+
     .photoContainer {
         min-height: 664px;
     }
+
     .form-group input[type='text'],
     .form-group input[type='date'],
-    .form-group input[type='textarea']
-    {
+    .form-group input[type='textarea'] {
         width: 305px;
         height: initial;
     }
@@ -745,6 +767,7 @@ input#photoInput {
     .profileContainer {
         min-height: 664px;
     }
+
     .container-pref {
         margin: 2rem auto;
         border: 1px solid #aaacaf;
@@ -756,11 +779,11 @@ input#photoInput {
 
 
     /*RECS*/
-
     .container-card {
         max-width: 600px;
         margin: 0 auto;
     }
+
     /*.invalid-feedback {*/
     /*    position: absolute;*/
     /*    left: 33%;*/

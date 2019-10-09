@@ -5,6 +5,8 @@
 @section('content')
   <div class="container-pref">
     <form action="/preferences" method="post">
+      <h1>Preferences</h1>
+
       <div class="col-3">
         <p class="slider-info">Age preference
           <span id="lowerAge" class="custom-span"></span>

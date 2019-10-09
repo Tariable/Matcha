@@ -15,11 +15,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
-    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap" rel="stylesheet">
+
+  <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Icons -->
     <script src="https://kit.fontawesome.com/a85f6d1cce.js"></script>
+{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--}}
     <!-- Styles -->
 
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
