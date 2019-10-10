@@ -84,7 +84,7 @@ function createPhotoElem(photo, i) {
 
 function showProfile(profile) {
     document.querySelector('.lds-heart').style.display = 'none';
-    document.querySelector('.buttons').style.visibility = 'visible'
+    document.querySelector('.buttons').style.visibility = 'visible';
     document.getElementById('cardId').innerHTML = profile['id'];
     document.getElementById('cardName').innerHTML = `${profile['name']}, ${profile['age']}`;
     document.getElementById('cardDistance').innerHTML = profile['distance'] + ' km from you';
@@ -259,7 +259,11 @@ function carousel(d) {
     'use strict';
     const _C = d.querySelector('.carousel');
     const _CI = d.querySelector('.carousel img');
+
+    const arrowLeft = d.querySelector('.carousel-prev');
+    const arrowRight = d.querySelector('.carousel-next');
     let totalImages = _C.children.length;
+
     document.documentElement.style.setProperty('--n', 0);
     document.documentElement.style.setProperty('--n', `${totalImages}`);
     _C.style.setProperty('--i', 0);
@@ -286,6 +290,18 @@ function carousel(d) {
         }
     }
 
+    function moveOnClick(e , sign) {
+        let totalImages = _C.children.length;
+        if (totalImages !== 1) {
+            if ((i > 0 || sign < 0) && (i < totalImages - 1 || sign > 0)) {
+                i -= sign;
+                _C.style.setProperty('--i', (totalImages * i));
+                _C.style.setProperty('--tx', '0px');
+            }
+        }
+
+    }
+
     function unify(e) {
         return e.changedTouches ? e.changedTouches[0] : e;
     }
@@ -295,4 +311,7 @@ function carousel(d) {
 
     _C.addEventListener('mouseup', move, false);
     _C.addEventListener('touchend', move, false);
+
+    arrowLeft.addEventListener('click', (e) => moveOnClick(e, 1), false);
+    arrowRight.addEventListener('click', (e) => moveOnClick(e, -1), false);
 }

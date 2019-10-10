@@ -594,7 +594,41 @@ input#photoInput {
 
 .smooth { transition: transform .5s ease-out; }
 
+/*arrows*/
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    padding: 1rem;
+    cursor: pointer;
+}
 
+.carousel-next {
+    top: 50%;
+    right: 10%;
+}
+.carousel-prev {
+    top: 50%;
+    left: 10%;
+}
+
+i.arrow {
+    border: solid #aaaaaa;
+    border-width: 0 5px 5px 0;
+    display: inline-block;
+    padding: 9px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    /*transform: scale(1.4);*/
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    /*transform: scale(1.4);*/
+    -webkit-transform: rotate(135deg);
+}
 /*    CARD INFO    */
 
 .card .buttons {

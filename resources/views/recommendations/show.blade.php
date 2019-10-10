@@ -18,6 +18,8 @@
                 <div id="match">
                     <div id="likeResponse">It's a Match!</div>
                 </div>
+                <div class="carousel-prev"><i class="arrow left"></i></div>
+                <div class="carousel-next"><i class="arrow right"></i></div>
                 <div id="mainInfo" class="card-info">
                     <div>
                         <p id="cardName"></p>
