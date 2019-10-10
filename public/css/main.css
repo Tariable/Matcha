@@ -156,7 +156,8 @@ textarea:focus {
     text-align: center;
 }
 
-.invalid-feedback {
+.invalid-feedback,
+.alert-danger {
     padding: 1rem;
     background-color: rgba(255,88,88,0.55);
     border-radius: 5px;
@@ -439,6 +440,7 @@ input#photoInput {
     display: inline-block;
     cursor: pointer;
     padding: 0.625rem 1.25rem;
+    border-radius: 5px;
 }
 
 #photoFormContent label:hover {

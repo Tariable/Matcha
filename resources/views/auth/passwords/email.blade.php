@@ -4,16 +4,15 @@
 
 @section('content')
   <div class="container-form">
-{{--        <div class="card">--}}
-          <h1>{{ __('Reset Password') }}</h1>
-
           <div class="card-body" style="visibility: visible">
-            @if (session('status'))
+          @if (session('status'))
               <div class="alert alert-success mb-10" role="alert">
                 {{ session('status') }}
               </div>
             @endif
             <form method="POST" action="{{ route('password.email') }}">
+              <h1>{{ __('Reset Password') }}</h1>
+
               @csrf
               <div class="form-group row">
                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="E-Mail Address" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

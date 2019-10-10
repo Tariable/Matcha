@@ -21,7 +21,7 @@
       <h2>Your data</h2>
       <form action="/profiles/{{ Auth::id() }}" method="post" novalidate>
         <div class="form-group">
-          <input name="name" id="name" type="text" class="form-control"
+          <input name="name" id="name" type="text" class="form-control" placeholder="Name"
                  value="{{ old('name') ?? $profile->name }}">
         </div>
 
@@ -34,6 +34,7 @@
 
         <div class="form-group">
           <textarea name="description" id="description" cols="15" rows="8"
+                    placeholder="Here you can describe yourself.&#10;What do you like to do in your freetime?"
                     class="form-control">{{ old('description') ?? $profile->description }}</textarea>
         </div>
         <div class="mb-10">Your gender is:</div>
