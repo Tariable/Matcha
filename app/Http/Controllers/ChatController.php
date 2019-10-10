@@ -46,6 +46,7 @@ class ChatController extends Controller
     public function prepareData(Chat $chat){
         $currentChat = $chat;
         $currentChat->partner = $chat->partner()->first();
+        $currentChat->photo = $currentChat->partner->photo()->first();
         $currentChat->message = $chat->messagesReverse()->first();
         $currentChat->unread = $chat->unreadMessages()->count();
         return $currentChat;

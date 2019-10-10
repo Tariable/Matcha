@@ -79,7 +79,7 @@
                         text-align: right;
                         .text {
                             color: #fff;
-
+                            word-break: break-word;
                             background: rgba(255, 0, 80, 0.71);
                             /*border: 1px solid var(--main);*/
                         }
