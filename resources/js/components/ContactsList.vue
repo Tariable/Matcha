@@ -107,13 +107,13 @@
                 }
 
                 .avatar {
-                    flex: 1;
+                    flex: 1 0;
                     display: flex;
                     align-items: center;
                     img {
                         width: 35px;
                         border-radius: 50%;
-                        margin: 0 auto;
+                        margin-left: 5px;
                     }
                 }
 

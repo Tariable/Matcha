@@ -725,7 +725,7 @@ i.arrow {
         display: flex;
         flex-flow: row;
         max-width: 1100px;
-        margin: 0 auto;
+        margin: 1rem;
         border: 1px solid #aaacaf;
         border-radius: 5px;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
