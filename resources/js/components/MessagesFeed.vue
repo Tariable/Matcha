@@ -87,7 +87,7 @@
                         text-align: left;
                         /*color: #fff;*/
                         .text {
-                            background: #fff;
+                            background: rgba(255, 255, 255, 0.43);
                         }
                     }
                     .data {

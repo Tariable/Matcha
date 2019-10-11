@@ -96,7 +96,6 @@
                     background: rgba(255, 0, 80, 1);
                     color: #fff;
                     position: absolute;
-                    right: 9px;
                     top: 20px;
                     display: flex;
                     font-weight: 700;
