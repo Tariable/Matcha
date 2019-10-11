@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('developers.developers');
+    return redirect('/recs');
 });
 
 Auth::routes(['verify' => true]);
