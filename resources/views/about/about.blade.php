@@ -9,7 +9,7 @@
       <div class="card" id="card">
       </div>
       <div class="card-body" id="cardBody" style="visibility: visible">
-        <div id="carousel" class="carousel">
+        <div id="carousel" class="carousel" style="height: auto">
           <img src="https://i.imgur.com/Fj1n66U.png" alt="pashok">
         </div>
         <div id="match">
@@ -34,7 +34,7 @@
       <div class="card" id="card">
       </div>
       <div class="card-body" id="cardBody" style="visibility: visible">
-        <div id="carousel" class="carousel">
+        <div id="carousel" class="carousel" style="height: auto">
           <img src="https://i.imgur.com/X1noUMa.jpg" alt="arseny">
         </div>
         <div id="match">
@@ -58,7 +58,7 @@
       <div class="card" id="card">
       </div>
       <div class="card-body" id="cardBody" style="visibility: visible">
-        <div id="carousel" class="carousel">
+        <div id="carousel" class="carousel" style="height: auto">
           <img src="https://i.imgur.com/oDqdVdw.jpg" alt="maxix">
         </div>
         <div id="match">
