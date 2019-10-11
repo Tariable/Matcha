@@ -5,9 +5,6 @@
 @section('content')
 
     <div class="container-card">
-
-        <div class="row mb-5">
-        </div>
         <div class="card" id="card">
             <div class="lds-heart">
                 <div></div>

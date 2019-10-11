@@ -287,9 +287,8 @@ input[type="checkbox"]:checked::before {
     transition: all 0.2s ease-out;
 }
 
-.nav-link:hover {
+.nav-item.nav-link:hover {
     border-bottom: #fff solid 1px;
-
 }
 
 .navbar ul {
@@ -318,9 +317,20 @@ input[type="checkbox"]:checked::before {
     transition: 0.1s linear;
 }
 
-ul.dropdown li {
+/*ul.dropdown li {*/
+/*    */
+/*}*/
+ul.dropdown li a{
+    display: block;
     padding: 0.5rem;
 }
+
+ul.dropdown li a:hover{
+    display: block;
+    padding: 0.5rem;
+    background-color: #ff4b4b;
+}
+
 ul.dropdown li:not(:last-of-type) {
     border-bottom: 2px solid #FFFFFF;
 }
@@ -596,6 +606,24 @@ input#photoInput {
 
 .smooth { transition: transform .5s ease-out; }
 
+/*   ABOUT    */
+.about-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.container-card.about {
+    /*transform: scale(0.8);*/
+}
+
+.about-description {
+    margin: 1rem;
+    text-align: center;
+}
+
+.about .card-info {
+    height: auto;
+}
 /*arrows*/
 
 .carousel-prev,
@@ -724,6 +752,7 @@ i.fa-ban {
 }
 
 /*MATCH*/
+
 #match {
     color: white;
     visibility: hidden;
@@ -741,8 +770,22 @@ i.fa-ban {
     text-transform: capitalize;
 }
 
+@media only screen and (min-width: 800px) {
+    /*About*/
+    .about-container {
+        flex-flow: row;
+        max-width: 950px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
 @media only screen and (min-width: 700px) {
+
+    /* About */
+    .carousel {
+        height: auto;
+    }
     /* Chat */
     #chat-app {
         display: flex;
