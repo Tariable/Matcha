@@ -15,6 +15,7 @@
             <div class="card-body" id="cardBody" hidden>
                 <div id="carousel" class="carousel">
                 </div>
+                <div class="report" id="Inappropriate description" onclick="report(id)"><i class="fas fa-ban"></i></div>
                 <div id="match">
                     <div id="likeResponse">It's a Match!</div>
                 </div>
@@ -32,7 +33,6 @@
             <div class="buttons">
                 <button class="btn" id="ban" onclick="ban()">Dislike</button>
                 <button class="btn" id="like" onclick="like()">Like</button>
-                <button class="btn" id="Inappropriate description" onclick="report(id)">Report</button>
             </div>
             <p id="cardDescription"></p>
         </div>

@@ -1,18 +1,18 @@
 let recommendations;
-let iterator;
+let i;
 let profile;
 let photos;
 let pref;
 
 window.onload = async function () {
     recommendations = await getRecommendations();
-    iterator = 0;
+    i = 0;
 
-    if (recommendations[iterator]) {
+    if (recommendations[i]) {
         [profile, photos] =
             await Promise.all([
-                getProfile(recommendations[iterator]),
-                getPhotos(recommendations[iterator])
+                getProfile(recommendations[i]),
+                getPhotos(recommendations[i])
             ]);
 
         displayProfile(profile, photos);
@@ -117,10 +117,13 @@ async function like() {
             match.innerText = 'IT\'S A MATCH';
             matchContainer.style.visibility = 'visible';
         }
-        iterator++;
-        if (recommendations[iterator]) {
-            profile = await getProfile(recommendations[iterator]);
-            photos = await getPhotos(recommendations[iterator]);
+        i++;
+        if (recommendations[i]) {
+            [profile, photos] =
+                await Promise.all([
+                    getProfile(recommendations[i]),
+                    getPhotos(recommendations[i])
+                ]);
             displayProfile(profile, photos);
             match.innerText = '';
             matchContainer.style.visibility = 'hidden';
@@ -154,10 +157,13 @@ async function report(reportReason) {
     let response = await reportResponse.json();
 
     if (reportResponse.ok) {
-        iterator++;
-        if (recommendations[iterator]) {
-            profile = await getProfile(recommendations[iterator]);
-            photos = await getPhotos(recommendations[iterator]);
+        i++;
+        if (recommendations[i]) {
+            [profile, photos] =
+                await Promise.all([
+                    getProfile(recommendations[i]),
+                    getPhotos(recommendations[i])
+                ]);
             displayProfile(profile, photos);
         } else {
             createSuggestion('You can expand selection criteria', 'expandPref');
@@ -182,10 +188,13 @@ async function ban() {
     let BanResponse = await fetch(urlBan, options);
 
     if (BanResponse.ok) {
-        iterator++;
-        if (recommendations[iterator]) {
-            profile = await getProfile(recommendations[iterator]);
-            photos = await getPhotos(recommendations[iterator]);
+        i++;
+        if (recommendations[i]) {
+            [profile, photos] =
+                await Promise.all([
+                    getProfile(recommendations[i]),
+                    getPhotos(recommendations[i])
+                ]);
             displayProfile(profile, photos);
         } else {
             createSuggestion('You can expand selection criteria', 'expandPref');
@@ -312,6 +321,9 @@ function carousel(d) {
     _C.addEventListener('mouseup', move, false);
     _C.addEventListener('touchend', move, false);
 
-    arrowLeft.addEventListener('click', (e) => moveOnClick(e, 1), false);
-    arrowRight.addEventListener('click', (e) => moveOnClick(e, -1), false);
+    arrowLeft.addEventListener('click',
+        (e) => moveOnClick(e, 1), false);
+
+    arrowRight.addEventListener('click',
+        (e) => moveOnClick(e, -1), false);
 }
