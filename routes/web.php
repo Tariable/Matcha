@@ -12,12 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('developers.developers');
+    return redirect('/recs');
 });
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => ['verified']], function () {
+
+    Route::get('/about', function() {
+        return view('about.about');
+    });
+
     Route::get('/photos/last/{profileId}', 'PhotoController@getLastPhoto');
     Route::get('/photos/{profileId}', 'PhotoController@show');
     Route::post('/photos', 'PhotoController@store');

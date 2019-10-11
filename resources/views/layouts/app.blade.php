@@ -71,6 +71,7 @@
                         <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
                         <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
                         <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a>
+                        <li class="dropdown-item"><a href="/about" class="nav-link">About us</a>
                         </li>
                         <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
                                                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
