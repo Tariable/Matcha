@@ -23,8 +23,10 @@
         </div>
       </div>
 
-      <p id="cardDescription" class="about-description">fgfgfdgdgffdghghfhfgdfhgdhfg</p>
-      <p id="cardDescription" style="margin-top: 0; margin-bottom: 2rem;" class="about-description"><a href="https://github.com/baryshkov" class="btn-link">github.com/baryshkov</a></p>
+      <p id="cardDescription" class="about-description">Backend developer</p>
+      <p id="cardDescription" style="margin-top: 0; margin-bottom: 2rem;" class="about-description">
+          <a href="https://github.com/Tariable" class="btn-link">github.com/Tariable</a>
+      </p>
 
     </div>
 
@@ -46,8 +48,10 @@
         </div>
       </div>
 
-      <p id="cardDescription" class="about-description">dfghhfdhgfghdgfhdgfhghdfghdf</p>
-      <p id="cardDescription" style="margin-top: 0; margin-bottom: 2rem;" class="about-description"><a href="https://github.com/baryshkov" class="btn-link">github.com/baryshkov</a></p>
+      <p id="cardDescription" class="about-description">Web master</p>
+      <p id="cardDescription" style="margin-top: 0; margin-bottom: 2rem;" class="about-description">
+          <a href="https://github.com/baryshkov" class="btn-link">github.com/baryshkov</a>
+      </p>
 
     </div>
     <div class="container-card about">
@@ -68,8 +72,10 @@
         </div>
       </div>
 
-      <p id="cardDescription" class="about-description">dfghgfhgdhfdgfhgdhffdghgdhf</p>
-      <p id="cardDescription" style="margin-top: 0; " class="about-description"><a href="https://github.com/baryshkov" class="btn-link">github.com/baryshkov</a></p>
+      <p id="cardDescription" class="about-description">Backend developer</p>
+      <p id="cardDescription" style="margin-top: 0; " class="about-description">
+          <a href="https://github.com/Maksix" class="btn-link">github.com/Maksix</a>
+      </p>
     </div>
   </div>
 

@@ -784,14 +784,14 @@ i.fa-ban {
 
     /* About */
     .carousel {
-        height: auto;
+        height: 600px;
     }
     /* Chat */
     #chat-app {
         display: flex;
         flex-flow: row;
         max-width: 1100px;
-        margin: 1rem;
+        margin: 1rem auto;
         border: 1px solid #aaacaf;
         border-radius: 5px;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -854,7 +854,7 @@ i.fa-ban {
     }
 
     .container-create > div {
-        margin: 50px 1rem 1rem 1rem;
+        margin: 0rem 1rem 1rem 1rem;
         border: 1px solid #aaacaf;
         border-radius: 5px;
 

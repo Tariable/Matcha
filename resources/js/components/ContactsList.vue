@@ -13,10 +13,11 @@
                         <p class="last_message_text">{{ contact.message.text | ellipsis}}</p>
                     </div>
 
-                    <div class="info-box"><p class="last_message_from" style="text-align: right;"
-                                             v-if="+myId !== contact.message.from">
-                        -></p>
-                        <p class="last_message_from" style="text-align: right;" v-else=""><-</p>
+                    <div class="info-box">
+                        <p class="last_message_from" style="text-align: center;" v-if="+myId !== contact.message.from">
+                            ->
+                        </p>
+                        <p class="last_message_from" style="text-align: center;" v-else=""><-</p>
                         <p class="last_message_created_at" style="text-align: right;">{{
                             contact.message.created_at.split(' ')[1] }}</p>
                         <span class="unread" v-if="contact.unread">{{ contact.unread }}</span></div>
@@ -57,8 +58,8 @@
         },
         filters: {
             ellipsis(val) {
-                if(val.length > 20) {
-                    return val.slice(0,19) + "...";
+                if(val.length > 15) {
+                    return val.slice(0,14) + "...";
                 }
                 return val;
             }
@@ -80,14 +81,15 @@
 
             li {
                 display: flex;
-                padding: 0 10px;
-                border-bottom: 1px solid #aaaaaa;
+                border-bottom: 0.5px solid #aaaaaa;
+                border-radius: 5px;
                 height: 80px;
                 position: relative;
                 cursor: pointer;
 
                 &.selected {
                     background: #f5bdbd;
+                    border-radius: 5px;
                 }
 
                 span.unread {
@@ -147,9 +149,9 @@
                         display: flex;
                         align-items: center;
                         img {
-                            width: 30px;
+                            width: 50px;
                             border-radius: 25%;
-                            margin: 0 auto;
+                            margin: 5px;
                         }
                     }
                 }

@@ -9,7 +9,7 @@
     <meta name="auth_id" content="{{ auth()->id() }}">
 
 
-    <title>@yield('title')</title>
+    <title>Messages</title>
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -57,8 +57,8 @@
                     <ul class="dropdown">
                         <li class="dropdown-item"><a href="/messages" class="nav-link">Messages</a></li>
                         <li class="dropdown-item"><a href="/profiles/edit" class="nav-link">Edit profile</a></li>
-                        <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a>
-                        </li>
+                        <li class="dropdown-item"><a href="/preferences/edit" class="nav-link">Edit preferences</a></li>
+                        <li class="dropdown-item"><a href="/about" class="nav-link">About us</a></li>
                         <li class="dropdown-item"><a class="nav-link" href="{{ route('logout') }}"
                                                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
