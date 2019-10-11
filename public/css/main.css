@@ -443,7 +443,7 @@ input#photoInput {
     text-align: center;
 }
 #photoFormContent label {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #efe4e8;
     position: relative;
     background-color: var(--main);
